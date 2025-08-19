@@ -45,6 +45,14 @@ body:not(.inicio) {
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+.titulo-navbar 
+{
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: all 0.4s ease;
+  display: inline-block;
+}
+
 .letra-marron {
   color: #A0522D !important;
 }
