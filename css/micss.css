@@ -9,6 +9,23 @@ html {
 
 @media (min-width: 768px) {
   html { font-size: 16px; }
+  .custom-navbar.transparent {
+    background-color: transparent !important;
+  }
+}
+
+@media (max-width: 767px) {
+
+  .navbar-nav .nav-link {
+    display: block;
+    width: 100%;
+    padding: 1rem;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .custom-navbar {
+    background-color: #f8f9fa !important;
+  }
 }
 
 html, body {
@@ -56,6 +73,7 @@ body:not(.inicio) {
 .letra-marron {
   color: #A0522D !important;
 }
+
 
 .letra-editorial {
   font-family: 'Playfair Display', Georgia, serif;
@@ -135,7 +153,7 @@ body:not(.inicio) {
   justify-content: flex-start;  /* a la izquierda */
   align-items: center;          /* centrado vertical */
   height: 100%;
-  padding-left: 15px;           /* opcional: pequeño margen a la izquierda */
+  padding-left: 15px;
 }
 
 /* Imagen del número */
@@ -158,10 +176,14 @@ body:not(.inicio) {
 
 /* Hover: cambia a un color de fondo elegido y letra blanca */
 .btn-vermas:hover {
-  background: #A0522D;   /* <-- aquí pones el color que quieras */
+  background: #A0522D;
   border-color: #A0522D;
   color: white !important;
 }
+
+ .elbadge{
+  background-color: #A0522D;
+ }
 
 
 /* =================== */
@@ -173,3 +195,35 @@ body:not(.inicio) {
   text-align: center;
   padding: 15px;
 }
+/* --- Navbar: transparente solo en >= md --- */
+@media (min-width: 768px) {
+  .custom-navbar.transparent {
+    background-color: transparent !important;
+  }
+}
+
+/* --- En móviles (< md) la navbar SIEMPRE sólida y legible --- */
+@media (max-width: 767.98px) {
+  /* aunque tenga la clase .transparent, forzamos fondo sólido */
+  .custom-navbar,
+  .custom-navbar.transparent,
+  .navbar .navbar-collapse {
+    background-color: #F5E6D3 !important; /* tu color */
+  }
+
+  /* Mejor distribución del menú colapsado */
+  .navbar-nav {
+    width: 100%;
+    text-align: center;
+  }
+  .navbar-nav .nav-item { 
+    margin: 0; 
+  }
+  .navbar-nav .nav-link {
+    display: block;
+    width: 100%;
+    padding: 0.9rem 1rem;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+  }
+}
+  
