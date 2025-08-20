@@ -1,0 +1,74 @@
+:root{
+  --burnt-sienna:#A0522D;      /* acento principal */
+  --sage-green:#87A96B;        /* acento secundario */
+  --warm-alabaster:#F5E6D3;    /* fondo cálido */
+  --goldenrod:#D4A437;         /* detalle */
+  --dusty-rose:#C47A6D;        /* variante */
+  --dark-wood:#3E2723;         /* títulos */
+  --ink:#222;                  /* texto */
+  --muted:#6b6b6b;            /* texto secundario */
+  --surface:#fff;
+  --radius-xl:22px;
+  --radius-lg:16px;
+  --shadow-lg: 0 16px 40px rgba(0,0,0,.12);
+  --shadow-md: 0 10px 24px rgba(0,0,0,.10);
+  --shadow-sm: 0 6px 14px rgba(0,0,0,.08);
+}
+
+/* Título del producto */
+.product-title{
+  margin: 8px 0 14px;
+  font-family: "Playfair Display", serif;
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  color: #3E2723; /* dark wood */
+}
+
+/* Carrusel + thumbs */
+.product-gallery{
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 24px rgba(0,0,0,.10);
+  background: #fff;
+}
+.product-gallery .carousel-item{
+  aspect-ratio: 16 / 9;
+  background:#eee;
+}
+.product-gallery img{ width:100%; height:100%; object-fit:cover; }
+
+.product-thumbs{
+  display:flex; gap:10px; padding:12px; overflow:auto;
+  background:#FAF7F2; border-top:1px solid #eee;
+}
+.product-thumbs img{
+  width:86px; height:64px; object-fit:cover;
+  border-radius:10px; cursor:pointer; flex:0 0 auto;
+  border:2px solid transparent;
+}
+.product-thumbs img.active{ border-color:#A0522D; } /* burnt sienna */
+
+/* Detalle y compra */
+.product-detail{ margin-top: 26px; }
+.purchase-card{
+  background:#fff; border-radius:16px; padding:20px;
+  box-shadow:0 10px 24px rgba(0,0,0,.10);
+  border:1px solid #f0e6d8;
+}
+.price{ font-size:clamp(1.4rem, 3.6vw, 2rem); color:#A0522D; font-weight:800; }
+.label{ font-size:.9rem; color:#6b6b6b; margin-bottom:6px; }
+.qty-input{ display:flex; align-items:center; gap:10px; }
+.qty-input input[type="number"]{
+  max-width:100px; border-radius:10px; border:1.5px solid #eadac6;
+  padding:10px 12px; background:#F5E6D3; color:#3E2723;
+}
+.btn-brand{
+  background:#A0522D; color:#fff; border:none; border-radius:12px;
+  padding:12px 16px; font-weight:700;
+}
+.btn-brand:hover{ filter:brightness(.96); }
+.btn-outline-brand{
+  background:transparent; color:#A0522D; border:2px solid #A0522D;
+  border-radius:12px; padding:10px 16px; font-weight:700;
+}
+.product-desc{ color:#222; }
+.product-specs li{ margin-bottom:6px; color:#444; }
