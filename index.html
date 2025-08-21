@@ -49,13 +49,34 @@
 
     <main role="main" class="pb-4">
         <!-- Hero -->
-        <section class="hero">
-            <img src="img/fondohero.jpg" alt="Fondo principal con muebles" class="hero-img">
-            <div class="hero-overlay"></div>
-            <div class="hero-content text-center">
-                <p class="lead">EXPLORA</p>
-                <p class="display-4 mb-5">NUEVA COLECCIÓN</p>
-                <a href="#coleccion" class="btn-hero">DESCUBRIR</a>
+        <section class="carousel" >
+            <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                <!-- TEXTO QUE FLOTARÁ ENCIMA DE TODO -->
+                <div class="texto-superpuesto">
+                        <p class="display-4 mb-5">NUEVA COLECCIÓN</p>
+                        <a href="#coleccion" class="btn-hero">DESCUBRIR</a>
+                </div>
+                <!-- SLIDES -->
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="img/fondohero.jpg" class="d-block w-100" alt="Fondo Con Muebles 1">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="img/fondohero.jpg" class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="img/fondohero.jpg" class="d-block w-100" alt="...">
+                    </div>
+                </div>
+            <!-- CONTROLES -->
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
             </div>
         </section>
 
@@ -86,47 +107,73 @@
         </section>
     </main>
         <!-- Productos Destacados -->
-         <section >
-            
-            
-         </section>
+<section id="productos">
+    <a class="card-hover letra-producto">
+        <div class="card producto " style="width: 18rem;">
+            <img src="img/silla_de_trabajo_belgrano.png" class=" rounded-5 card-img-top" alt="...">
+            <div class="card-body ">
+                <p class="card-text ">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            </div>
+        </div>
+    </a>
+    <a class="card-hover letra-producto">
+        <div  class="card producto " style="width: 18rem;">
+            <img src="img/mesa_de_centro_araucaria.png" class=" rounded-5 card-img-top" alt="...">
+            <div class="card-body ">
+                <p class="card-text ">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            </div>
+        </div>
+    </a>
+    <a class="card-hover letra-producto">
+        <div class="card producto " style="width: 18rem;">
+            <img src="img/mesa_de_noche_aconcagua.png" class=" card-img-top" alt="...">
+            <div class="card-body " >
+                <h6>Mesa de noche</h6>
+            </div>
+        </div>
+    </a>
+    <a class=" card-hover letra-producto ">
+        <div class="card producto " style="width: 18rem;">
+            <img src="img/aparador_uspallata.png" class=" card-img-top" alt="...">
+            <div class="card-body  ">
+                <p class="card-text  ">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            </div>
+        </div>
+    </a>
+</section>
     <footer class="footer">
         <div class="footer-container">
-    
-            <div class="footer-col">
-                <h3>Showroom y Taller</h3>
-                <p><strong>Hermanos Jota — Casa Taller</strong></p>
-                <p>Av. San Juan 2847<br>
-                C1232AAB — San Cristobal<br>
-                Ciudad Autónoma de Buenos Aires<br>
-                Argentina</p>
-                <p><strong>Horarios:</strong><br>
-                Lunes a Viernes: 10:00 - 19:00<br>
-                Sábados: 10:00 - 14:00</p>
-            </div>
+                <div class="footer-col">
+                    <h3>Showroom y Taller</h3>
+                    <p><strong>Hermanos Jota — Casa Taller</strong></p>
+                    <p>Av. San Juan 2847<br>
+                    C1232AAB — San Cristóbal<br>
+                    Ciudad Autónoma de Buenos Aires<br>
+                    Argentina</p>
+                    <p><strong>Horarios:</strong><br>
+                    Lunes a Viernes: 10:00 - 19:00<br>
+                    Sábados: 10:00 - 14:00</p>
+                </div>
 
-            <div class="footer-col">
-                <h3>Contacto Digital</h3>
-                <ul>
-                    <li><a href="http://www.hermanosjota.com.ar">www.hermanosjota.com.ar</a></li>
-                    <li><a href="mailto:info@hermanosjota.com.ar">info@hermanosjota.com.ar</a></li>
-                    <li><a href="mailto:ventas@hermanosjota.com.ar">ventas@hermanosjota.com.ar</a></li>
-                    <li><a href="https://instagram.com/hermanosjota_ba" target="_blank">@hermanosjota_ba</a></li>
-                    <li><a href="https://wa.me/541145678900" target="_blank">+54 11 4567-8900</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-col">
-                <h3>Créditos del Manual</h3>
-                <p>Dirección Creativa: Estudio Hermanos</p>
-                <p>Diseño: María Fernanda López</p>
-                <p>Fotografía: Santiago Ciuffo</p>
-                <p>Redacción: Carolina Mendez</p>
-                <p>Tipografía: Inter por Rasmus Andersson</p>
-            </div>
-        
+                <div class="footer-col">
+                    <h3>Contacto Digital</h3>
+                    <ul>
+                        <li><a href="http://www.hermanosjota.com.ar">www.hermanosjota.com.ar</a></li>
+                        <li><a href="mailto:info@hermanosjota.com.ar">info@hermanosjota.com.ar</a></li>
+                        <li><a href="mailto:ventas@hermanosjota.com.ar">ventas@hermanosjota.com.ar</a></li>
+                        <li><a href="https://instagram.com/hermanosjota_ba" target="_blank">@hermanosjota_ba</a></li>
+                        <li><a href="https://wa.me/541145678900" target="_blank">+54 11 4567-8900</a></li>
+                    </ul>
+                </div>
+           <div class="footer-col">
+                    <h3>Créditos del Manual</h3>
+                    <p>Dirección Creativa: Estudio Hermanos</p>
+                    <p>Diseño: María Fernanda López</p>
+                    <p>Fotografía: Santiago Ciuffo</p>
+                    <p>Redacción: Carolina Mendez</p>
+                    <p>Tipografía: Inter por Rasmus Andersson</p>
+                </div>
         </div>
-
         <div class="footer-bottom">
             <p>© 2025 Hermanos Jota. Todos los derechos reservados.<br>
             Este manual es propiedad de Hermanos Jota Muebles.</p>
