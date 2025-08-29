@@ -1,114 +1,233 @@
+
+/*
+===========================================
+  HERMANOS JOTA - MAIN STYLESHEET
+===========================================
+  Fontenla-inspired design with custom colors
+  Color Palette:
+  - Primary Brown: #A0522D
+  - Secondary Green: #87A96B  
+  - Background Cream: #F5E6D3
+  - White: #ffffff
+===========================================
+*/
+
 /* =================== */
-/* Base general */
+/* 1. BASE & RESET */
 /* =================== */
+
+/* Base HTML settings for responsive design and smooth scrolling */
 html {
   font-size: 14px;
   position: relative;
   min-height: 100%;
-  scroll-behavior:smooth
+  scroll-behavior: smooth;
 }
 
+/* Increase base font size on larger screens */
 @media (min-width: 768px) {
-  html { font-size: 16px; }
-  .custom-navbar.transparent {
-    background-color: transparent !important;
+  html { 
+    font-size: 16px; 
   }
 }
 
-@media (max-width: 767px) {
-
-  .navbar-nav .nav-link {
-    display: block;
-    width: 100%;
-    padding: 1rem;
-    border-bottom: 1px solid #ddd;
-  }
-
-  .custom-navbar {
-    background-color: #f8f9fa !important;
-  }
-}
-
+/* Global body and container settings */
 html, body {
   margin: 0;
   padding: 0;
   width: 100%;
-  overflow-x: hidden;
+  overflow-x: hidden; /* Prevent horizontal scroll */
 }
 
 body {
-  background-color: #F5E6D3;
+  background-color: #F5E6D3; /* Cream background - Alabastro Cálido per brand manual */
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.6;
+  color: #3E2723; /* Dark wood color per brand manual */
 }
 
-/* Body con clase "inicio" (sin padding extra arriba) */
+/* Add top padding to body except for pages with 'inicio' class */
 body:not(.inicio) {
   padding-top: 80px;
 }
 
 /* =================== */
-/* Navbar */
+/* 2. TYPOGRAPHY */
 /* =================== */
+
+/* Editorial font class for headings */
+.letra-editorial {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 700;
+}
+
+/* Brown text color utility */
+.letra-marron {
+  color: #A0522D !important;
+}
+
+/* Section titles - large, elegant headings */
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #A0522D;
+  margin-bottom: 2rem;
+  line-height: 1.2;
+}
+
+/* Section labels - small uppercase labels above titles */
+.section-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #87A96B;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+/* Section text - readable paragraph text */
+.section-text {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #555;
+  margin-bottom: 2rem;
+}
+
+/* =================== */
+/* 3. BUTTONS */
+/* =================== */
+
+/* Primary button - main call-to-action style */
+.btn-primary-custom {
+  display: inline-block;
+  padding: 15px 40px;
+  background-color: #A0522D;
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-radius: 0;
+  transition: all 0.3s ease;
+  border: 2px solid #A0522D;
+}
+
+.btn-primary-custom:hover {
+  background-color: transparent;
+  color: #A0522D;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(160, 82, 45, 0.2);
+}
+
+/* Secondary button - alternative style */
+.btn-secondary {
+  display: inline-block;
+  padding: 12px 30px;
+  background-color: transparent;
+  color: #A0522D;
+  text-decoration: none;
+  font-weight: 600;
+  border: 2px solid #A0522D;
+  border-radius: 0;
+  transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+  background-color: #A0522D;
+  color: white;
+  transform: translateY(-2px);
+}
+
+/* Modern hero button - large, prominent CTA */
+.btn-hero-modern {
+  display: inline-block;
+  padding: 20px 50px;
+  background-color: white;
+  color: #A0522D;
+  text-decoration: none;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  border-radius: 0;
+  transition: all 0.4s ease;
+  border: 2px solid white;
+  font-size: 1.1rem;
+}
+
+.btn-hero-modern:hover {
+  background-color: transparent;
+  color: white;
+  transform: scale(1.05);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* Badge for cart counter */
+.elbadge {
+  background-color: #A0522D;
+}
+
+/* =================== */
+/* 4. NAVIGATION */
+/* =================== */
+
+/* Custom navbar styling */
 .custom-navbar {
   background-color: #F5E6D3 !important;
   color: #A0522D;
   transition: background-color 0.3s ease-in-out;
 }
 
+/* Transparent navbar state */
 .navbar.custom-navbar.transparent {
   background-color: transparent !important;
 }
 
+/* Scrolled navbar state with shadow */
 .navbar.custom-navbar.scrolled {
   background-color: #F5E6D3 !important;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.titulo-navbar 
-{
+/* Animated title that appears on hover */
+.titulo-navbar {
   opacity: 0;
   transform: translateX(-30px);
   transition: all 0.4s ease;
   display: inline-block;
 }
 
-.letra-marron {
-  color: #A0522D !important;
-}
-
-
-.letra-editorial {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-weight: 700;
-}
-
 .navbar:hover .titulo-navbar {
   opacity: 1;
   transform: translateX(0);
 }
-/* --- Navbar: transparente solo en >= md --- */
+
+/* Navbar transparency only on desktop */
 @media (min-width: 768px) {
   .custom-navbar.transparent {
     background-color: transparent !important;
   }
 }
 
-/* --- En móviles (< md) la navbar SIEMPRE sólida y legible --- */
+/* Mobile navbar - always solid background for readability */
 @media (max-width: 767.98px) {
-  /* aunque tenga la clase .transparent, forzamos fondo sólido */
   .custom-navbar,
   .custom-navbar.transparent,
   .navbar .navbar-collapse {
-    background-color: #F5E6D3 !important; /* tu color */
+    background-color: #F5E6D3 !important;
   }
 
-  /* Mejor distribución del menú colapsado */
+  /* Mobile menu layout */
   .navbar-nav {
     width: 100%;
     text-align: center;
   }
+  
   .navbar-nav .nav-item { 
     margin: 0; 
   }
+  
   .navbar-nav .nav-link {
     display: block;
     width: 100%;
@@ -116,126 +235,296 @@ body:not(.inicio) {
     border-bottom: 1px solid rgba(0,0,0,0.06);
   }
 }
+
 /* =================== */
-/* Hero */
+/* 5. HERO SECTION */
 /* =================== */
 
-
-.btn-hero {
-  margin-top: 20px;
-  padding: 10px 30px;
-  border: 2px solid white;
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
-  text-transform: uppercase;
-  background: transparent;
-  transition: all 0.3s ease;
-}
-.texto-superpuesto {
-  font-family: sans-serif;
-  position: absolute;
-  z-index: 10;  /* más alto que la imagen */
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: white;
-  font-size: 18px;
-  font-weight: bold;
-  padding: 8px 12px;
-  border-radius: 8px;
-  justify-content: center;
+/* Main hero container with full viewport height */
+.hero-section {
+  min-height: 100vh;
+  position: relative;
+  display: flex;
   align-items: center;
+  background-color: #F5E6D3;
+  overflow: hidden;
+}
+
+/* Hero layout container */
+.hero-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  min-height: 100vh;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* Hero content area with text */
+.hero-content {
+  padding: 2rem;
+  z-index: 2;
+}
+
+/* Hero text container */
+.hero-text {
+  max-width: 500px;
+}
+
+/* Main hero title */
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 4rem;
+  font-weight: 700;
+  color: #A0522D;
+  margin-bottom: 1.5rem;
+  line-height: 1.1;
+  letter-spacing: -2px;
+}
+
+/* Hero subtitle */
+.hero-subtitle {
+  font-size: 1.3rem;
+  color: #666;
+  margin-bottom: 3rem;
+  font-weight: 400;
+}
+
+/* Hero image container */
+.hero-image {
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Hero image styling */
+.hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Mobile hero responsive design */
+@media (max-width: 768px) {
+  .hero-container {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr auto;
+    text-align: center;
+  }
+  
+  .hero-content {
+    order: 2;
+    padding: 3rem 1rem;
+    background-color: rgba(245, 230, 211, 0.95);
+  }
+  
+  .hero-image {
+    order: 1;
+    height: 60vh;
+  }
+  
+  .hero-title {
+    font-size: 2.5rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 1.1rem;
+  }
+}
+
+/* =================== */
+/* 6. ABOUT SECTION */
+/* =================== */
+
+/* About section container */
+.about-section {
+  padding: 80px 0;
+  background-color: white;
+}
+
+/* About content styling */
+.about-content {
+  padding: 2rem 0;
+}
+
+.about-title {
+  font-size: 2.2rem;
+  font-weight: 600;
+  color: #A0522D;
+  margin-bottom: 1.5rem;
+  line-height: 1.3;
+}
+
+.about-text {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: #666666;
+  margin-bottom: 1.5rem;
+}
+
+.about-media {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+}
+
+.about-video {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* =================== */
+/* 7. PRODUCTS SECTION */
+/* =================== */
+
+/* Products section background */
+.products-section {
+  padding: 100px 0;
+  background: linear-gradient(to bottom, white, #F5E6D3);
+}
+
+/* Desktop products grid layout */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+/* Individual product card styling */
+.product-card {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  text-decoration: none;
+  color: inherit;
+}
+
+.product-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Product image container */
+.product-image {
+  aspect-ratio: 1;
+  overflow: hidden;
+  background-color: #f8f8f8;
+}
+
+.product-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.product-card:hover .product-image img {
+  transform: scale(1.05);
+}
+
+/* Product information area */
+.product-info {
+  padding: 1.5rem;
   text-align: center;
 }
-.carrusel {
-      position: relative;
-      width: 600px;
-      height: 300px;
-      overflow: hidden;
-    }
 
-.btn-hero:hover {
-  background: #87A96B;
-  border-color: #87A96B;
-  color: white;
+/* Product title styling */
+.product-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #A0522D;
+  margin-bottom: 0.5rem;
 }
 
-/* Contenedor del número */
-.box-number {
-  display: flex;
-  justify-content: flex-start;  /* a la izquierda */
-  align-items: center;          /* centrado vertical */
-  height: 100%;
-  padding-left: 15px;
-}
-
-/* Imagen del número */
-.box-number img {
-  width: 75%;        /* un poco más grande */
-  max-width: 260px;  /* límite superior */
-  height: auto;
-}
-
-/* Botón "ver más" */
-.btn-vermas {
-  padding: 10px 30px;
-  border: 1px solid black;
-  color: black;
-  text-decoration: none;
-  text-transform: uppercase;
-  background: transparent;
-  transition: all 0.3s ease;
-}
-
-/* Hover: cambia a un color de fondo elegido y letra blanca */
-.btn-vermas:hover {
-  background: #A0522D;
-  border-color: #A0522D;
-  color: white !important;
-}
-
- .elbadge{
-  background-color: #A0522D;
- }
-
- .borde-capsula {
-  border-radius: 999px;
+/* Product price styling */
+.product-price {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #87A96B;
+  margin: 0;
 }
 
 /* =================== */
-/* GALERIA DE PRODUCTOS */
+/* 8. MOBILE CAROUSEL */
 /* =================== */
 
-#productos{
-  background: linear-gradient(white, #A0522D) no-repeat; 
+/* Mobile carousel specific styles */
+@media (max-width: 767.98px) {
+  .products-section {
+    padding: 60px 0;
+  }
   
+  /* Mobile product cards in carousel */
+  #productCarousel .product-card {
+    max-width: 300px;
+    margin: 0 auto;
+  }
+  
+  /* Carousel control styling */
+  .carousel-control-prev,
+  .carousel-control-next {
+    width: 8%;
+  }
+  
+  .carousel-control-prev-icon,
+  .carousel-control-next-icon {
+    background-color: #A0522D;
+    border-radius: 50%;
+    padding: 20px;
+  }
+  
+  /* Carousel indicators styling */
+  .carousel-indicators {
+    bottom: -50px;
+  }
+  
+  .carousel-indicators button {
+    background-color: #A0522D;
+    border-radius: 50%;
+    width: 12px;
+    height: 12px;
+  }
 }
 
+/* =================== */
+/* 9. LEGACY STYLES */
+/* =================== */
 
-#cartelera{
+/* Legacy product gallery styles - keeping for compatibility */
+#cartelera {
   display: flex;
   justify-content: space-around;
-  flex-direction:row;
+  flex-direction: row;
 }
 
-.encabezado{
+.encabezado {
   color: #A0522D;
   font-family: 'Playfair Display', Georgia, serif;
   text-align: center;
 }
-.producto{
+
+.producto {
   border-radius: 40px;
   margin: 3%;
   background: white;
   font-family: 'Playfair Display', Georgia, serif;
-  
 }
 
 .card-hover {
   display: flex;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
- 
 }
 
 .card-hover:hover {
@@ -244,45 +533,51 @@ body:not(.inicio) {
   color: #333;
 }
 
-.letra-producto{
+.letra-producto {
   text-decoration: none;
   color: #333;
 }
 
-#botonVerMas{
-  color: #F5E6D3 ;
+/* Legacy 'Ver Más' button */
+#botonVerMas {
+  color: #F5E6D3;
   text-decoration: underline;
   font-family: 'Playfair Display', Georgia, serif;
   background-color: transparent;
   border: 0;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  
 }
 
-#botonVerMas:hover{
+#botonVerMas:hover {
   transform: scale(1.05);
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
-  color:#87A96B;
+  color: #87A96B;
 }
+
 /* =================== */
-/* Footer */
+/* 10. FOOTER STYLES */
 /* =================== */
+
+/* Modern footer with brand color background */
 .modern-footer {
-  background: #A0522D;;
+  background: #A0522D;
   color: #ffffff;
   padding: 60px 0 30px;
   position: relative;
 }
 
+/* Footer content area with bottom border */
 .footer-content {
   padding-bottom: 40px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+/* Footer brand section spacing */
 .footer-brand {
   padding-right: 2rem;
 }
 
+/* Footer main title */
 .footer-title {
   font-family: 'Playfair Display', serif;
   font-size: 1.8rem;
@@ -291,17 +586,20 @@ body:not(.inicio) {
   margin-bottom: 1rem;
 }
 
+/* Footer description text */
 .footer-description {
   color: rgba(255, 255, 255, 0.8);
   line-height: 1.6;
   margin-bottom: 2rem;
 }
 
+/* Social media links container */
 .footer-social {
   display: flex;
   gap: 1rem;
 }
 
+/* Individual social media link styling */
 .social-link {
   display: flex;
   align-items: center;
@@ -321,6 +619,7 @@ body:not(.inicio) {
   transform: translateY(-2px);
 }
 
+/* Footer section headings */
 .footer-heading {
   font-family: 'Playfair Display', serif;
   font-size: 1.2rem;
@@ -329,6 +628,7 @@ body:not(.inicio) {
   margin-bottom: 1.5rem;
 }
 
+/* Contact item layout */
 .contact-item {
   display: flex;
   align-items: flex-start;
@@ -336,6 +636,7 @@ body:not(.inicio) {
   color: rgba(255, 255, 255, 0.8);
 }
 
+/* Contact item icons */
 .contact-item i {
   font-size: 1.1rem;
   margin-right: 0.8rem;
@@ -344,6 +645,7 @@ body:not(.inicio) {
   min-width: 20px;
 }
 
+/* Contact item links */
 .contact-item a {
   color: rgba(255, 255, 255, 0.8);
   text-decoration: none;
@@ -354,17 +656,20 @@ body:not(.inicio) {
   color: #ffffff;
 }
 
+/* Footer bottom section */
 .footer-bottom {
   padding-top: 30px;
   margin-top: 30px;
 }
 
+/* Copyright text */
 .copyright {
   color: rgba(255, 255, 255, 0.7);
   margin: 0;
   font-size: 0.9rem;
 }
 
+/* Credits text */
 .credits {
   color: rgba(255, 255, 255, 0.7);
   margin: 0;
@@ -376,8 +681,13 @@ body:not(.inicio) {
   margin: 0 4px;
 }
 
-/* Mobile responsive styles for footer */
+/* =================== */
+/* 11. MOBILE RESPONSIVE */
+/* =================== */
+
+/* Mobile footer centering */
 @media (max-width: 767.98px) {
+  /* Center all footer sections on mobile */
   .modern-footer .footer-brand,
   .modern-footer .footer-info,
   .modern-footer .footer-contact {
@@ -386,10 +696,12 @@ body:not(.inicio) {
     margin-bottom: 2rem;
   }
   
+  /* Center social media links */
   .footer-social {
     justify-content: center;
   }
   
+  /* Center contact items */
   .contact-item {
     justify-content: center;
     text-align: center;
@@ -399,6 +711,7 @@ body:not(.inicio) {
     margin-right: 0.8rem;
   }
   
+  /* Center footer bottom content */
   .footer-bottom .col-md-8,
   .footer-bottom .col-md-4 {
     text-align: center !important;
@@ -411,4 +724,463 @@ body:not(.inicio) {
   }
 }
 
+/* =================== */
+/* 12. UTILITY CLASSES */
+/* =================== */
+
+/* Rounded pill shape utility */
+.borde-capsula {
+  border-radius: 999px;
+}
+
+/* Hide on mobile, show on desktop */
+@media (max-width: 767.98px) {
+  .d-none.d-md-flex {
+    display: none !important;
+  }
+}
+
+/* Hide on desktop, show on mobile */
+@media (min-width: 768px) {
+  .d-md-none {
+    display: none !important;
+  }
+}
+
+/* =================== */
+/* 13. ELEGANT HERO CAROUSEL */
+/* =================== */
+
+/* Hero carousel section - full viewport height */
+.hero-carousel-section {
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Individual hero slide container */
+.hero-slide {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Hero slide image styling */
+.hero-slide-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 8s ease-in-out;
+}
+
+/* Subtle zoom effect during slide transition */
+.carousel-item.active .hero-slide-image {
+  transform: scale(1.02);
+}
+
+/* Elegant hero overlay */
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(160, 82, 45, 0.1) 0%, rgba(0, 0, 0, 0.3) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Hero content centered container */
+.hero-content-center {
+  text-align: center;
+  max-width: 700px;
+  padding: 2rem;
+  color: white;
+}
+
+/* Main hero title - following brand manual typography */
+.hero-main-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 4rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+  line-height: 1.1;
+}
+
+/* Hero main subtitle */
+.hero-main-subtitle {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 300;
+  margin-bottom: 3rem;
+  opacity: 0.95;
+  line-height: 1.5;
+}
+
+/* Primary hero button */
+.btn-hero-primary {
+  display: inline-block;
+  padding: 18px 45px;
+  background-color: rgba(255, 255, 255, 0.95);
+  color: #A0522D;
+  text-decoration: none;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  border: 2px solid rgba(255, 255, 255, 0.95);
+  transition: all 0.4s ease;
+  backdrop-filter: blur(10px);
+}
+
+.btn-hero-primary:hover {
+  background-color: transparent;
+  color: white;
+  border-color: white;
+  transform: translateY(-3px);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
+  text-decoration: none;
+}
+
+/* Custom elegant carousel indicators as dots */
+.carousel-indicators-custom {
+  bottom: 30px;
+  margin-bottom: 0;
+  justify-content: center;
+}
+
+.carousel-indicators-custom button {
+  background-color: rgba(255, 255, 255, 0.4);
+  border: 0;
+  margin: 0 6px;
+  transition: all 0.3s ease;
+  text-indent: 0;
+  opacity: 1;
+}
+
+
+.carousel-indicators-custom button.active {
+  background-color: white;
+  transform: scale(1.4);
+}
+
+.carousel-indicators-custom button:hover {
+  background-color: rgba(255, 255, 255, 0.7);
+  transform: scale(1.2);
+}
+
+/* Mobile hero carousel responsive */
+@media (max-width: 768px) {
+  .hero-main-title {
+    font-size: 2.5rem;
+    letter-spacing: 0.05em;
+  }
   
+  .hero-main-subtitle {
+    font-size: 1.1rem;
+  }
+  
+  .btn-hero-primary {
+    padding: 15px 35px;
+    font-size: 0.9rem;
+  }
+}
+
+/* =================== */
+/* 14. ELEGANT VIDEO SECTION */
+/* =================== */
+
+/* About section with video - full width */
+.about-section {
+  background-color: white;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+/* Video media container with 16:9 aspect ratio */
+.about-media-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #000;
+}
+
+/* Elegant video styling with 16:9 ratio */
+.about-video-elegant {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Video overlay with label */
+.video-overlay {
+  position: absolute;
+  bottom: 40px;
+  left: 40px;
+  z-index: 2;
+}
+
+.video-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: white;
+  background: rgba(160, 82, 45, 0.9);
+  padding: 8px 16px;
+  letter-spacing: 2px;
+  backdrop-filter: blur(10px);
+}
+
+/* About content elegant styling */
+.about-content-elegant {
+  padding: 80px 60px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Section label accent following brand manual */
+.section-label-accent {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #87A96B;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 1.5rem;
+  display: block;
+}
+
+/* Large section title */
+.section-title-large {
+  font-family: 'Playfair Display', serif;
+  font-size: 3rem;
+  font-weight: 700;
+  color: #A0522D;
+  margin-bottom: 2rem;
+  line-height: 1.2;
+}
+
+/* Refined section text */
+.section-text-refined {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 400;
+  line-height: 1.8;
+  color: #3E2723;
+  margin-bottom: 1.8rem;
+}
+
+/* Elegant secondary button */
+.btn-elegant-secondary {
+  display: inline-block;
+  padding: 15px 35px;
+  background-color: transparent;
+  color: #A0522D;
+  text-decoration: none;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border: 1px solid #A0522D;
+  transition: all 0.3s ease;
+}
+
+.btn-elegant-secondary:hover {
+  background-color: #A0522D;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(160, 82, 45, 0.2);
+  text-decoration: none;
+}
+
+/* Mobile video section responsive */
+@media (max-width: 991px) {
+  /* Maintain 16:9 aspect ratio on mobile */
+  .about-media-container {
+    aspect-ratio: 16 / 9;
+    width: 100%;
+    max-width: 100vw;
+  }
+  
+  .about-content-elegant {
+    padding: 60px 40px;
+  }
+  
+  .section-title-large {
+    font-size: 2.2rem;
+  }
+}
+
+@media (max-width: 576px) {
+  /* Maintain 16:9 aspect ratio on small mobile */
+  .about-media-container {
+    aspect-ratio: 16 / 9;
+    width: 100%;
+  }
+  
+  .about-content-elegant {
+    padding: 40px 20px;
+  }
+  
+  .section-title-large {
+    font-size: 1.8rem;
+  }
+  
+  .video-overlay {
+    bottom: 20px;
+    left: 20px;
+  }
+}
+
+/* =================== */
+/* 15. SPLIT SECTION - SUSTAINABILITY */
+/* =================== */
+
+/* Split section container */
+.split-section {
+  background-color: #F5E6D3;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+/* Split content styling */
+.split-content {
+  padding: 80px 60px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Sustainability stats container */
+.sustainability-stats {
+  display: flex;
+  gap: 3rem;
+  margin: 3rem 0;
+}
+
+/* Individual stat item */
+.stat-item {
+  text-align: center;
+}
+
+.stat-number {
+  font-family: 'Playfair Display', serif;
+  font-size: 3rem;
+  font-weight: 700;
+  color: #D4A437; /* Vara de Oro per brand manual */
+  margin-bottom: 0.5rem;
+  line-height: 1;
+}
+
+.stat-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #3E2723;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin: 0;
+}
+
+/* Split image container */
+.split-image-container {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.split-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.3s ease;
+}
+
+.split-image-container:hover .split-image {
+  transform: scale(1.02);
+}
+
+/* Image overlay with label */
+.image-overlay {
+  position: absolute;
+  top: 40px;
+  right: 40px;
+  z-index: 2;
+}
+
+.image-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: white;
+  background: rgba(135, 169, 107, 0.9);
+  padding: 8px 16px;
+  letter-spacing: 2px;
+  backdrop-filter: blur(10px);
+}
+
+/* Mobile split section responsive */
+@media (max-width: 991px) {
+  .split-image-container {
+    height: 50vh;
+  }
+  
+  .split-content {
+    padding: 60px 40px;
+  }
+  
+  .sustainability-stats {
+    gap: 2rem;
+    margin: 2rem 0;
+  }
+  
+  .stat-number {
+    font-size: 2.5rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .split-content {
+    padding: 40px 20px;
+  }
+  
+  .sustainability-stats {
+    flex-direction: column;
+    gap: 2rem;
+    text-align: center;
+  }
+  
+  .image-overlay {
+    top: 20px;
+    right: 20px;
+  }
+}
+
+
+/* Keep modern hover effects for nav links */
+.navbar-nav .nav-link {
+  border-radius: var(--border-radius);
+  transition: var(--transition);
+}
+
+.navbar-nav .nav-link:hover {
+  background-color: rgba(160, 82, 45, 0.1);
+  transform: translateY(-1px);
+}
+
+.cart-link {
+  position: relative;
+  font-size: 1.1rem;
+}
