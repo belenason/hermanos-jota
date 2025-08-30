@@ -3,12 +3,14 @@
 ===========================================
   HERMANOS JOTA - MAIN STYLESHEET
 ===========================================
-  Fontenla-inspired design with custom colors
-  Color Palette:
-  - Primary Brown: #A0522D
-  - Secondary Green: #87A96B  
-  - Background Cream: #F5E6D3
-  - White: #ffffff
+  Brand Manual Compliant Color Palette:
+  - Siena Tostado (Primary): #A0522D
+  - Verde Salvia (Secondary): #87A96B
+  - Alabastro Cálido (Background): #F5E6D3
+  - Vara de Oro (Accent): #D4A437
+  - Rosa Polvoriento (Accent): #C47A6D
+  - Madera Oscura (Text): #3E2723
+  - Light Grey: #F5F5F5
 ===========================================
 */
 
@@ -74,6 +76,8 @@ body:not(.inicio) {
   color: #A0522D;
   margin-bottom: 2rem;
   line-height: 1.2;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
 }
 
 /* Section labels - small uppercase labels above titles */
@@ -387,6 +391,8 @@ body:not(.inicio) {
   color: #A0522D;
   margin-bottom: 1.5rem;
   line-height: 1.3;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
 }
 
 .about-text {
@@ -844,7 +850,7 @@ body:not(.inicio) {
   font-family: 'Playfair Display', serif;
   font-size: 4rem;
   font-weight: 700;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   margin-bottom: 1.5rem;
   text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
@@ -1009,6 +1015,8 @@ body:not(.inicio) {
   color: #A0522D;
   margin-bottom: 2rem;
   line-height: 1.2;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
 }
 
 /* Refined section text */
