@@ -184,127 +184,37 @@
         </section>
 
         <!-- Productos Destacados -->
-        <section id="productos" class="products-section">
-            <div class="container">
-                <h2 class="section-title text-center mb-5">Productos Destacados</h2>
-                
-                <!-- Desktop Grid -->
-                <div class="products-grid d-none d-md-flex">
-                    <article class="product-card">
-                        <div class="product-image">
-                            <img src="img/silla_de_trabajo_belgrano.png" alt="Silla de trabajo Belgrano" class="img-fluid">
-                        </div>
-                        <div class="product-info">
-                            <h3 class="product-title">Silla Belgrano</h3>
-                            <p class="product-price">$2.000</p>
-                        </div>
-                    </article>
-                    
-                    <article class="product-card">
-                        <div class="product-image">
-                            <img src="img/mesa_de_centro_araucaria.png" alt="Mesa de centro Araucaria" class="img-fluid">
-                        </div>
-                        <div class="product-info">
-                            <h3 class="product-title">Mesa Araucaria</h3>
-                            <p class="product-price">$2.000</p>
-                        </div>
-                    </article>
-                    
-                    <article class="product-card">
-                        <div class="product-image">
-                            <img src="img/mesa_de_noche_aconcagua.png" alt="Mesa de noche Aconcagua" class="img-fluid">
-                        </div>
-                        <div class="product-info">
-                            <h3 class="product-title">Mesa Aconcagua</h3>
-                            <p class="product-price">$2.000</p>
-                        </div>
-                    </article>
-                    
-                    <article class="product-card">
-                        <div class="product-image">
-                            <img src="img/aparador_uspallata.png" alt="Aparador Uspallata" class="img-fluid">
-                        </div>
-                        <div class="product-info">
-                            <h3 class="product-title">Aparador Uspallata</h3>
-                            <p class="product-price">$2.000</p>
-                        </div>
-                    </article>
-                </div>
-                
-                <!-- Mobile Carousel -->
-                <div id="productCarousel" class="carousel slide d-md-none" data-bs-ride="carousel">
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <article class="product-card mx-auto">
-                                <div class="product-image">
-                                    <img src="img/silla_de_trabajo_belgrano.png" alt="Silla de trabajo Belgrano" class="img-fluid">
-                                </div>
-                                <div class="product-info">
-                                    <h3 class="product-title">Silla Belgrano</h3>
-                                    <p class="product-price">$2.000</p>
-                                </div>
-                            </article>
-                        </div>
-                        <div class="carousel-item">
-                            <article class="product-card mx-auto">
-                                <div class="product-image">
-                                    <img src="img/mesa_de_centro_araucaria.png" alt="Mesa de centro Araucaria" class="img-fluid">
-                                </div>
-                                <div class="product-info">
-                                    <h3 class="product-title">Mesa Araucaria</h3>
-                                    <p class="product-price">$2.000</p>
-                                </div>
-                            </article>
-                        </div>
-                        <div class="carousel-item">
-                            <article class="product-card mx-auto">
-                                <div class="product-image">
-                                    <img src="img/mesa_de_noche_aconcagua.png" alt="Mesa de noche Aconcagua" class="img-fluid">
-                                </div>
-                                <div class="product-info">
-                                    <h3 class="product-title">Mesa Aconcagua</h3>
-                                    <p class="product-price">$2.000</p>
-                                </div>
-                            </article>
-                        </div>
-                        <div class="carousel-item">
-                            <article class="product-card mx-auto">
-                                <div class="product-image">
-                                    <img src="img/aparador_uspallata.png" alt="Aparador Uspallata" class="img-fluid">
-                                </div>
-                                <div class="product-info">
-                                    <h3 class="product-title">Aparador Uspallata</h3>
-                                    <p class="product-price">$2.000</p>
-                                </div>
-                            </article>
-                        </div>
-                    </div>
-                    
-                    <!-- Carousel controls -->
-                    <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Anterior</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Siguiente</span>
-                    </button>
-                    
-                    <!-- Carousel indicators -->
-                    <div class="carousel-indicators">
-                        <button type="button" data-bs-target="#productCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                        <button type="button" data-bs-target="#productCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                        <button type="button" data-bs-target="#productCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                        <button type="button" data-bs-target="#productCarousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
-                    </div>
-                </div>
-                
-                <!-- View More Button -->
-                <div class="text-center mt-5">
-                    <a href="./productos.html" class="btn-secondary-custom">Ver Todos los Productos</a>
-                </div>
-            </div>
-        </section>
+<section id="productos" class="products-section">
+  <div class="container">
+    <h2 class="section-title text-center mb-5">Productos Destacados</h2>
+
+    <!-- Contenedor Desktop -->
+    <div id="products-container"  class="row g-4 d-none d-md-flex"></div>
+
+    <!-- Contenedor Mobile Carousel -->
+    <div id="productCarousel" class="carousel slide d-md-none" data-bs-ride="carousel">
+      <div class="carousel-inner" id="products-carousel-container"></div>
+
+      <!-- Controles -->
+      <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Anterior</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Siguiente</span>
+      </button>
+
+      <!-- Indicadores -->
+      <div class="carousel-indicators" id="products-carousel-indicators"></div>
+    </div>
+
+    <!-- Botón ver más -->
+    <div class="text-center mt-5">
+      <a href="./productos.html" class="btn-secondary-custom">Ver Todos los Productos</a>
+    </div>
+  </div>
+</section>
     </main>
 
     <footer class="modern-footer" id="contacto">
