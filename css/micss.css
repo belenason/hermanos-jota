@@ -160,6 +160,11 @@ body:not(.inicio) {
   color: white;
 }
 
+.tamanioCarrousel{
+  width: 600px;
+  height: 650px;
+}
+
 /* Contenedor del número */
 .box-number {
   display: flex;
