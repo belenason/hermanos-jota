@@ -31,8 +31,35 @@ const PRODUCTS = [
     imagenes: [
       "img/biblioteca_recoleta.png"
     ]
+  },
+  {
+    id: "03",
+    nombre: "Butaca Mendoza",
+    precio: 0,
+    descripcion: "Butaca tapizada en bouclé Dusty Rose con base de madera de guatambú. El respaldo curvo abraza el cuerpo y ofrece máximo confort, mientras que su diseño orgánico aporta calidez y sofisticación a cualquier ambiente contemporáneo.",
+    medidas: "80 × 75 × 85 cm",
+    materiales: "Guatambú macizo, tela bouclé",
+    acabado: "Cera vegetal, tapizado premium",
+    tapizado:"Repelente al agua y manchas" ,
+    confort:"Espuma alta densidad", 
+    imagenes: [
+      "img/butaca_mendoza.png"
+    ]
+  },
+  {
+    id: "04",
+    nombre: "Sillón Copacabana",
+    precio: 0,
+    descripcion: "Sillón lounge en cuero cognac con base giratoria en acero Burnt Sienna. Inspirado en la estética brasilera moderna de los 60, combina comodidad excepcional con un diseño icónico que trasciende tendencias y épocas.",
+    medidas: "90 × 85 × 95 cm",
+    materiales: "Cuero curtido vegetal, acero pintado",
+    acabado: "Cuero anilina premium",
+    rotacion:"360° silenciosa y suave" ,
+    garantia:"10 años en estructura", 
+    imagenes: [
+      "img/butaca_mendoza.png"
+    ]
   }
-  //faltan agregar todos los productos!!
 ];
 
 // Función para simular una carga asíncrona (como si viniera de un servidor)
