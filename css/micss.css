@@ -3,6 +3,11 @@
 ===========================================
   HERMANOS JOTA - MAIN STYLESHEET
 ===========================================
+  Organized CSS Structure:
+  1. GLOBAL STYLES (All pages)
+  2. INDEX PAGE SPECIFIC STYLES  
+  3. CONTACT PAGE SPECIFIC STYLES
+  
   Brand Manual Compliant Color Palette:
   - Siena Tostado (Primary): #A0522D
   - Verde Salvia (Secondary): #87A96B
@@ -11,6 +16,12 @@
   - Rosa Polvoriento (Accent): #C47A6D
   - Madera Oscura (Text): #3E2723
   - Light Grey: #F5F5F5
+===========================================
+*/
+
+/*
+===========================================
+  SECTION 1: GLOBAL STYLES (ALL PAGES)
 ===========================================
 */
 
@@ -792,8 +803,15 @@ body:not(.inicio) {
   }
 }
 
+
+/*
+===========================================
+  SECTION 2: INDEX PAGE SPECIFIC STYLES
+===========================================
+*/
+
 /* =================== */
-/* 13. ELEGANT HERO CAROUSEL */
+/* 1. HERO CAROUSEL */
 /* =================== */
 
 /* Hero carousel section - full viewport height */
@@ -937,7 +955,7 @@ body:not(.inicio) {
 }
 
 /* =================== */
-/* 14. ELEGANT VIDEO SECTION */
+/* 2. VIDEO SECTION */
 /* =================== */
 
 /* About section with video - full width */
@@ -1091,9 +1109,12 @@ body:not(.inicio) {
   }
 }
 
-/* =================== */
-/* 15. CONTACT PAGE STYLES */
-/* =================== */
+
+/*
+===========================================
+  SECTION 3: CONTACT PAGE SPECIFIC STYLES
+===========================================
+*/
 
 /* Contact page hero section */
 .contact-hero {
@@ -1222,7 +1243,7 @@ body:not(.inicio) {
 }
 
 /* =================== */
-/* 16. SPLIT SECTION - SUSTAINABILITY */
+/* 3. SPLIT SECTION - SUSTAINABILITY */
 /* =================== */
 
 /* Split section container */
