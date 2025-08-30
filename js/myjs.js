@@ -257,57 +257,153 @@ const PRODUCTS = [
 ];
 
 
+// Función para inicializar productos (solo en páginas que los necesiten)
+function initProductos() {
+    console.log('Inicializando productos');
+    
+    const productos = [
+        { nombre: "Silla Belgrano", precio: "$2.000", img: "img/silla_de_trabajo_belgrano.png" },
+        { nombre: "Mesa Araucaria", precio: "$2.000", img: "img/mesa_de_centro_araucaria.png" },
+        { nombre: "Mesa Aconcagua", precio: "$2.000", img: "img/mesa_de_noche_aconcagua.png" },
+        { nombre: "Aparador Uspallata", precio: "$2.000", img: "img/aparador_uspallata.png" }
+    ];
 
-const productos = [
-    { nombre: "Silla Belgrano", precio: "$2.000", img: "img/silla_de_trabajo_belgrano.png" },
-    { nombre: "Mesa Araucaria", precio: "$2.000", img: "img/mesa_de_centro_araucaria.png" },
-    { nombre: "Mesa Aconcagua", precio: "$2.000", img: "img/mesa_de_noche_aconcagua.png" },
-    { nombre: "Aparador Uspallata", precio: "$2.000", img: "img/aparador_uspallata.png" }
-  ];
+    // Contenedores - verificar que existan antes de usarlos
+    const desktopContainer = document.getElementById("products-container");
+    const carouselContainer = document.getElementById("products-carousel-container");
+    const indicatorsContainer = document.getElementById("products-carousel-indicators");
 
-  // Contenedores
-  const desktopContainer = document.getElementById("products-container");
-  const carouselContainer = document.getElementById("products-carousel-container");
-  const indicatorsContainer = document.getElementById("products-carousel-indicators");
+    // Solo ejecutar si los contenedores existen
+    if (!desktopContainer || !carouselContainer) {
+        console.log('Contenedores de productos no encontrados en esta página');
+        return;
+    }
 
-  productos.forEach((prod, index) => {
-    // ----- Desktop grid -----
-  desktopContainer.innerHTML += `
-    <div class="col-md-3 col-sm-6">
-      <article class="product-card text-center h-100">
-        <div class="product-image">
-          <img src="${prod.img}" alt="${prod.nombre}" class="img-fluid">
-        </div>
-        <div class="product-info">
-          <h3 class="product-title">${prod.nombre}</h3>
-          <p class="product-price">${prod.precio}</p>
-        </div>
-      </article>
-    </div>
-  `;
+    console.log('Contenedores de productos encontrados');
 
+    productos.forEach((prod, index) => {
+        // ----- Desktop grid -----
+        desktopContainer.innerHTML += `
+            <div class="col-md-3 col-sm-6">
+                <article class="product-card text-center h-100">
+                    <div class="product-image">
+                        <img src="${prod.img}" alt="${prod.nombre}" class="img-fluid">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">${prod.nombre}</h3>
+                        <p class="product-price">${prod.precio}</p>
+                    </div>
+                </article>
+            </div>
+        `;
+        
+        // ----- Mobile carousel -----
+        carouselContainer.innerHTML += `
+            <div class="carousel-item ${index === 0 ? "active" : ""}">
+                <article class="product-card mx-auto text-center">
+                    <div class="product-image">
+                        <img src="${prod.img}" alt="${prod.nombre}" class="img-fluid">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">${prod.nombre}</h3>
+                        <p class="product-price">${prod.precio}</p>
+                    </div>
+                </article>
+            </div>
+        `;
+    });
 
-    // ----- Mobile carousel -----
-    carouselContainer.innerHTML += `
-      <div class="carousel-item ${index === 0 ? "active" : ""}">
-        <article class="product-card mx-auto text-center">
-          <div class="product-image">
-            <img src="${prod.img}" alt="${prod.nombre}" class="img-fluid">
-          </div>
-          <div class="product-info">
-            <h3 class="product-title">${prod.nombre}</h3>
-            <p class="product-price">${prod.precio}</p>
-          </div>
-        </article>
-      </div>
-    `;
+    console.log('Productos cargados correctamente');
+}
 
-    indicatorsContainer.innerHTML += `
-      <button type="button" data-bs-target="#productCarousel" 
-              data-bs-slide-to="${index}" 
-              class="${index === 0 ? "active" : ""}" 
-              aria-current="${index === 0 ? "true" : "false"}" 
-              aria-label="Slide ${index + 1}">
-      </button>
-    `;
-  });
+// Función para inicializar formulario de contacto
+function initContactForm() {
+    console.log('Inicializando formulario de contacto');
+    
+    const form = document.getElementById("contact-form");
+    const successMessage = document.getElementById("success-message");
+
+    // Solo ejecutar si el formulario existe (página de contacto)
+    if (!form || !successMessage) {
+        console.log('Formulario de contacto no encontrado en esta página');
+        return;
+    }
+
+    console.log('✅ Formulario de contacto encontrado');
+
+    form.addEventListener("submit", (event) => {
+        console.log('Formulario enviado');
+        event.preventDefault();
+        event.stopPropagation();
+
+        const isValid = form.checkValidity();
+        form.classList.add('was-validated');
+
+        console.log('Formulario válido:', isValid);
+
+        if (isValid) {
+            console.log('🎉 Mostrando mensaje de éxito');
+            setTimeout(() => {
+                successMessage.classList.remove("d-none");
+                form.reset();
+                form.classList.remove('was-validated');
+                
+                successMessage.scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'center' 
+                });
+            }, 500);
+        }
+    });
+
+    // Validación en tiempo real
+    const inputs = form.querySelectorAll('.form-control');
+    console.log('Inputs encontrados:', inputs.length);
+    
+    inputs.forEach(input => {
+        input.addEventListener('input', () => {
+            if (input.checkValidity()) {
+                input.classList.remove('is-invalid');
+                input.classList.add('is-valid');
+            } else {
+                input.classList.remove('is-valid');
+                input.classList.add('is-invalid');
+            }
+        });
+    });
+
+    console.log('Formulario de contacto inicializado correctamente');
+}
+
+// Función principal que inicializa todo
+function initApp() {
+    console.log('Inicializando aplicación');
+    console.log('Document ready state:', document.readyState);
+    
+    // Intentar inicializar productos
+    initProductos();
+    
+    // Intentar inicializar formulario de contacto
+    initContactForm();
+    
+    console.log('Inicialización completada');
+}
+
+// Ejecutar cuando el DOM esté listo
+if (document.readyState === 'loading') {
+    console.log('Esperando DOMContentLoaded');
+    document.addEventListener('DOMContentLoaded', initApp);
+} else {
+    console.log('DOM ya está listo, ejecutando inmediatamente');
+    initApp();
+}
+
+// Backup: ejecutar también en window.load
+window.addEventListener('load', function() {
+    console.log('🔄 Window load disparado');
+    // Solo como backup si no se ejecutó antes
+    if (!window.appInitialized) {
+        initApp();
+        window.appInitialized = true;
+    }
+});
