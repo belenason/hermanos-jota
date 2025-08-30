@@ -1,43 +1,91 @@
-(function () {
+/*
+===========================================
+  HERMANOS JOTA - JAVASCRIPT FUNCTIONS
+===========================================
+  Main JavaScript file for website functionality
+  Includes: Navbar behavior, Product display, 
+  Contact forms, and general interactions
+===========================================
+*/
+
+// ==========================================
+// 1. NAVBAR FUNCTIONALITY
+// ==========================================
+
+/**
+ * Manages navbar transparency and mobile behavior
+ * - Transparent navbar on desktop when at top of page
+ * - Solid background when scrolled or on mobile
+ * - Handles mobile menu collapse states
+ */
+(function initializeNavbar() {
   const navbar = document.querySelector(".custom-navbar");
   const collapse = document.querySelector(".navbar-collapse");
+  
+  // Exit if navbar doesn't exist on current page
   if (!navbar) return;
 
+  /**
+   * Checks if current viewport is desktop size
+   * @returns {boolean} True if desktop (768px+), false if mobile
+   */
   const isDesktop = () => window.matchMedia("(min-width: 768px)").matches;
 
+  /**
+   * Applies appropriate navbar styling based on scroll position and device type
+   */
   function applyNavbarState() {
+    // On mobile: always show solid background for readability
     if (!isDesktop()) {
       navbar.classList.add("scrolled");
       navbar.classList.remove("transparent");
       return;
     }
 
+    // On desktop: toggle transparency based on scroll position
     if (window.scrollY > 50) {
-      navbar.classList.add("scrolled");
+      navbar.classList.add("scrolled");     // Solid background + shadow
       navbar.classList.remove("transparent");
     } else {
-      navbar.classList.add("transparent");
+      navbar.classList.add("transparent");  // Transparent background
       navbar.classList.remove("scrolled");
     }
   }
 
+  // Apply navbar state on page load
   document.addEventListener("DOMContentLoaded", applyNavbarState);
+  
+  // Update navbar state on scroll (passive for better performance)
   window.addEventListener("scroll", applyNavbarState, { passive: true });
+  
+  // Update navbar state when window is resized
   window.addEventListener("resize", applyNavbarState);
 
-  // Cuando se abre el menú colapsado en móviles, fondo sólido sí o sí
+  // Handle mobile menu collapse states
   if (collapse) {
+    // When mobile menu opens: force solid background
     collapse.addEventListener("show.bs.collapse", () => {
       navbar.classList.add("scrolled");
       navbar.classList.remove("transparent");
     });
+    
+    // When mobile menu closes: restore normal state
     collapse.addEventListener("hide.bs.collapse", applyNavbarState);
   }
 })();
 
 
+// ==========================================
+// 2. INDIVIDUAL PRODUCT PAGE FUNCTIONALITY
+// ==========================================
 
-//logica de producto.html - no se si esta bien 
+/**
+ * Handles individual product page display and interactions
+ * - Generates product gallery carousel with thumbnails
+ * - Displays product specifications and details
+ * - Manages add to cart functionality
+ * - Updates cart badge counter
+ */
 document.addEventListener("DOMContentLoaded", async () => {
   const container = document.getElementById("product");
   if (!container) return; // solo corre en producto.html
@@ -194,6 +242,15 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 
+// ==========================================
+// 3. PRODUCT DATA
+// ==========================================
+
+/**
+ * Product catalog data
+ * Contains detailed information for all available products
+ * Used by product pages and catalog displays
+ */
 const PRODUCTS = [
   {
     id: "01",
@@ -256,8 +313,17 @@ const PRODUCTS = [
 
 ];
 
+// ==========================================
+// 4. PRODUCT CATALOG FUNCTIONALITY
+// ==========================================
 
-// Función para inicializar productos (solo en páginas que los necesiten)
+/**
+ * Initializes product catalog display for home and catalog pages
+ * - Creates desktop grid layout for product cards
+ * - Generates mobile carousel with indicators
+ * - Only runs on pages that have the required containers
+ * - Prevents duplication by clearing containers first
+ */
 function initProductos() {
     console.log('Inicializando productos');
     
@@ -279,11 +345,29 @@ function initProductos() {
         return;
     }
 
-    console.log('Contenedores de productos encontrados');
+    // Verificar si ya están cargados para evitar duplicación
+    if (desktopContainer.children.length > 0) {
+        console.log('Productos ya cargados, evitando duplicación');
+        return;
+    }
+
+    console.log('Contenedores de productos encontrados, cargando...');
+
+    // Limpiar contenedores por seguridad
+    desktopContainer.innerHTML = '';
+    carouselContainer.innerHTML = '';
+    if (indicatorsContainer) {
+        indicatorsContainer.innerHTML = '';
+    }
+
+    // Arrays para acumular el HTML
+    let desktopHTML = '';
+    let carouselHTML = '';
+    let indicatorsHTML = '';
 
     productos.forEach((prod, index) => {
         // ----- Desktop grid -----
-        desktopContainer.innerHTML += `
+        desktopHTML += `
             <div class="col-md-3 col-sm-6">
                 <article class="product-card text-center h-100">
                     <div class="product-image">
@@ -298,7 +382,7 @@ function initProductos() {
         `;
         
         // ----- Mobile carousel -----
-        carouselContainer.innerHTML += `
+        carouselHTML += `
             <div class="carousel-item ${index === 0 ? "active" : ""}">
                 <article class="product-card mx-auto text-center">
                     <div class="product-image">
@@ -311,12 +395,39 @@ function initProductos() {
                 </article>
             </div>
         `;
+
+        // ----- Carousel indicators -----
+        if (indicatorsContainer) {
+            indicatorsHTML += `
+                <button type="button" data-bs-target="#productCarousel" data-bs-slide-to="${index}" 
+                        class="${index === 0 ? 'active' : ''}" 
+                        aria-current="${index === 0 ? 'true' : 'false'}" 
+                        aria-label="Slide ${index + 1}"></button>
+            `;
+        }
     });
 
-    console.log('Productos cargados correctamente');
+    // Asignar todo el HTML de una vez para evitar múltiples reflows
+    desktopContainer.innerHTML = desktopHTML;
+    carouselContainer.innerHTML = carouselHTML;
+    if (indicatorsContainer) {
+        indicatorsContainer.innerHTML = indicatorsHTML;
+    }
+
+    console.log('✅ Productos cargados correctamente:', productos.length, 'productos');
 }
 
-// Función para inicializar formulario de contacto
+// ==========================================
+// 5. CONTACT FORM FUNCTIONALITY
+// ==========================================
+
+/**
+ * Initializes contact form validation and submission
+ * - Handles form validation with Bootstrap classes
+ * - Provides real-time input validation feedback
+ * - Shows success message after valid submission
+ * - Resets form state after successful submission
+ */
 function initContactForm() {
     console.log('Inicializando formulario de contacto');
     
@@ -375,7 +486,16 @@ function initContactForm() {
     console.log('Formulario de contacto inicializado correctamente');
 }
 
-// Función principal que inicializa todo
+// ==========================================
+// 6. APPLICATION INITIALIZATION
+// ==========================================
+
+/**
+ * Main application initialization function
+ * - Coordinates initialization of all page components
+ * - Attempts to initialize products and contact form
+ * - Called when DOM is ready or immediately if already loaded
+ */
 function initApp() {
     console.log('Inicializando aplicación');
     console.log('Document ready state:', document.readyState);

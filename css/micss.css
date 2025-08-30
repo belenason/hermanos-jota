@@ -1084,7 +1084,137 @@ body:not(.inicio) {
 }
 
 /* =================== */
-/* 15. SPLIT SECTION - SUSTAINABILITY */
+/* 15. CONTACT PAGE STYLES */
+/* =================== */
+
+/* Contact page hero section */
+.contact-hero {
+  background: linear-gradient(180deg, #F5E6D3 0%, #FFFFFF 100%);
+  padding: 100px 0 40px;
+}
+
+/* Contact hero title */
+.contact-hero .hero-title {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  color: #8B4513;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+/* Contact hero subtitle */
+.contact-hero .hero-subtitle {
+  font-size: 1.1rem;
+  color: #6B7280;
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto 2rem;
+}
+
+/* Contact container wrapper */
+.contact-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Contact form wrapper with card styling */
+.contact-form-wrapper {
+  background: #FFFFFF;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  padding: 2.5rem;
+  margin-bottom: 3rem;
+}
+
+/* Enhanced form floating inputs */
+.form-floating {
+  margin-bottom: 1.5rem;
+}
+
+.form-floating > .form-control {
+  height: 56px;
+  border: 2px solid #E0E0E0;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: border-color 0.2s ease;
+}
+
+.form-floating > .form-control:focus {
+  border-color: #8B4513;
+  box-shadow: 0 0 0 0.15rem rgba(139, 69, 19, 0.15);
+}
+
+.form-floating > .form-control:focus ~ label {
+  color: #8B4513;
+}
+
+.form-floating > label {
+  color: #6B7280;
+}
+
+.form-floating > textarea.form-control {
+  height: 120px;
+  resize: none;
+}
+
+/* Contact form primary button override */
+.contact-form-wrapper .btn-primary {
+  background-color: #87A96B;
+  border: none;
+  border-radius: 8px;
+  padding: 0.875rem 2.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+}
+
+.contact-form-wrapper .btn-primary:hover {
+  background-color: #68864f;
+}
+
+.contact-form-wrapper .btn-primary:active,
+.contact-form-wrapper .btn-primary:focus {
+  background-color: #87A96B !important;
+  box-shadow: 0 0 0 0.15rem rgba(135, 169, 107, 0.25);
+}
+
+/* Success message styling */
+.success-message {
+  background: #10B981;
+  color: white;
+  border-radius: 8px;
+  padding: 1.25rem;
+  font-weight: 500;
+}
+
+.success-message .alert-content {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* Form validation feedback */
+.invalid-feedback {
+  font-size: 14px;
+  margin-top: 0.5rem;
+}
+
+/* Contact page mobile responsive */
+@media (max-width: 768px) {
+  .contact-form-wrapper {
+    padding: 2rem 1.5rem;
+    margin: 0 1rem 2rem;
+  }
+  
+  .contact-hero {
+    padding: 80px 0 30px;
+  }
+}
+
+/* =================== */
+/* 16. SPLIT SECTION - SUSTAINABILITY */
 /* =================== */
 
 /* Split section container */
