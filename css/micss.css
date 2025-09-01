@@ -3,17 +3,17 @@
 ===========================================
   HERMANOS JOTA - MAIN STYLESHEET
 ===========================================
-  Organized CSS Structure:
-  1. GLOBAL STYLES (All pages)
-  2. INDEX PAGE SPECIFIC STYLES  
-  3. CONTACT PAGE SPECIFIC STYLES
+  Organización del archivo CSS:
+  1. ESTILOS GLOBALES (Para todas las páginas)
+  2. Estilos específicos del index  
+  3. Estilos especificos de contacto
   
-  Brand Manual Compliant Color Palette:
-  - Siena Tostado (Primary): #A0522D
-  - Verde Salvia (Secondary): #87A96B
-  - Alabastro Cálido (Background): #F5E6D3
-  - Vara de Oro (Accent): #D4A437
-  - Rosa Polvoriento (Accent): #C47A6D
+  Paleta de colores del manual de marca:
+  - Siena Tostado (Primario): #A0522D
+  - Verde Salvia (Secundario): #87A96B
+  - Alabastro Cálido (Fonod): #F5E6D3
+  - Vara de Oro (Acento): #D4A437
+  - Rosa Polvoriento (Acento): #C47A6D
   - Madera Oscura (Text): #3E2723
   - Light Grey: #F5F5F5
 ===========================================
@@ -21,7 +21,7 @@
 
 /*
 ===========================================
-  SECTION 1: GLOBAL STYLES (ALL PAGES)
+SECCIÓN 1: ESTILOS GLOBALES (Para todas las páginas)
 ===========================================
 */
 
@@ -29,7 +29,8 @@
 /* 1. BASE & RESET */
 /* =================== */
 
-/* Base HTML settings for responsive design and smooth scrolling */
+
+/* HTML base*/
 html {
   font-size: 14px;
   position: relative;
@@ -37,49 +38,45 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Increase base font size on larger screens */
+/* Para que la letra sea más grande en pantallas más grandes */
 @media (min-width: 768px) {
   html { 
     font-size: 16px; 
   }
 }
 
-/* Global body and container settings */
+/* Configuración de los contenedores en general */
 html, body {
   margin: 0;
   padding: 0;
   width: 100%;
-  overflow-x: hidden; /* Prevent horizontal scroll */
+  overflow-x: hidden; /* Para prevenir que se pueda hacer scroll en horizontal */
 }
 
 body {
-  background-color: #F5E6D3; /* Cream background - Alabastro Cálido per brand manual */
+  background-color: #F5E6D3;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   line-height: 1.6;
-  color: #3E2723; /* Dark wood color per brand manual */
+  color: #3E2723;
 }
 
-/* Add top padding to body except for pages with 'inicio' class */
-body:not(.inicio) {
-  padding-top: 80px;
-}
 
 /* =================== */
-/* 2. TYPOGRAPHY */
+/* 2. TIPOGRAFÍA */
 /* =================== */
 
-/* Editorial font class for headings */
+/* Letra de editorial para encabezados*/
 .letra-editorial {
   font-family: 'Playfair Display', Georgia, serif;
   font-weight: 700;
 }
 
-/* Brown text color utility */
+/* Letra del color primario de la marca */
 .letra-marron {
   color: #A0522D !important;
 }
 
-/* Section titles - large, elegant headings */
+/* Diseño de los titulos de las secciones */
 .section-title {
   font-family: 'Playfair Display', serif;
   font-size: 2.5rem;
@@ -91,7 +88,7 @@ body:not(.inicio) {
   letter-spacing: 0.12em;
 }
 
-/* Section labels - small uppercase labels above titles */
+/* Diseño de las label de las secciones - label que van arriba de los titulos */
 .section-label {
   font-size: 0.9rem;
   font-weight: 600;
@@ -102,13 +99,6 @@ body:not(.inicio) {
   display: block;
 }
 
-/* Section text - readable paragraph text */
-.section-text {
-  font-size: 1.1rem;
-  line-height: 1.8;
-  color: #555;
-  margin-bottom: 2rem;
-}
 
 /* =================== */
 /* 3. BUTTONS */
@@ -137,30 +127,8 @@ body:not(.inicio) {
   transform: translateY(-2px);
 }
 
-/* Modern hero button - large, prominent CTA */
-.btn-hero-modern {
-  display: inline-block;
-  padding: 20px 50px;
-  background-color: white;
-  color: #A0522D;
-  text-decoration: none;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  border-radius: 0;
-  transition: all 0.4s ease;
-  border: 2px solid white;
-  font-size: 1.1rem;
-}
 
-.btn-hero-modern:hover {
-  background-color: transparent;
-  color: white;
-  transform: scale(1.05);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-}
-
-/* Badge for cart counter */
+/* Insignia para contador del carrito */
 .elbadge {
   position: absolute;
   top: 0;
@@ -177,25 +145,25 @@ body:not(.inicio) {
 /* 4. NAVIGATION */
 /* =================== */
 
-/* Custom navbar styling */
+/* Estilos personalizados de la barra de navegación */
 .custom-navbar {
   background-color: #F5E6D3 !important;
   color: #A0522D;
   transition: background-color 0.3s ease-in-out;
 }
 
-/* Transparent navbar state */
+/* Estado transparente de la barra de navegación */
 .navbar.custom-navbar.transparent {
   background-color: transparent !important;
 }
 
-/* Scrolled navbar state with shadow */
+/* Estado de barra de navegación con sombra al hacer scroll */
 .navbar.custom-navbar.scrolled {
   background-color: #F5E6D3 !important;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Animated title that appears on hover */
+/* Título animado que aparece al pasar el cursor */
 .titulo-navbar {
   opacity: 0;
   transform: translateX(-30px);
@@ -592,21 +560,7 @@ body:not(.inicio) {
   color: #333;
 }
 
-/* Legacy 'Ver Más' button */
-#botonVerMas {
-  color: #F5E6D3;
-  text-decoration: underline;
-  font-family: 'Playfair Display', Georgia, serif;
-  background-color: transparent;
-  border: 0;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
 
-#botonVerMas:hover {
-  transform: scale(1.05);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
-  color: #87A96B;
-}
 
 /* =================== */
 /* 10. FOOTER STYLES */
@@ -783,11 +737,6 @@ body:not(.inicio) {
 /* =================== */
 /* 12. UTILITY CLASSES */
 /* =================== */
-
-/* Rounded pill shape utility */
-.borde-capsula {
-  border-radius: 999px;
-}
 
 /* Hide on mobile, show on desktop */
 @media (max-width: 767.98px) {
@@ -1211,7 +1160,7 @@ body:not(.inicio) {
 
 /* Success message styling */
 .success-message {
-  background: #10B981;
+  background: #326924;
   color: white;
   border-radius: 8px;
   padding: 1.25rem;
