@@ -237,7 +237,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       if (item) item.qty += qty; else cart.push({ id: p.id, qty });
       localStorage.setItem("cart", JSON.stringify(cart));
     } catch(e) {}
-    alert(`Se añadieron ${qty} unidad(es) de "${p.nombre}" al carrito.`);
   });
 });
 

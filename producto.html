@@ -11,9 +11,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
     <link rel="stylesheet" href="css/producto.css" />
-
 </head>
-<body>
+
+<body class="producto">
     <!-- Header reciclado -->
     <header>
         <nav class="navbar navbar-expand-sm navbar-light custom-navbar mb-3 fixed-top">
@@ -27,7 +27,7 @@
                         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-
+                
                 <div class="navbar navbar-collapse collapse d-sm-inline-flex justify-content-end me-2">
                     <ul class="navbar-nav">
                         <li class="nav-item">
@@ -55,8 +55,16 @@
         </nav>
     </header>
 
-    <!-- Contenido del producto, extraido del catalogo products.js -->
+    <!-- barra de navegacion de categorias -->
     <main class="container mt-5 pt-5 pb-5">
+        <nav aria-label="Migas de pan" class="mb-2">
+            <ol class="breadcrumb m-0">
+            <li class="breadcrumb-item"><a href="index.html">Inicio</a></li>
+            <li class="breadcrumb-item"><a href="productos.html">Catálogo</a></li>
+            <li class="breadcrumb-item active" id="crumb-current" aria-current="page">Producto</li>
+            </ol>
+        </nav>
+    <!-- cargar contenido del producto -->
         <article id="product" class="row">
             <div class="col-12"><h2>Cargando producto…</h2></div>
         </article>
@@ -137,9 +145,11 @@
     </footer>
 
     <!-- Scrips -->
+    <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="js/products.js"></script>
     <script src="js/myjs.js"></script>
-    <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
+    
+
 
 </body>
 </html>
