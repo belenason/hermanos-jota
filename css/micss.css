@@ -11,7 +11,7 @@
   Paleta de colores del manual de marca:
   - Siena Tostado (Primario): #A0522D
   - Verde Salvia (Secundario): #87A96B
-  - Alabastro Cálido (Fonod): #F5E6D3
+  - Alabastro Cálido (Fondo): #F5E6D3
   - Vara de Oro (Acento): #D4A437
   - Rosa Polvoriento (Acento): #C47A6D
   - Madera Oscura (Text): #3E2723
@@ -66,13 +66,13 @@ body {
 /* =================== */
 
 /* Letra de editorial para encabezados*/
-.letra-editorial {
+.font-encabezado {
   font-family: 'Playfair Display', Georgia, serif;
   font-weight: 700;
 }
 
 /* Letra del color primario de la marca */
-.letra-marron {
+.color-principal-texto {
   color: #A0522D !important;
 }
 
@@ -88,7 +88,7 @@ body {
   letter-spacing: 0.12em;
 }
 
-/* Diseño de las label de las secciones - label que van arriba de los titulos */
+/* Diseño de las label de las secciones, label que van arriba de los titulos */
 .section-label {
   font-size: 0.9rem;
   font-weight: 600;
@@ -101,7 +101,7 @@ body {
 
 
 /* =================== */
-/* 3. BUTTONS */
+/* 3. BOTONES */
 /* =================== */
 
 
@@ -462,7 +462,7 @@ body {
 }
 
 /* Product title styling */
-.product-title {
+.product-dest-title {
   font-family: 'Playfair Display', serif;
   font-size: 1.2rem;
   font-weight: 600;

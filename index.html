@@ -1,22 +1,28 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
+    <!-- METADATOS -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hermanos Jota</title>
+    
+    <!-- HOJAS DE ESTILO -->
     <link rel="stylesheet" href="css/micss.css" />
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" href="css/site.css?v=2fUxDfFOHow1_oahM9gzJ5BNVn4Vwfp4hgXbk62OCxE" />
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 </head>
+
 <body class="inicio">
+    <!-- ENCABEZADO Y MENÚ DE NAVEGACIÓN -->
     <header>
         <nav class="navbar navbar-expand-sm navbar-light custom-navbar mb-3 fixed-top">
             <div class="container-fluid">
                 <a class="navbar-brand d-flex align-items-center me-auto ms-4" href="index.html">
                     <img class="rounded-circle me-3" src="img/logo.svg" alt="logo Hermanos Jota" width="45" height="45" style="min-width: 45px;">
-                    <h1 class="fs-2 letra-marron letra-editorial titulo-navbar m-0">Hermanos Jota</h1>
+                    <h1 class="fs-2 color-principal-texto font-encabezado titulo-navbar m-0">Hermanos Jota</h1>
                 </a>
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
@@ -27,13 +33,13 @@
                 <div class="navbar navbar-collapse collapse d-sm-inline-flex justify-content-end me-2">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link fs-5 px-3 py-2 fw-semibold letra-marron" href="productos.html">Catálogo</a>
+                            <a class="nav-link fs-5 px-3 py-2 fw-semibold color-principal-texto" href="productos.html">Catálogo</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link fs-5 px-3 py-2 fw-semibold letra-marron" href="contacto.html">Contacto</a>
+                            <a class="nav-link fs-5 px-3 py-2 fw-semibold color-principal-texto" href="contacto.html">Contacto</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link fs-5 px-3 py-2 fw-semibold letra-marron" 
+                            <a class="nav-link fs-5 px-3 py-2 fw-semibold color-principal-texto" 
                             href="/Carrito" aria-label="Carrito de compras">
                                 <span class="position-relative d-inline-block">
                                     <i class="bi bi-cart3 fs-4"></i>
@@ -41,18 +47,19 @@
                                 </span>
                             </a>
                         </li>
-
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
 
+    <!-- CONTENIDO PRINCIPAL -->
     <main>
-        <!-- Hero Carousel Section -->
+        <!-- SECCIÓN HERO CON CARRUSEL -->
         <section class="hero-carousel-section">
             <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
                 <div class="carousel-inner">
+                    <!-- PRIMERA DIAPOSITIVA -->
                     <div class="carousel-item active">
                         <div class="hero-slide">
                             <img src="img/fondohero.jpg" class="hero-slide-image" alt="Nueva Colección">
@@ -65,6 +72,8 @@
                             </div>
                         </div>
                     </div>
+                    
+                    <!-- SEGUNDA DIAPOSITIVA -->
                     <div class="carousel-item">
                         <div class="hero-slide">
                             <img src="img/ImagenHero1.png" class="hero-slide-image" alt="Artesanía Sustentable">
@@ -77,6 +86,8 @@
                             </div>
                         </div>
                     </div>
+                    
+                    <!-- TERCERA DIAPOSITIVA -->
                     <div class="carousel-item">
                         <div class="hero-slide">
                             <img src="img/ImagenHero2.png" class="hero-slide-image" alt="Showroom Buenos Aires">
@@ -91,7 +102,7 @@
                     </div>
                 </div>
                 
-                <!-- Elegant carousel indicators -->
+                <!-- INDICADORES DEL CARRUSEL -->
                 <div class="carousel-indicators carousel-indicators-custom">
                     <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active" aria-current="true"></button>
                     <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1"></button>
@@ -100,50 +111,42 @@
             </div>
         </section>
 
-    <!-- About Section -->
-    <section class="about-section py-5" id="about">
-      <div class="container">
-        <div class="row align-items-center g-5">
-          <!-- Media -->
-          <div class="col-lg-6">
-            <div class="about-media">
-              <video
-                src="img/video_historia.mp4"
-                autoplay
-                loop
-                muted
-                playsinline
-                class="about-video"
-              >
-                Tu navegador no soporta la etiqueta de video.
-              </video>
+        <!-- SECCIÓN "SOBRE NOSOTROS" -->
+        <section class="about-section py-5" id="about">
+            <div class="container">
+                <div class="row align-items-center g-5">
+                    <!-- MEDIA (VIDEO) -->
+                    <div class="col-lg-6">
+                        <div class="about-media">
+                            <video src="img/video_historia.mp4" autoplay loop muted playsinline class="about-video">
+                                Tu navegador no soporta la etiqueta de video.
+                            </video>
+                        </div>
+                    </div>
+
+                    <!-- CONTENIDO -->
+                    <div class="col-lg-6">
+                        <div class="about-content">
+                            <span class="section-label">Nuestra Historia</span>
+                            <h2 class="about-title">Diseño con historia, muebles con alma</h2>
+                            <p class="about-text">
+                                Hermanos Jota es el redescubrimiento de un arte olvidado: crear muebles que no solo sirven una función, sino que alimentan el alma. Existimos en la intersección entre herencia e innovación, donde la calidez del optimismo de los años 60 se encuentra con la conciencia de la sustentabilidad del 2025.
+                            </p>
+                            <p class="about-text">
+                                Cada pieza cuenta una historia de artesanía que honra el pasado mientras abraza el futuro. No solo comprás muebles; invertís en un legado que envejece con gracia, desarrollando carácter mientras mantiene su belleza esencial.
+                            </p>
+                            <a href="#contacto" class="btn-secondary-custom">Conoce Más</a>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
+        </section>
 
-          <!-- Content -->
-          <div class="col-lg-6">
-            <div class="about-content">
-              <span class="section-label">Nuestra Historia</span>
-              <h2 class="about-title">Diseño con historia, muebles con alma</h2>
-              <p class="about-text">
-                Hermanos Jota es el redescubrimiento de un arte olvidado: crear muebles que no solo sirven una función, sino que alimentan el alma. Existimos en la intersección entre herencia e innovación, donde la calidez del optimismo de los años 60 se encuentra con la conciencia de la sustentabilidad del 2025.
-              </p>
-              <p class="about-text">
-                Cada pieza cuenta una historia de artesanía que honra el pasado mientras abraza el futuro. No solo comprás muebles; invertís en un legado que envejece con gracia, desarrollando carácter mientras mantiene su belleza esencial.
-              </p>
-              <a href="#contacto" class="btn-secondary-custom">Conoce Más</a>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-        <!-- New Split Section - Sustainability -->
+        <!-- SECCIÓN DIVIDIDA - SUSTENTABILIDAD -->
         <section class="split-section">
             <div class="container-fluid">
                 <div class="row g-0">
-                    <!-- Content Side -->
+                    <!-- LADO DEL CONTENIDO -->
                     <div class="col-lg-6">
                         <div class="split-content">
                             <span class="section-label-accent">Sustentabilidad</span>
@@ -168,7 +171,7 @@
                         </div>
                     </div>
                     
-                    <!-- Image Side -->
+                    <!-- LADO DE LA IMAGEN -->
                     <div class="col-lg-6">
                         <div class="split-image-container">
                             <img src="img/mesa_de_noche_aconcagua.png" alt="Materiales Sustentables" class="split-image">
@@ -181,44 +184,46 @@
             </div>
         </section>
 
-        <!-- Productos Destacados -->
-<section id="productos" class="products-section">
-  <div class="container">
-    <h2 class="section-title text-center mb-5">Productos Destacados</h2>
+        <!-- SECCIÓN DE PRODUCTOS DESTACADOS -->
+        <section id="productos" class="products-section">
+            <div class="container">
+                <h2 class="section-title text-center mb-5">Productos Destacados</h2>
 
-    <!-- Contenedor Desktop -->
-    <div id="products-container"  class="row g-4 d-none d-md-flex"></div>
+                <!-- CONTENEDOR PARA ESCRITORIO -->
+                <div id="products-container" class="row g-4 d-none d-md-flex"></div>
 
-    <!-- Contenedor Mobile Carousel -->
-    <div id="productCarousel" class="carousel slide d-md-none" data-bs-ride="carousel">
-      <div class="carousel-inner" id="products-carousel-container"></div>
+                <!-- CONTENEDOR PARA MÓVIL (CARRUSEL) -->
+                <div id="productCarousel" class="carousel slide d-md-none" data-bs-ride="carousel">
+                    <div class="carousel-inner" id="products-carousel-container"></div>
 
-      <!-- Controles -->
-      <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Anterior</span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Siguiente</span>
-      </button>
+                    <!-- CONTROLES DEL CARRUSEL -->
+                    <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Anterior</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Siguiente</span>
+                    </button>
 
-      <!-- Indicadores -->
-      <div class="carousel-indicators" id="products-carousel-indicators"></div>
-    </div>
+                    <!-- INDICADORES DEL CARRUSEL -->
+                    <div class="carousel-indicators" id="products-carousel-indicators"></div>
+                </div>
 
-    <!-- Botón ver más -->
-    <div class="text-center mt-5">
-      <a href="./productos.html" class="btn-secondary-custom">Ver Todos los Productos</a>
-    </div>
-  </div>
-</section>
+                <!-- BOTÓN "VER MÁS" -->
+                <div class="text-center mt-5">
+                    <a href="./productos.html" class="btn-secondary-custom">Ver Todos los Productos</a>
+                </div>
+            </div>
+        </section>
     </main>
 
+    <!-- FOOTER -->
     <footer class="modern-footer" id="contacto">
         <div class="container">
             <section class="footer-content">
                 <div class="row g-5">
+                    <!-- MARCA Y DESCRIPCIÓN -->
                     <section class="col-lg-4 footer-brand px-3">
                         <h3 class="footer-title">Hermanos Jota</h3>
                         <p class="footer-description">
@@ -237,6 +242,7 @@
                         </nav>
                     </section>
                     
+                    <!-- INFORMACIÓN DE CONTACTO -->
                     <address class="col-lg-4 footer-info">
                         <h4 class="footer-heading">Showroom & Taller</h4>
                         <div class="contact-item">
@@ -257,6 +263,7 @@
                         </div>
                     </address>
                     
+                    <!-- DATOS DE CONTACTO -->
                     <section class="col-lg-4 footer-contact">
                         <h4 class="footer-heading">Contacto</h4>
                         <div class="contact-item">
@@ -275,6 +282,7 @@
                 </div>
             </section>
             
+            <!-- SECCIÓN INFERIOR DEL FOOTER -->
             <section class="footer-bottom">
                 <div class="row align-items-center">
                     <div class="col-md-8">
@@ -288,6 +296,7 @@
         </div>
     </footer>
 
+    <!-- SCRIPTS -->
     <script src="js/myjs.js"></script>
     <script src="bootstrap/js/bootstrap.min.js"></script>
 </body>

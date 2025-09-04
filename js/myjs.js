@@ -373,7 +373,7 @@ function initProductos() {
                         <img src="${prod.img}" alt="${prod.nombre}" class="img-fluid">
                     </div>
                     <div class="product-info">
-                        <h3 class="product-title">${prod.nombre}</h3>
+                        <h3 class="product-dest-title">${prod.nombre}</h3>
                         <p class="product-price">${prod.precio}</p>
                     </div>
                 </article>
@@ -388,7 +388,7 @@ function initProductos() {
                         <img src="${prod.img}" alt="${prod.nombre}" class="img-fluid">
                     </div>
                     <div class="product-info">
-                        <h3 class="product-title">${prod.nombre}</h3>
+                        <h3 class="product-dest-title">${prod.nombre}</h3>
                         <p class="product-price">${prod.precio}</p>
                     </div>
                 </article>

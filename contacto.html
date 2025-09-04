@@ -1,22 +1,28 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
+    <!-- METADATOS -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hermanos Jota</title>
+    
+    <!-- HOJAS DE ESTILO -->
     <link rel="stylesheet" href="css/micss.css" />
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" href="css/site.css?v=2fUxDfFOHow1_oahM9gzJ5BNVn4Vwfp4hgXbk62OCxE" />
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 </head>
+
 <body class="inicio">
+    <!-- ENCABEZADO Y MENÚ DE NAVEGACIÓN -->
     <header>
         <nav class="navbar navbar-expand-sm navbar-light custom-navbar mb-3 fixed-top">
             <div class="container-fluid">
                 <a class="navbar-brand d-flex align-items-center me-auto ms-4" href="index.html">
                     <img class="rounded-circle me-3" src="img/logo.svg" alt="logo" width="45" height="45">
-                    <h1 class="fs-2 letra-marron letra-editorial titulo-navbar m-0">Hermanos Jota</h1>
+                    <h1 class="fs-2 color-principal-texto font-encabezado titulo-navbar m-0">Hermanos Jota</h1>
                 </a>
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
@@ -27,13 +33,13 @@
                 <div class="navbar navbar-collapse collapse d-sm-inline-flex justify-content-end me-2">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link fs-5 px-3 py-2 fw-semibold letra-marron" href="productos.html">Catálogo</a>
+                            <a class="nav-link fs-5 px-3 py-2 fw-semibold color-principal-texto" href="productos.html">Catálogo</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link fs-5 px-3 py-2 fw-semibold letra-marron" href="">Contacto</a>
+                            <a class="nav-link fs-5 px-3 py-2 fw-semibold color-principal-texto" href="">Contacto</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link fs-5 px-3 py-2 fw-semibold letra-marron" 
+                            <a class="nav-link fs-5 px-3 py-2 fw-semibold color-principal-texto" 
                             href="/Carrito" aria-label="Carrito de compras">
                                 <span class="position-relative d-inline-block">
                                     <i class="bi bi-cart3 fs-4"></i>
@@ -47,7 +53,9 @@
         </nav>
     </header>
 
+    <!-- CONTENIDO PRINCIPAL -->
     <main>
+        <!-- SECCIÓN HERO DE CONTACTO -->
         <section class="contact-hero">
             <div class="contact-container">
                 <h2 class="hero-title">Conversemos</h2>
@@ -58,9 +66,12 @@
             </div>
         </section>
 
+        <!-- SECCIÓN DEL FORMULARIO DE CONTACTO -->
         <section class="contact-container">
             <div class="contact-form-wrapper">
+                <!-- FORMULARIO DE CONTACTO -->
                 <form id="contact-form" class="needs-validation" novalidate>
+                    <!-- CAMPO NOMBRE -->
                     <div class="form-floating">
                         <input 
                             type="text" 
@@ -75,6 +86,7 @@
                         </div>
                     </div>
 
+                    <!-- CAMPO EMAIL -->
                     <div class="form-floating">
                         <input 
                             type="email" 
@@ -89,6 +101,7 @@
                         </div>
                     </div>
 
+                    <!-- CAMPO MENSAJE -->
                     <div class="form-floating">
                         <textarea 
                             class="form-control" 
@@ -102,6 +115,7 @@
                         </div>
                     </div>
 
+                    <!-- BOTÓN DE ENVÍO -->
                     <div class="d-grid">
                         <button type="submit" class="btn btn-primary">
                             <i class="bi bi-send me-2"></i>
@@ -110,7 +124,7 @@
                     </div>
                 </form>
 
-                <!-- Mensaje de éxito -->
+                <!-- MENSAJE DE ÉXITO (OCULTO INICIALMENTE) -->
                 <div id="success-message" class="success-message mt-4 d-none" role="alert">
                     <div class="alert-content">
                         <i class="bi bi-check-circle-fill"></i>
@@ -124,10 +138,12 @@
         </section>
     </main>
 
+    <!-- FOOTER -->
     <footer class="modern-footer" id="contacto">
         <div class="container">
             <section class="footer-content">
                 <div class="row g-5">
+                    <!-- MARCA Y DESCRIPCIÓN -->
                     <section class="col-lg-4 footer-brand px-3">
                         <h3 class="footer-title">Hermanos Jota</h3>
                         <p class="footer-description">
@@ -146,6 +162,7 @@
                         </nav>
                     </section>
                     
+                    <!-- INFORMACIÓN DE CONTACTO -->
                     <address class="col-lg-4 footer-info">
                         <h4 class="footer-heading">Showroom & Taller</h4>
                         <div class="contact-item">
@@ -166,6 +183,7 @@
                         </div>
                     </address>
                     
+                    <!-- DATOS DE CONTACTO -->
                     <section class="col-lg-4 footer-contact">
                         <h4 class="footer-heading">Contacto</h4>
                         <div class="contact-item">
@@ -184,6 +202,7 @@
                 </div>
             </section>
             
+            <!-- SECCIÓN INFERIOR DEL FOOTER -->
             <section class="footer-bottom">
                 <div class="row align-items-center">
                     <div class="col-md-8">
@@ -197,6 +216,7 @@
         </div>
     </footer>
 
+    <!-- SCRIPTS -->
     <script src="js/myjs.js"></script>
     <script src="bootstrap/js/bootstrap.min.js"></script>
 </body>
