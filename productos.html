@@ -1,159 +1,185 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hermanos Jota</title>
-    <link rel="stylesheet" href="css/micss.css" />
-    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="css/site.css?v=2fUxDfFOHow1_oahM9gzJ5BNVn4Vwfp4hgXbk62OCxE" />
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Hermanos Jota - Catálogo</title>
+    <link rel="stylesheet" href="style.css" />
 </head>
-<body class="inicio">
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-light custom-navbar mb-3 fixed-top">
-            <div class="container-fluid">
-                <a class="navbar-brand d-flex align-items-center me-auto ms-4" href="index.html">
-                    <img class="rounded-circle me-3" src="img/logo.svg" alt="logo" width="45" height="45">
-                    <h1 class="fs-2 letra-marron letra-editorial titulo-navbar m-0">Hermanos Jota</h1>
-                </a>
-
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
-                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="navbar navbar-collapse collapse d-sm-inline-flex justify-content-end me-2">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link fs-5 px-3 py-2 fw-semibold letra-marron" href="productos.html">Catálogo</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link fs-5 px-3 py-2 fw-semibold letra-marron" href="">Contacto</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link fs-5 px-3 py-2 fw-semibold letra-marron" 
-                            href="/Carrito" aria-label="Carrito de compras">
-                                <span class="position-relative d-inline-block">
-                                    <i class="bi bi-cart3 fs-4"></i>
-                                    <span class="badge rounded-pill elbadge">0<span>
-                                </span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
-    <main>
-         <!-- Hero -->
-        <section class="carousel" >
-            <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-                <!-- TEXTO QUE FLOTARÁ ENCIMA DE TODO -->
-                <div class="texto-superpuesto">
-                        <p class="display-4 mb-5">NUEVA COLECCIÓN</p>
-                        <a href="#coleccion" class="btn-hero">DESCUBRIR</a>
-                </div>
-                <!-- SLIDES -->
-                <div class="carousel-inner tamanioCarrousel">
-                    <div class="carousel-item active">
-                        <img src="img/fondohero.jpg" class="d-block w-100" alt="Fondo Con Muebles 1">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="img/ChatGPT Image 28 ago 2025, 10_56_11 a.m..png" class="d-block w-100" alt="Imagen mueble 1">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="img/ChatGPT Image 28 ago 2025, 11_03_47 a.m..png" class="d-block w-100" alt="Imagen mueble 2">
-                    </div>
-                </div>
-            <!-- CONTROLES -->
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
-            </div>
-        </section>
-
-    </main>
-    <footer class="modern-footer" id="contacto">
-        <div class="container">
-            <section class="footer-content">
-                <div class="row g-5">
-                    <section class="col-lg-4 footer-brand px-3">
-                        <h3 class="footer-title">Hermanos Jota</h3>
-                        <p class="footer-description">
-                            Cada pieza cuenta la historia de manos expertas y materiales nobles. Creamos muebles que no solo sirven una función, sino que alimentan el alma y perduran generaciones.
-                        </p>
-                        <nav class="footer-social">
-                            <a href="https://instagram.com/hermanosjota_ba" target="_blank" class="social-link">
-                                <i class="bi bi-instagram"></i>
-                            </a>
-                            <a href="https://wa.me/541145678900" target="_blank" class="social-link">
-                                <i class="bi bi-whatsapp"></i>
-                            </a>
-                            <a href="mailto:info@hermanosjota.com.ar" class="social-link">
-                                <i class="bi bi-envelope"></i>
-                            </a>
-                        </nav>
-                    </section>
-                    
-                    <address class="col-lg-4 footer-info">
-                        <h4 class="footer-heading">Showroom & Taller</h4>
-                        <div class="contact-item">
-                            <i class="bi bi-geo-alt"></i>
-                            <div class="px-2">
-                                <strong>Av. San Juan 2847</strong><br>
-                                C1232AAB — Barrio de San Cristóbal<br>
-                                Ciudad Autónoma de Buenos Aires, Argentina
-                            </div>
-                        </div>
-                        <div class="contact-item">
-                            <i class="bi bi-clock"></i>
-                            <div>
-                                <strong>Horarios</strong><br>
-                                Lun - Vie: 10:00 - 19:00<br>
-                                Sáb: 10:00 - 14:00
-                            </div>
-                        </div>
-                    </address>
-                    
-                    <section class="col-lg-4 footer-contact">
-                        <h4 class="footer-heading">Contacto</h4>
-                        <div class="contact-item">
-                            <i class="bi bi-phone"></i>
-                            <a href="tel:+541145678900">+54 11 4567-8900</a>
-                        </div>
-                        <div class="contact-item">
-                            <i class="bi bi-envelope"></i>
-                            <a href="mailto:info@hermanosjota.com.ar">info@hermanosjota.com.ar</a>
-                        </div>
-                        <div class="contact-item">
-                            <i class="bi bi-globe"></i>
-                            <a href="http://www.hermanosjota.com.ar">www.hermanosjota.com.ar</a>
-                        </div>
-                    </section>
-                </div>
-            </section>
+<body>
+    <header class="header">
+        <div class="container header-container">
+            <div class="logo-container"> <img src="imgCatalogo/logo.png" alt="Logo Hermanos Jota" class="logo" /></div>
             
-            <section class="footer-bottom">
-                <div class="row align-items-center">
-                    <div class="col-md-8">
-                        <p class="copyright">© 2025 Hermanos Jota. Todos los derechos reservados.</p>
-                    </div>
-                    <div class="col-md-4 text-md-end">
-                        <p class="credits">Diseñado con <i class="bi bi-heart-fill"></i> para curso ITBA</p>
-                    </div>
-                </div>
-            </section>
+            <h1 class="titulo_principal">Catálogo de Productos</h1>
         </div>
-    </footer>
+    </header>
 
-    <script src="js/myjs.js"></script>
-    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <main class="pagina_Princ">
+        <h2>Nuestros Productos</h2>
+        <p class="parrafo">
+            Descubre nuestra exclusiva selección de muebles, diseñados para transformar tu espacio.
+        </p>
+
+        <div class="barraDeBusqueda">
+            <input type="text" placeholder="Buscar muebles..." aria-label="Buscar muebles" />
+            <button>Buscar</button>
+        </div>
+
+        <section class="grilla">
+            <!-- Silla-->
+            <article class="estiloProducto">
+                <img src="img/Silla de Trabajo Belgrano.png" alt="Silla de Trabajo Belgrano" />
+                <div class="estiloProducto-content">
+                    <h3>Silla de Trabajo Belgrano</h3>
+                    <p>
+                        Silla ergonómica regulable en altura con respaldo de malla transpirable y asiento tapizado en tejido reciclado. Diseñada para largas jornadas de trabajo con máximo confort y apoyo lumbar, ideal para oficinas en casa y espacios de coworking.
+                    </p>
+                    <span class="price">$950.00</span>
+                    <button>Agregar al Carrito</button>
+                </div>
+            </article>
+            <!-- Silla-->
+            <article class="estiloProducto">
+                <img src="img/Sillas Córdoba.png" alt="Sillas Córdoba" />
+                <div class="estiloProducto-content">
+                    <h3>Sillas Córdoba</h3>
+                    <p>
+                        Set de cuatro sillas apilables en contrachapado moldeado de nogal y estructura tubular pintada en Sage Green. Su diseño ergonómico y materiales de calidad garantizan comodidad y durabilidad en el uso diario, perfectas para comedores contemporáneos.
+                    </p>
+                    <span class="price">$450.00</span>
+                    <button>Agregar al Carrito</button>
+                </div>
+            </article>
+            <!--Sillon-->
+            <article class="estiloProducto">
+                <img src="img/Sillón Copacabana.png" alt="Sillón Copacabana" />
+                <div class="estiloProducto-content">
+                    <h3>Sillón Copacabana</h3>
+                    <p>
+                        Sillón lounge en cuero cognac con base giratoria en acero Burnt Sienna. Inspirado en la estética brasilera moderna de los 60, combina comodidad excepcional con un diseño icónico que trasciende tendencias y épocas.
+                    </p>
+                    <span class="price">$1,200.00</span>
+                    <button>Agregar al Carrito</button>
+                </div>
+            </article>
+            <!--Sillon-->
+            <article class="estiloProducto">
+                <img src="img/Butaca Mendoza.png" alt="Butaca Mendoza" />
+                <div class="estiloProducto-content">
+                    <h3>Butaca Mendoza</h3>
+                    <p>
+                        Butaca tapizada en bouclé Dusty Rose con base de madera de guatambú. El respaldo curvo abraza el cuerpo y ofrece máximo confort, mientras que su diseño orgánico aporta calidez y sofisticación a cualquier ambiente contemporáneo.
+                    </p>
+                    <span class="price">$450.00</span>
+                    <button>Agregar al Carrito</button>
+                </div>
+            </article>
+
+
+            <article class="estiloProducto">
+                <img src="img/Sofá Patagonia.png"alt="Sofa Patagonia" />
+                <div class="estiloProducto-content">
+                    <h3>Sofa Patagonica</h3>
+                    <p>
+                     Sofá de tres cuerpos tapizado en lino Warm Alabaster con patas cónicas de madera. Los cojines combinan espuma de alta resiliencia con plumón reciclado, ofreciendo comodidad duradera y sostenible para el hogar moderno.   
+                    </p>
+                    <span class="price">$450.00</span>
+                    <button>Agregar al Carrito</button>
+                </div>
+            </article>
+
+            <article class="estiloProducto">
+                <img src="img/CamaNeuquen.png" alt="Cama Neuquén" />
+                <div class="estiloProducto-content">
+                    <h3>Cama Neuquén</h3>
+                    <p>
+                    Cama plataforma con cabecero flotante tapizado en lino natural y estructura de madera maciza. Su diseño minimalista y sofisticado crea un ambiente de serenidad y elegancia, perfecto para dormitorios contemporáneos que buscan paz y simplicidad.
+                    </p>
+                    <span class="price">$450.00</span>
+                    <button>Agregar al Carrito</button>
+                </div>
+            </article>
+
+            <article class="estiloProducto">
+                <img src="img/Aparador Uspallata.png" alt="Aparador Uspallata" />
+                <div class="estiloProducto-content">
+                    <h3>Aparador Uspallata</h3>
+                    <p>
+                     Aparador de seis puertas fabricado en nogal sostenible con tiradores metálicos en acabado latón. Su silueta minimalista realza el veteado natural de la madera, creando una pieza que combina funcionalidad y elegancia atemporal para espacios contemporáneos.
+                    </p>
+                    <span class="price">$450.00</span>
+                    <button>Agregar al Carrito</button>
+                </div>
+            </article>
+            
+            <article class="estiloProducto">
+                <img src="img/Biblioteca Recoleta.png" alt="Mesa de centro rústica" />
+                <div class="estiloProducto-content">
+                    <h3>Biblioteca Recoleta</h3>
+                    <p>
+                       Sistema modular de estantes abierto que combina estructura de acero Sage Green y repisas en roble claro. Perfecta para colecciones y objetos de diseño, su diseño versátil se adapta a cualquier espacio contemporáneo con elegancia funcional.
+                    </p>
+                    <span class="price">$450.00</span>
+                    <button>Agregar al Carrito</button>
+                </div>
+            </article>
+            
+            <article class="estiloProducto">
+                <img src="img/Mesa de Centro Araucaria.png" alt="Mesa de Centro Araucaria" />
+                <div class="estiloProducto-content">
+                    <h3>Mesa de Centro Araucaria</h3>
+                    <p>
+                    Mesa de centro con sobre circular de mármol Patagonia y base de tres patas en madera de nogal. Su diseño minimalista se convierte en el punto focal perfecto para cualquier sala de estar contemporánea, combinando la frialdad del mármol con la calidez de la madera.
+                    </p>
+                    <span class="price">$450.00</span>
+                    <button>Agregar al Carrito</button>
+                </div>
+            </article>
+            
+            <article class="estiloProducto">
+                <img src="img/mesa_de_noche_aconcagua.png" alt="Mesa de Noche Aconcagua" />
+                <div class="estiloProducto-content">
+                    <h3>Mesa de Noche Aconcagua</h3>
+                    <p>
+                    Mesa de noche con cajón oculto y repisa inferior en roble certificado FSC®. Su diseño limpio y funcional permite convivir con diferentes estilos de dormitorio, ofreciendo almacenamiento discreto y elegante para objetos personales.
+                    </p>
+                    <span class="price">$450.00</span>
+                    <button>Agregar al Carrito</button>
+                </div>
+            </article>
+            
+            <article class="estiloProducto">
+                <img src="img/mesa_comedor_pampa.png" alt="Mesa Comedor Pampa" />
+                <div class="estiloProducto-content">
+                    <h3>Mesa Comedor Pampa</h3>
+                    <p>
+                       Mesa extensible de roble macizo con tablero biselado y sistema de apertura suave. Su diseño robusto y elegante se adapta perfectamente a reuniones íntimas o grandes celebraciones familiares, extendiéndose de 6 a 10 comensales.
+                    </p>
+                    <span class="price">$450.00</span>
+                    <button>Agregar al Carrito</button>
+                </div>
+            </article>
+            <article class="estiloProducto">
+                <img src="img/escritorio_costa.png" alt="Escritorio Costa" />
+                <div class="estiloProducto-content">
+                    <h3>Escritorio Costa</h3>
+                    <p>
+                      Escritorio compacto con cajón organizado y tapa pasacables integrada en bambú laminado. Ideal para espacios de trabajo en casa, combina funcionalidad moderna con estética minimalista y sostenible, perfecto para el trabajo remoto.
+                    </p>
+                    <span class="price">$450.00</span>
+                    <button>Agregar al Carrito</button>
+                </div>
+            </article>
+        </section>
+    </main>
+
+    <footer class="pieDePagina">
+        <p>©2025 Hermanos Jota Furniture
+
+Contacto: brand@hermanosjota.com
+
+Redescubriendo el arte de vivir desde 2025</p>
+    </footer>
 </body>
 </html>
