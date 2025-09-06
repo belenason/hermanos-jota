@@ -564,9 +564,13 @@ function initCarouselAccessibility() {
  * - Called when DOM is ready or immediately if already loaded
  */
 function initApp() {
+
     console.log('Inicializando aplicación');
     console.log('Document ready state:', document.readyState);
     
+    //Inicializar contador de carrito
+    renderCartBadge();
+
     // Intentar inicializar productos
     initProductos();
     
@@ -743,17 +747,29 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (isNaN(qty) || qty < 1) qty = 1;
     if (qty > 99) qty = 99;
 
-    const badge = document.querySelector(".elbadge");
-    if (badge) {
-      const n = parseInt(badge.textContent, 10) || 0;
-      badge.textContent = n + qty;
-    }
     try {
       const cart = JSON.parse(localStorage.getItem("cart") || "[]");
       const item = cart.find(i => i.id === p.id);
       if (item) item.qty += qty; else cart.push({ id: p.id, qty });
       localStorage.setItem("cart", JSON.stringify(cart));
     } catch(e) {}
+
+    renderCartBadge(); // <- refresca el contador global leyendo de localStorage
     alert(`Se añadieron ${qty} unidad(es) de "${p.nombre}" al carrito.`);
   });
 });
+
+    // CONTADOR GLOBAL
+    function getCart() {
+      try { return JSON.parse(localStorage.getItem("cart") || "[]"); }
+      catch { return []; }
+    }
+
+    function getCartCount() {
+      return getCart().reduce((sum, item) => sum + (parseInt(item.qty, 10) || 0), 0);
+    }
+
+    function renderCartBadge() {
+      const badge = document.querySelector(".elbadge");
+      if (badge) badge.textContent = getCartCount();
+    }
