@@ -444,7 +444,7 @@ function initProductos() {
 
     grid.innerHTML = cards;
 
-    // 2) Delegación: click en cualquier botón "Agregar al Carrito"
+    // 2) click en cualquier botón "Agregar al Carrito"
     grid.addEventListener("click", (e) => {
       const btn = e.target.closest(".btn-add-to-cart");
       if (!btn) return;
@@ -458,10 +458,72 @@ function initProductos() {
         const item = cart.find(i => i.id === id);
         if (item) item.qty += 1; else cart.push({ id, qty: 1 });
         localStorage.setItem("cart", JSON.stringify(cart));
-      } catch { /* nada */ }
+      } catch { }
 
       renderCartBadge(); // refresca contador global
     });
+  }
+
+  function formatARS(n){
+  return Number(n || 0).toLocaleString("es-AR",{style:"currency",currency:"ARS",maximumFractionDigits:0});
+}
+
+  function renderCatalogGrid(products){
+    const grid = document.querySelector(".grilla");
+    if (!grid) return;
+
+    grid.innerHTML = products.map(p => {
+      const img = (p.imagenes && p.imagenes[0]) ? p.imagenes[0] : "img/producto-ejemplo.jpg";
+      return `
+        <article class="estiloProducto">
+          <a href="producto.html?id=${encodeURIComponent(p.id)}" style="text-decoration:none;color:inherit;">
+            <img src="${img}" alt="${p.nombre}" />
+            <div class="estiloProducto-content">
+              <h3>${p.nombre}</h3>
+              <p>${p.descripcion ? p.descripcion : ""}</p>
+              <span class="price">${formatARS(p.precio)}</span>
+            </div>
+          </a>
+          <button class="btn-add-to-cart" data-id="${p.id}">Agregar al Carrito</button>
+        </article>
+      `;
+    }).join("");
+  }
+
+  function initCatalogPage(){
+    // solo corre en productos.html
+    const grid = document.querySelector(".grilla");
+    const input = document.getElementById("search-input");
+    const button = input ? input.parentElement.querySelector("button") : null;
+    if (!grid) return;
+
+    // 1. carga inicial de los productos
+    renderCatalogGrid(PRODUCTS);
+
+    // 2. agregar al carrito
+    grid.addEventListener("click", (e) => {
+      const btn = e.target.closest(".btn-add-to-cart");
+      if (!btn) return;
+      const id = btn.getAttribute("data-id");
+      const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+      const item = cart.find(i => i.id === id);
+      if (item) item.qty += 1; else cart.push({ id, qty: 1 });
+      localStorage.setItem("cart", JSON.stringify(cart));
+      renderCartBadge(); // refresca contador global
+    });
+
+    // 3. barra busqueda: filtra por nombre/descripcion
+    const doSearch = () => {
+      const q = (input?.value || "").trim().toLowerCase();
+      const filtered = !q ? PRODUCTS : PRODUCTS.filter(p =>
+        (p.nombre && p.nombre.toLowerCase().includes(q)) ||
+        (p.descripcion && p.descripcion.toLowerCase().includes(q))
+      );
+      renderCatalogGrid(filtered);
+    };
+
+    input?.addEventListener("input", doSearch);
+    button?.addEventListener("click", (ev) => { ev.preventDefault(); doSearch(); });
   }
 
 // ==========================================
@@ -612,7 +674,8 @@ function initCarouselAccessibility() {
  * - Called when DOM is ready or immediately if already loaded
  */
 function initApp() {
-
+    if (window.appInitialized) return;   
+    window.appInitialized = true;
     console.log('Inicializando aplicación');
     console.log('Document ready state:', document.readyState);
     
