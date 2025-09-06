@@ -416,6 +416,116 @@ function initProductos() {
     console.log('✅ Productos cargados correctamente:', productos.length, 'productos');
 }
 
+  function formatARS(n) {
+    return Number(n || 0).toLocaleString("es-AR", { style: "currency", currency: "ARS", maximumFractionDigits: 0 });
+  }
+
+  function initCatalogPage() {
+    const grid = document.getElementById("catalog-grid");
+    if (!grid) return; // solo corre en productos.html
+
+    // 1) Render dinámico de todas las cards
+    const cards = PRODUCTS.map(p => {
+      const img = (p.imagenes && p.imagenes[0]) ? p.imagenes[0] : "img/producto-ejemplo.jpg";
+      return `
+        <article class="estiloProducto">
+          <a href="producto.html?id=${encodeURIComponent(p.id)}" style="text-decoration:none; color:inherit;">
+            <img src="${img}" alt="${p.nombre}" />
+            <div class="estiloProducto-content">
+              <h3>${p.nombre}</h3>
+              <p>${p.descripcion ? p.descripcion : ""}</p>
+              <span class="price">${formatARS(p.precio)}</span>
+            </div>
+          </a>
+          <button class="btn-add-to-cart" data-id="${p.id}">Agregar al Carrito</button>
+        </article>
+      `;
+    }).join("");
+
+    grid.innerHTML = cards;
+
+    // 2) click en cualquier botón "Agregar al Carrito"
+    grid.addEventListener("click", (e) => {
+      const btn = e.target.closest(".btn-add-to-cart");
+      if (!btn) return;
+
+      const id = btn.getAttribute("data-id");
+      const prod = PRODUCTS.find(x => x.id === id);
+      if (!prod) return;
+
+      try {
+        const cart = getCart();
+        const item = cart.find(i => i.id === id);
+        if (item) item.qty += 1; else cart.push({ id, qty: 1 });
+        localStorage.setItem("cart", JSON.stringify(cart));
+      } catch { }
+
+      renderCartBadge(); // refresca contador global
+    });
+  }
+
+  function formatARS(n){
+  return Number(n || 0).toLocaleString("es-AR",{style:"currency",currency:"ARS",maximumFractionDigits:0});
+}
+
+  function renderCatalogGrid(products){
+    const grid = document.querySelector(".grilla");
+    if (!grid) return;
+
+    grid.innerHTML = products.map(p => {
+      const img = (p.imagenes && p.imagenes[0]) ? p.imagenes[0] : "img/producto-ejemplo.jpg";
+      return `
+        <article class="estiloProducto">
+          <a href="producto.html?id=${encodeURIComponent(p.id)}" style="text-decoration:none;color:inherit;">
+            <img src="${img}" alt="${p.nombre}" />
+            <div class="estiloProducto-content">
+              <h3>${p.nombre}</h3>
+              <p>${p.descripcion ? p.descripcion : ""}</p>
+              <span class="price">${formatARS(p.precio)}</span>
+            </div>
+          </a>
+          <button class="btn-add-to-cart" data-id="${p.id}">Agregar al Carrito</button>
+        </article>
+      `;
+    }).join("");
+  }
+
+  function initCatalogPage(){
+    // solo corre en productos.html
+    const grid = document.querySelector(".grilla");
+    const input = document.getElementById("search-input");
+    const button = input ? input.parentElement.querySelector("button") : null;
+    if (!grid) return;
+
+    // 1. carga inicial de los productos
+    renderCatalogGrid(PRODUCTS);
+
+    // 2. agregar al carrito
+    grid.addEventListener("click", (e) => {
+      const btn = e.target.closest(".btn-add-to-cart");
+      if (!btn) return;
+      const id = btn.getAttribute("data-id");
+      const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+      const item = cart.find(i => i.id === id);
+      if (item) item.qty += 1; else cart.push({ id, qty: 1 });
+      localStorage.setItem("cart", JSON.stringify(cart));
+      renderCartBadge(); // refresca contador global
+    });
+
+    // 3. barra busqueda: filtra por nombre/descripcion
+    const doSearch = () => {
+      const q = (input?.value || "").trim().toLowerCase();
+      const filtered = !q ? PRODUCTS : PRODUCTS.filter(p =>
+        (p.nombre && p.nombre.toLowerCase().includes(q)) ||
+        (p.descripcion && p.descripcion.toLowerCase().includes(q))
+      );
+      renderCatalogGrid(filtered);
+    };
+
+    input?.addEventListener("input", doSearch);
+    button?.addEventListener("click", (ev) => { ev.preventDefault(); doSearch(); });
+  }
+
 // ==========================================
 // 5. CONTACT FORM FUNCTIONALITY
 // ==========================================
@@ -564,9 +674,14 @@ function initCarouselAccessibility() {
  * - Called when DOM is ready or immediately if already loaded
  */
 function initApp() {
+    if (window.appInitialized) return;   
+    window.appInitialized = true;
     console.log('Inicializando aplicación');
     console.log('Document ready state:', document.readyState);
     
+    //Inicializar contador de carrito
+    renderCartBadge();
+
     // Intentar inicializar productos
     initProductos();
     
@@ -575,6 +690,9 @@ function initApp() {
     
     // Intentar inicializar accesibilidad del carrusel
     initCarouselAccessibility();
+
+    // Intentar inicializar catalogo productos
+    initCatalogPage();
     
     console.log('Inicialización completada');
 }
@@ -743,17 +861,29 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (isNaN(qty) || qty < 1) qty = 1;
     if (qty > 99) qty = 99;
 
-    const badge = document.querySelector(".elbadge");
-    if (badge) {
-      const n = parseInt(badge.textContent, 10) || 0;
-      badge.textContent = n + qty;
-    }
     try {
       const cart = JSON.parse(localStorage.getItem("cart") || "[]");
       const item = cart.find(i => i.id === p.id);
       if (item) item.qty += qty; else cart.push({ id: p.id, qty });
       localStorage.setItem("cart", JSON.stringify(cart));
     } catch(e) {}
+
+    renderCartBadge(); // <- refresca el contador global leyendo de localStorage
     alert(`Se añadieron ${qty} unidad(es) de "${p.nombre}" al carrito.`);
   });
 });
+
+    // CONTADOR GLOBAL
+    function getCart() {
+      try { return JSON.parse(localStorage.getItem("cart") || "[]"); }
+      catch { return []; }
+    }
+
+    function getCartCount() {
+      return getCart().reduce((sum, item) => sum + (parseInt(item.qty, 10) || 0), 0);
+    }
+
+    function renderCartBadge() {
+      const badge = document.querySelector(".elbadge");
+      if (badge) badge.textContent = getCartCount();
+    }
