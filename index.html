@@ -17,6 +17,7 @@
 
 <body class="inicio">
     <!-- ENCABEZADO Y MENÚ DE NAVEGACIÓN -->
+    <a href="#contenido-principal" class="skip-link">Saltar a contenido principal</a>
     <header>
         <nav class="navbar navbar-expand-sm navbar-light custom-navbar mb-3 fixed-top">
             <div class="container-fluid">
@@ -40,7 +41,7 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link fs-5 px-3 py-2 fw-semibold color-principal-texto" 
-                            href="/Carrito" aria-label="Carrito de compras">
+                            href="" aria-label="Carrito de compras">
                                 <span class="position-relative d-inline-block">
                                     <i class="bi bi-cart3 fs-4"></i>
                                     <span class="badge rounded-pill elbadge">0</span>
@@ -54,59 +55,112 @@
     </header>
 
     <!-- CONTENIDO PRINCIPAL -->
-    <main>
+    <main id="contenido-principal" tabindex="-1">
         <!-- SECCIÓN HERO CON CARRUSEL -->
-        <section class="hero-carousel-section">
-            <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
+        <section class="hero-carousel-section" aria-label="Presentación principal">
+            <div id="heroCarousel" 
+                 class="carousel slide" 
+                 data-bs-ride="carousel" 
+                 data-bs-interval="5000"
+                 aria-label="Carrusel de imágenes principales"
+                 role="hero-banner">
+                
                 <div class="carousel-inner">
                     <!-- PRIMERA DIAPOSITIVA -->
-                    <div class="carousel-item active">
+                    <div class="carousel-item active" role="group" aria-roledescription="diapositiva" aria-label="1 de 3">
                         <div class="hero-slide">
-                            <img src="img/fondohero.jpg" class="hero-slide-image" alt="Nueva Colección">
+                            <img src="img/fondohero.jpg" 
+                                 class="hero-slide-image" 
+                                 alt="Imagen de la nueva colección de muebles Hermanos Jota con diseños contemporáneos">
                             <div class="hero-overlay">
                                 <div class="hero-content-center">
-                                    <h1 class="hero-main-title">NUEVA COLECCIÓN</h1>
+                                    <h2 class="hero-main-title">NUEVA COLECCIÓN</h2>
                                     <p class="hero-main-subtitle">Diseño con historia, muebles con alma</p>
-                                    <a href="#productos" class="btn-hero-primary">Descubrir Colección</a>
+                                    <a href="productos.html" class="btn-hero-primary">
+                                        Descubrir Colección
+                                    </a>
                                 </div>
                             </div>
                         </div>
                     </div>
                     
                     <!-- SEGUNDA DIAPOSITIVA -->
-                    <div class="carousel-item">
+                    <div class="carousel-item" role="group" aria-roledescription="diapositiva" aria-label="2 de 3">
                         <div class="hero-slide">
-                            <img src="img/ImagenHero1.png" class="hero-slide-image" alt="Artesanía Sustentable">
+                            <img src="img/ImagenHero1.png" 
+                                 class="hero-slide-image" 
+                                 alt="Taller de artesanía sustentable mostrando materiales ecológicos y procesos responsables">
                             <div class="hero-overlay">
                                 <div class="hero-content-center">
-                                    <h1 class="hero-main-title">ARTESANÍA SUSTENTABLE</h1>
+                                    <h2 class="hero-main-title">ARTESANÍA SUSTENTABLE</h2>
                                     <p class="hero-main-subtitle">Materiales nobles, futuro responsable</p>
-                                    <a href="#about" class="btn-hero-primary">Nuestra Historia</a>
+                                    <a href="#sustentabilidad" class="btn-hero-primary">
+                                        Nuestro Compromiso
+                                    </a>
                                 </div>
                             </div>
                         </div>
                     </div>
                     
                     <!-- TERCERA DIAPOSITIVA -->
-                    <div class="carousel-item">
+                    <div class="carousel-item" role="group" aria-roledescription="diapositiva" aria-label="3 de 3">
                         <div class="hero-slide">
-                            <img src="img/ImagenHero2.png" class="hero-slide-image" alt="Showroom Buenos Aires">
+                            <img src="img/ImagenHero2.png" 
+                                 class="hero-slide-image" 
+                                 alt="Interior del showroom Hermanos Jota en Buenos Aires con muebles expuestos">
                             <div class="hero-overlay">
                                 <div class="hero-content-center">
-                                    <h1 class="hero-main-title">SHOWROOM BA</h1>
+                                    <h2 class="hero-main-title">SHOWROOM BA</h2>
                                     <p class="hero-main-subtitle">Visitá nuestro taller en San Cristóbal</p>
-                                    <a href="#contacto" class="btn-hero-primary">Visitanos</a>
+                                    <a href="#contacto" class="btn-hero-primary">
+                                        Visitanos
+                                    </a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 
+                <!-- CONTROLES DE NAVEGACIÓN -->
+                <button class="carousel-control-prev" 
+                        type="button" 
+                        data-bs-target="#heroCarousel" 
+                        data-bs-slide="prev"
+                        aria-label="Ir a la diapositiva anterior">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span> 
+                    <span class="visually-hidden">Anterior</span>
+                </button>
+                
+                <button class="carousel-control-next" 
+                        type="button" 
+                        data-bs-target="#heroCarousel" 
+                        data-bs-slide="next"
+                        aria-label="Ir a la siguiente diapositiva">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Siguiente</span>
+                </button>
+                
                 <!-- INDICADORES DEL CARRUSEL -->
-                <div class="carousel-indicators carousel-indicators-custom">
-                    <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active" aria-current="true"></button>
-                    <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1"></button>
-                    <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2"></button>
+                <div class="carousel-indicators" aria-label="Seleccionar diapositiva">
+                    <button type="button" 
+                            data-bs-target="#heroCarousel" 
+                            data-bs-slide-to="0" 
+                            class="active" 
+                            aria-current="true"
+                            aria-label="Ir a la diapositiva 1: Nueva Colección"
+                            aria-selected="true"></button>
+                            
+                    <button type="button" 
+                            data-bs-target="#heroCarousel" 
+                            data-bs-slide-to="1"
+                            aria-label="Ir a la diapositiva 2: Artesanía Sustentable"
+                            aria-selected="false"></button>
+                            
+                    <button type="button" 
+                            data-bs-target="#heroCarousel" 
+                            data-bs-slide-to="2"
+                            aria-label="Ir a la diapositiva 3: Showroom Buenos Aires"
+                            aria-selected="false"></button>
                 </div>
             </div>
         </section>
@@ -118,8 +172,9 @@
                     <!-- MEDIA (VIDEO) -->
                     <div class="col-lg-6">
                         <div class="about-media">
-                            <video src="img/video_historia.mp4" autoplay loop muted playsinline class="about-video">
-                                Tu navegador no soporta la etiqueta de video.
+                            <video autoplay loop muted playsinline class="about-video" aria-label="Video sobre la historia de Hermanos Jota">
+                                <source src="img/video_historia.mp4" type="video/mp4">
+                                <p>Tu navegador no soporta la etiqueta de video.</p>
                             </video>
                         </div>
                     </div>
@@ -143,7 +198,7 @@
         </section>
 
         <!-- SECCIÓN DIVIDIDA - SUSTENTABILIDAD -->
-        <section class="split-section">
+        <section class="split-section" id="sustentabilidad">
             <div class="container-fluid">
                 <div class="row g-0">
                     <!-- LADO DEL CONTENIDO -->
@@ -174,7 +229,7 @@
                     <!-- LADO DE LA IMAGEN -->
                     <div class="col-lg-6">
                         <div class="split-image-container">
-                            <img src="img/mesa_de_noche_aconcagua.png" alt="Materiales Sustentables" class="split-image">
+                            <img src="img/mesa_de_noche_aconcagua.png" alt="Imagen de la mesa de noche aconcagua" class="split-image">
                             <div class="image-overlay">
                                 <span class="image-label">MADERA CERTIFICADA FSC</span>
                             </div>
@@ -276,7 +331,7 @@
                         </div>
                         <div class="contact-item">
                             <i class="bi bi-globe"></i>
-                            <a href="http://www.hermanosjota.com.ar">www.hermanosjota.com.ar</a>
+                            <a href="https://hermanos-jota.vercel.app">www.hermanos-jota.vercel.app</a>
                         </div>
                     </section>
                 </div>

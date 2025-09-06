@@ -16,6 +16,7 @@
 </head>
 
 <body>
+    <a href="#contenido-principal" class="skip-link">Saltar a contenido principal</a>
     <!-- ENCABEZADO Y MENÚ DE NAVEGACIÓN -->
     <header>
         <nav class="navbar navbar-expand-sm navbar-light custom-navbar mb-3 fixed-top">
@@ -40,7 +41,7 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link fs-5 px-3 py-2 fw-semibold color-principal-texto" 
-                            href="/Carrito" aria-label="Carrito de compras">
+                            href="" aria-label="Carrito de compras">
                                 <span class="position-relative d-inline-block">
                                     <i class="bi bi-cart3 fs-4"></i>
                                     <span class="badge rounded-pill elbadge">0</span>
@@ -54,7 +55,7 @@
     </header>
 
     <!-- CONTENIDO PRINCIPAL -->
-    <main class="pagina_Princ">
+    <main id="contenido-principal" tabindex="-1" class="pagina_Princ">
         <!-- ENCABEZADO DE PRODUCTOS -->
         <h2>Nuestros Productos</h2>
         <p class="parrafo">
@@ -63,7 +64,10 @@
 
         <!-- BARRA DE BÚSQUEDA -->
         <div class="barraDeBusqueda">
-            <input type="text" placeholder="Buscar muebles..." aria-label="Buscar muebles" />
+            <label for="search-input" class="visually-hidden">Buscar muebles</label>
+            <input type="text" id="search-input" placeholder="Buscar muebles..." 
+                aria-describedby="search-help"/>
+            <p class="visually-hidden" id="search-help">Ingrese palabras clave para buscar productos</p>
             <button>Buscar</button>
         </div>
 
@@ -285,7 +289,7 @@
                         </div>
                         <div class="contact-item">
                             <i class="bi bi-globe"></i>
-                            <a href="http://www.hermanosjota.com.ar">www.hermanosjota.com.ar</a>
+                            <a href="https://hermanos-jota.vercel.app">www.hermanos-jota.vercel.app</a>
                         </div>
                     </section>
                 </div>

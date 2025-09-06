@@ -752,6 +752,40 @@ body {
   }
 }
 
+/* =================== */
+/* 13. ACCESSIBILITY CLASSES */
+/* =================== */
+
+/* Screen reader only content */
+.visually-hidden {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0,0,0,0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+}
+
+.skip-link {
+    position: absolute;
+    top: -100px;
+    left: 0.5rem;
+    background: #87A96B;
+    color: white;
+    border: 1px solid #547936;
+    z-index: 9999;
+    padding: 1rem;
+    text-decoration: none;
+}
+
+.skip-link:focus {
+    top: 0.5rem;
+}
+
+
 
 /*
 ===========================================
@@ -822,6 +856,7 @@ body {
   margin-bottom: 1.5rem;
   text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
   line-height: 1.1;
+  color: white;
 }
 
 /* Hero main subtitle */
@@ -859,32 +894,6 @@ body {
   text-decoration: none;
 }
 
-/* Custom elegant carousel indicators as dots */
-.carousel-indicators-custom {
-  bottom: 30px;
-  margin-bottom: 0;
-  justify-content: center;
-}
-
-.carousel-indicators-custom button {
-  background-color: rgba(255, 255, 255, 0.4);
-  border: 0;
-  margin: 0 6px;
-  transition: all 0.3s ease;
-  text-indent: 0;
-  opacity: 1;
-}
-
-
-.carousel-indicators-custom button.active {
-  background-color: white;
-  transform: scale(1.4);
-}
-
-.carousel-indicators-custom button:hover {
-  background-color: rgba(255, 255, 255, 0.7);
-  transform: scale(1.2);
-}
 
 /* Mobile hero carousel responsive */
 @media (max-width: 768px) {
@@ -996,28 +1005,6 @@ body {
   margin-bottom: 1.8rem;
 }
 
-/* Elegant secondary button */
-.btn-elegant-secondary {
-  display: inline-block;
-  padding: 15px 35px;
-  background-color: transparent;
-  color: #A0522D;
-  text-decoration: none;
-  font-family: 'Inter', sans-serif;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  border: 1px solid #A0522D;
-  transition: all 0.3s ease;
-}
-
-.btn-elegant-secondary:hover {
-  background-color: #A0522D;
-  color: white;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(160, 82, 45, 0.2);
-  text-decoration: none;
-}
 
 /* Mobile video section responsive */
 @media (max-width: 991px) {

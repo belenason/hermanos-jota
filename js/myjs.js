@@ -486,13 +486,81 @@ function initContactForm() {
 }
 
 // ==========================================
-// 6. APPLICATION INITIALIZATION
+// 6. CAROUSEL ACCESSIBILITY ENHANCEMENT
+// ==========================================
+
+/**
+ * Enhanced carousel accessibility features
+ * - Manages aria-selected states for indicators
+ * - Provides keyboard navigation for carousel indicators
+ * - No live region announcements to avoid distracting screen reader users
+ */
+function initCarouselAccessibility() {
+    console.log('Inicializando accesibilidad del carrusel');
+    
+    const carousel = document.getElementById('heroCarousel');
+    
+    if (!carousel) {
+        console.log('Carrusel principal no encontrado en esta página');
+        return;
+    }
+    
+    // Listen for carousel slide events to update aria-selected only
+    carousel.addEventListener('slid.bs.carousel', function(e) {
+        const activeIndex = e.to;
+        
+        // Update aria-selected for indicators (silent update)
+        const indicators = carousel.querySelectorAll('.carousel-indicators button');
+        indicators.forEach((indicator, index) => {
+            indicator.setAttribute('aria-selected', index === activeIndex ? 'true' : 'false');
+        });
+        
+        console.log('Carrusel cambió a diapositiva:', activeIndex + 1);
+    });
+    
+    // Handle keyboard navigation for carousel indicators
+    const indicators = carousel.querySelectorAll('.carousel-indicators button');
+    indicators.forEach((indicator, index) => {
+        indicator.addEventListener('keydown', function(e) {
+            let newIndex = index;
+            
+            switch(e.key) {
+                case 'ArrowLeft':
+                    e.preventDefault();
+                    newIndex = index > 0 ? index - 1 : indicators.length - 1;
+                    break;
+                case 'ArrowRight':
+                    e.preventDefault();
+                    newIndex = index < indicators.length - 1 ? index + 1 : 0;
+                    break;
+                case 'Home':
+                    e.preventDefault();
+                    newIndex = 0;
+                    break;
+                case 'End':
+                    e.preventDefault();
+                    newIndex = indicators.length - 1;
+                    break;
+                default:
+                    return;
+            }
+            
+            // Focus and click the new indicator
+            indicators[newIndex].focus();
+            indicators[newIndex].click();
+        });
+    });
+    
+}
+
+// ==========================================
+// 7. APPLICATION INITIALIZATION
 // ==========================================
 
 /**
  * Main application initialization function
  * - Coordinates initialization of all page components
- * - Attempts to initialize products and contact form
+ * - Attempts to initialize products, contact form, and carousel accessibility
  * - Called when DOM is ready or immediately if already loaded
  */
 function initApp() {
@@ -504,6 +572,9 @@ function initApp() {
     
     // Intentar inicializar formulario de contacto
     initContactForm();
+    
+    // Intentar inicializar accesibilidad del carrusel
+    initCarouselAccessibility();
     
     console.log('Inicialización completada');
 }
