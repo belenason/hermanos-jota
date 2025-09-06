@@ -642,6 +642,8 @@ body {
   align-items: flex-start;
   margin-bottom: 1rem;
   color: rgba(255, 255, 255, 0.8);
+  margin-left: 2rem;
+  margin-right: 2rem;
 }
 
 /* Contact item icons */
@@ -700,7 +702,6 @@ body {
   .modern-footer .footer-info,
   .modern-footer .footer-contact {
     text-align: center;
-    padding-right: 0;
     margin-bottom: 2rem;
   }
   
@@ -1202,11 +1203,13 @@ body {
   display: flex;
   gap: 3rem;
   margin: 3rem 0;
+  padding-left: 0rem;
 }
 
 /* Individual stat item */
 .stat-item {
   text-align: center;
+  list-style-type: none;
 }
 
 .stat-number {
@@ -1434,7 +1437,7 @@ body {
     position: relative;
 }
 
-h2 {
+.pagina_Princ h2 {
     font-family: 'Playfair Display', serif;
     font-size: 3rem;
     font-weight: 600;
