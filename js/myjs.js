@@ -291,7 +291,7 @@ const PRODUCTS = [
     tapizado: "Repelente al agua y manchas",
     confort: "Espuma alta densidad",
     imagenes: [
-      "img/butaca_mendoza.png"
+      "img/butacaMendoza.png"
     ]
   },
 
@@ -842,7 +842,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   if (!container) return; // solo corre en producto.html
 
   const params = new URLSearchParams(location.search);
-  const productId = params.get("id");
+  const productId = Number(params.get("id"));
 
   const p = PRODUCTS.find(x => x.id === productId);
 
