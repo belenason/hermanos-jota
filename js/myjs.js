@@ -1,8 +1,22 @@
 /*
 ===========================================
   HERMANOS JOTA - FUNCIONES JAVASCRIPT
+  Versión con carga asíncrona simulada
 ===========================================
 
+ÍNDICE DE CONTENIDOS:
+1. DATOS DE PRODUCTOS.............................línea 17
+2. FUNCIONES DE UTILIDAD..........................línea 178
+3. SERVICIOS ASÍNCRONOS...........................línea 220
+4. FUNCIONALIDAD DEL NAVBAR.......................línea 285
+5. FUNCIONALIDAD DEL CATÁLOGO.....................línea 355
+   5.1. Inicialización de productos
+   5.2. Renderizado del catálogo
+   5.3. Página del catálogo
+6. PÁGINA DE PRODUCTO INDIVIDUAL..................línea 577
+7. FORMULARIO DE CONTACTO.........................línea 779
+8. ACCESIBILIDAD DEL CARRUSEL.....................línea 840
+9. INICIALIZACIÓN DE LA APLICACIÓN................línea 911
 */
 
 // ==========================================
@@ -11,6 +25,7 @@
 
 /**
  * Catálogo de datos de productos
+ * @type {Array<Object>} Array de objetos producto con propiedades completas
  */
 const PRODUCTS = [
   {
@@ -201,7 +216,7 @@ function formatARS(n) {
 }
 
 /**
- * Obtiene el carrito del localStorage
+ * Obtiene el carrito del localStorage con manejo de errores
  * @returns {Array} Array de items del carrito
  */
 function getCart() {
@@ -213,7 +228,7 @@ function getCart() {
 }
 
 /**
- * Obtiene el número total de items en el carrito
+ * Calcula el número total de items en el carrito
  * @returns {number} Cantidad total de items
  */
 function getCartCount() {
@@ -221,19 +236,124 @@ function getCartCount() {
 }
 
 /**
- * Actualiza el badge del contador del carrito
+ * Actualiza el badge visual del contador del carrito
  */
 function renderCartBadge() {
   const badge = document.querySelector(".elbadge");
   if (badge) badge.textContent = getCartCount();
 }
 
+/**
+ * Muestra un indicador de carga
+ * @param {HTMLElement} container - Contenedor donde mostrar el loader
+ */
+function showLoader(container) {
+  if (!container) return;
+  container.innerHTML = `
+    <div class="text-center justify-content-center py-5">
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Cargando productos...</span>
+      </div>
+      <p class="mt-2 text-muted">Cargando productos...</p>
+    </div>
+  `;
+}
+
 // ==========================================
-// 3. FUNCIONALIDAD DEL NAVBAR
+// 3. SERVICIOS ASÍNCRONOS
 // ==========================================
 
 /**
- * Gestiona la transparencia del navbar y comportamiento móvil
+ * Simula una llamada a API para obtener productos con retraso asíncrono
+ * @param {number} delay - Tiempo de retraso en milisegundos (por defecto 1000ms)
+ * @returns {Promise<Array>} Promise que resuelve con el array de productos
+ */
+function fetchProducts(delay = 1000) {
+  return new Promise((resolve, reject) => {
+    console.log(`🔄 Simulando carga de productos (${delay}ms)...`);
+    
+    setTimeout(() => {
+      try {
+        // Simular posibles errores de red (5% de probabilidad)
+        if (Math.random() < 0.05) {
+          throw new Error('Error de conexión simulado');
+        }
+        
+        console.log('✅ Productos cargados exitosamente');
+        resolve([...PRODUCTS]); // Clonar array para simular datos de API
+      } catch (error) {
+        console.error('❌ Error al cargar productos:', error);
+        reject(error);
+      }
+    }, delay);
+  });
+}
+
+/**
+ * Obtiene un producto específico por ID de forma asíncrona
+ * @param {number} id - ID del producto a buscar
+ * @param {number} delay - Tiempo de retraso en milisegundos (por defecto 500ms)
+ * @returns {Promise<Object|null>} Promise que resuelve con el producto o null si no se encuentra
+ */
+async function fetchProductById(id, delay = 500) {
+  try {
+    console.log(`🔄 Buscando producto ID: ${id}...`);
+    
+    // Simular retraso de API
+    await new Promise(resolve => setTimeout(resolve, delay));
+    
+    const product = PRODUCTS.find(p => p.id === Number(id));
+    
+    if (!product) {
+      console.warn(`⚠️ Producto con ID ${id} no encontrado`);
+      return null;
+    }
+    
+    console.log(`✅ Producto encontrado: ${product.nombre}`);
+    return { ...product }; // Clonar objeto para simular datos de API
+    
+  } catch (error) {
+    console.error('❌ Error al buscar producto:', error);
+    throw error;
+  }
+}
+
+/**
+ * Simula búsqueda de productos con filtros
+ * @param {string} query - Término de búsqueda
+ * @param {number} delay - Tiempo de retraso en milisegundos
+ * @returns {Promise<Array>} Promise que resuelve con productos filtrados
+ */
+async function searchProducts(query, delay = 300) {
+  try {
+    console.log(`🔍 Buscando productos: "${query}"...`);
+    
+    // Simular retraso de búsqueda
+    await new Promise(resolve => setTimeout(resolve, delay));
+    
+    const filtered = query.trim() === '' 
+      ? [...PRODUCTS]
+      : PRODUCTS.filter(p =>
+          (p.nombre && p.nombre.toLowerCase().includes(query.toLowerCase())) ||
+          (p.descripcion && p.descripcion.toLowerCase().includes(query.toLowerCase()))
+        );
+    
+    console.log(`✅ Encontrados ${filtered.length} productos`);
+    return filtered;
+    
+  } catch (error) {
+    console.error('❌ Error en búsqueda:', error);
+    throw error;
+  }
+}
+
+// ==========================================
+// 4. FUNCIONALIDAD DEL NAVBAR
+// ==========================================
+
+/**
+ * IIFE para inicializar el comportamiento del navbar
+ * Gestiona la transparencia del navbar y comportamiento móvil:
  * - Navbar transparente en desktop cuando está en el tope de la página
  * - Fondo sólido cuando se hace scroll o en móvil
  * - Maneja estados de colapso del menú móvil
@@ -272,137 +392,157 @@ function renderCartBadge() {
     }
   }
 
-  // Aplicar estado del navbar al cargar la página
+  // Event Listeners para el navbar
   document.addEventListener("DOMContentLoaded", applyNavbarState);
-  
-  // Actualizar estado del navbar en scroll (pasivo para mejor rendimiento)
   window.addEventListener("scroll", applyNavbarState, { passive: true });
-  
-  // Actualizar estado del navbar cuando se redimensiona la ventana
   window.addEventListener("resize", applyNavbarState);
 
-  // Manejar estados de colapso del menú móvil
+  // Manejo del colapso del menú móvil
   if (collapse) {
-    // Cuando se abre el menú móvil: forzar fondo sólido
     collapse.addEventListener("show.bs.collapse", () => {
       navbar.classList.add("scrolled");
       navbar.classList.remove("transparent");
     });
     
-    // Cuando se cierra el menú móvil: restaurar estado normal
     collapse.addEventListener("hide.bs.collapse", applyNavbarState);
   }
 })();
 
 // ==========================================
-// 4. FUNCIONALIDAD DEL CATÁLOGO DE PRODUCTOS
+// 5. FUNCIONALIDAD DEL CATÁLOGO DE PRODUCTOS
 // ==========================================
+
+// ========== 5.1. INICIALIZACIÓN DE PRODUCTOS ==========
 
 /**
  * Inicializa la visualización del catálogo de productos para páginas home y catálogo
- * - Crea layout de grilla desktop para tarjetas de productos
- * - Genera carrusel móvil con indicadores
- * - Solo se ejecuta en páginas que tienen los contenedores requeridos
- * - Previene duplicación limpiando contenedores primero
+ * con carga asíncrona simulada
  */
-function initProductos() {
-  console.log('Inicializando productos');
+async function initProductos() {
+  console.log('🚀 Inicializando productos con carga asíncrona');
   
-  const productos = PRODUCTS.map(p => ({
-    id: p.id,
-    nombre: p.nombre,
-    precio: `$${p.precio.toLocaleString("es-AR")}`,
-    img: p.imagenes[0]
-  }));
-
-  // Contenedores - verificar que existan antes de usarlos
+  // Verificación de existencia de contenedores
   const desktopContainer = document.getElementById("products-container");
   const carouselContainer = document.getElementById("products-carousel-container");
   const indicatorsContainer = document.getElementById("products-carousel-indicators");
 
-  // Solo ejecutar si los contenedores existen
   if (!desktopContainer || !carouselContainer) {
     console.log('Contenedores de productos no encontrados en esta página');
     return;
   }
 
-  // Verificar si ya están cargados para evitar duplicación
+  // Prevenir duplicación
   if (desktopContainer.children.length > 0) {
     console.log('Productos ya cargados, evitando duplicación');
     return;
   }
 
-  console.log('Contenedores de productos encontrados, cargando...');
+  try {
+    // Mostrar loader
+    showLoader(desktopContainer);
+    showLoader(carouselContainer);
+    
+    // Cargar productos de forma asíncrona
+    const products = await fetchProducts(1500); // 1.5 segundos de carga
+    
+    // Transformar datos para vista simplificada
+    const productos = products.map(p => ({
+      id: p.id,
+      nombre: p.nombre,
+      precio: `$${p.precio.toLocaleString("es-AR")}`,
+      img: p.imagenes[0]
+    }));
 
-  // Limpiar contenedores por seguridad
-  desktopContainer.innerHTML = '';
-  carouselContainer.innerHTML = '';
-  if (indicatorsContainer) {
-    indicatorsContainer.innerHTML = '';
-  }
+    console.log('📦 Renderizando productos cargados...');
 
-  // Arrays para acumular el HTML
-  let desktopHTML = '';
-  let carouselHTML = '';
-  let indicatorsHTML = '';
-
-  productos.forEach((prod, index) => {
-    if(prod.id <= 4){
-      // ----- Grilla Desktop -----
-      desktopHTML += `
-        <div class="col-md-3 col-sm-6">
-          <article class="product-card text-center h-100">
-            <a href="producto.html?id=${encodeURIComponent(prod.id)}" style="text-decoration:none; color:inherit;">
-              <div class="product-image">
-                <img src="${prod.img}" alt="${prod.nombre}" class="img-fluid">
-              </div>
-              <div class="product-info">
-                <h3 class="product-dest-title">${prod.nombre}</h3>
-                <p class="product-price">${prod.precio}</p>
-              </div>
-            </a>
-          </article>
-        </div>
-      `;
-      
-      // ----- Carrusel Móvil -----
-      carouselHTML += `
-        <div class="carousel-item ${index === 0 ? "active" : ""}">
-          <article class="product-card mx-auto text-center">
-            <a href="producto.html?id=${encodeURIComponent(prod.id)}" style="text-decoration:none; color:inherit;">
-              <div class="product-image">
-                <img src="${prod.img}" alt="${prod.nombre}" class="img-fluid">
-              </div>
-              <div class="product-info">
-                <h3 class="product-dest-title">${prod.nombre}</h3>
-                <p class="product-price">${prod.precio}</p>
-              </div>
-            </a>
-          </article>
-        </div>
-      `;
-
-      // ----- Indicadores del Carrusel -----
-      if (indicatorsContainer) {
-        indicatorsHTML += `
-          <button type="button" data-bs-target="#productCarousel" data-bs-slide-to="${index}" 
-                  class="${index === 0 ? 'active' : ''}" 
-                  aria-current="${index === 0 ? 'true' : 'false'}" 
-                  aria-label="Slide ${index + 1}"></button>
-        `;
-      }
+    // Limpiar contenedores
+    desktopContainer.innerHTML = '';
+    carouselContainer.innerHTML = '';
+    if (indicatorsContainer) {
+      indicatorsContainer.innerHTML = '';
     }
-  });
 
-  // Asignar todo el HTML de una vez para evitar múltiples reflows
-  desktopContainer.innerHTML = desktopHTML;
-  carouselContainer.innerHTML = carouselHTML;
-  if (indicatorsContainer) {
-    indicatorsContainer.innerHTML = indicatorsHTML;
+    // Variables para acumular HTML
+    let desktopHTML = '';
+    let carouselHTML = '';
+    let indicatorsHTML = '';
+
+    // Generar HTML para cada producto (limitado a los primeros 4)
+    productos.forEach((prod, index) => {
+      if(prod.id <= 4){
+        // HTML para grilla desktop
+        desktopHTML += `
+          <div class="col-md-3 col-sm-6">
+            <article class="product-card text-center h-100">
+              <a href="producto.html?id=${encodeURIComponent(prod.id)}" style="text-decoration:none; color:inherit;">
+                <div class="product-image">
+                  <img src="${prod.img}" alt="${prod.nombre}" class="img-fluid">
+                </div>
+                <div class="product-info">
+                  <h3 class="product-dest-title">${prod.nombre}</h3>
+                  <p class="product-price">${prod.precio}</p>
+                </div>
+              </a>
+            </article>
+          </div>
+        `;
+        
+        // HTML para carrusel móvil
+        carouselHTML += `
+          <div class="carousel-item ${index === 0 ? "active" : ""}">
+            <article class="product-card mx-auto text-center">
+              <a href="producto.html?id=${encodeURIComponent(prod.id)}" style="text-decoration:none; color:inherit;">
+                <div class="product-image">
+                  <img src="${prod.img}" alt="${prod.nombre}" class="img-fluid">
+                </div>
+                <div class="product-info">
+                  <h3 class="product-dest-title">${prod.nombre}</h3>
+                  <p class="product-price">${prod.precio}</p>
+                </div>
+              </a>
+            </article>
+          </div>
+        `;
+
+        // HTML para indicadores del carrusel
+        if (indicatorsContainer) {
+          indicatorsHTML += `
+            <button type="button" data-bs-target="#productCarousel" data-bs-slide-to="${index}" 
+                    class="${index === 0 ? 'active' : ''}" 
+                    aria-current="${index === 0 ? 'true' : 'false'}" 
+                    aria-label="Slide ${index + 1}"></button>
+          `;
+        }
+      }
+    });
+
+    // Insertar HTML generado (una sola operación DOM por contenedor)
+    desktopContainer.innerHTML = desktopHTML;
+    carouselContainer.innerHTML = carouselHTML;
+    if (indicatorsContainer) {
+      indicatorsContainer.innerHTML = indicatorsHTML;
+    }
+
+    console.log('✅ Productos renderizados correctamente:', productos.length, 'productos');
+    
+  } catch (error) {
+    console.error('❌ Error al cargar productos:', error);
+    
+    // Mostrar mensaje de error
+    const errorHTML = `
+      <div class="alert alert-danger text-center" role="alert">
+        <h5>Error al cargar productos</h5>
+        <p>No se pudieron cargar los productos. Por favor, recarga la página.</p>
+        <button class="btn btn-primary" onclick="location.reload()">Recargar página</button>
+      </div>
+    `;
+    
+    desktopContainer.innerHTML = errorHTML;
+    carouselContainer.innerHTML = errorHTML;
   }
-
-  console.log('✅ Productos cargados correctamente:', productos.length, 'productos');
 }
+
+// ========== 5.2. RENDERIZADO DEL CATÁLOGO ==========
 
 /**
  * Renderiza la grilla del catálogo con productos filtrados
@@ -411,6 +551,16 @@ function initProductos() {
 function renderCatalogGrid(products) {
   const grid = document.querySelector(".grilla");
   if (!grid) return;
+
+  if (products.length === 0) {
+    grid.innerHTML = `
+      <div class="col-12 text-center py-5">
+        <h3 class="text-muted">No se encontraron productos</h3>
+        <p>Intenta con otros términos de búsqueda</p>
+      </div>
+    `;
+    return;
+  }
 
   grid.innerHTML = products.map(p => {
     const img = (p.imagenes && p.imagenes[0]) ? p.imagenes[0] : "img/producto-ejemplo.jpg";
@@ -424,253 +574,401 @@ function renderCatalogGrid(products) {
             <span class="price">${formatARS(p.precio)}</span>
           </div>
         </a>
-        <button class="btn-add-to-cart " data-id="${p.id}">Agregar al Carrito</button>
+        <button class="btn-add-to-cart" data-id="${p.id}">Agregar al Carrito</button>
       </article>
     `;
   }).join("");
 }
 
+// ========== 5.3. PÁGINA DEL CATÁLOGO ==========
+
 /**
- * Inicializa la página del catálogo de productos
- * - Renderizado dinámico de todas las tarjetas
- * - Funcionalidad de agregar al carrito
- * - Búsqueda por nombre y descripción
+ * Inicializa la página del catálogo de productos con carga asíncrona
  */
-function initCatalogPage() {
-  // Solo se ejecuta en productos.html
+async function initCatalogPage() {
   const grid = document.querySelector(".grilla");
   const input = document.getElementById("search-input");
   const button = input ? input.parentElement.querySelector("button") : null;
+  
+  // Solo ejecutar si existe la grilla (página productos.html)
   if (!grid) return;
 
-  // 1. Carga inicial de los productos
-  renderCatalogGrid(PRODUCTS);
-
-  // 2. Agregar al carrito
-  grid.addEventListener("click", (e) => {
-    const btn = e.target.closest(".btn-add-to-cart");
-    if (!btn) return;
+  try {
+    console.log('🚀 Inicializando catálogo con carga asíncrona');
     
-    const id = btn.getAttribute("data-id");
-    const cart = JSON.parse(localStorage.getItem("cart") || "[]");
-    const item = cart.find(i => i.id === id);
+    // Mostrar loader inicial
+    showLoader(grid);
     
-    if (item) item.qty += 1; 
-    else cart.push({ id, qty: 1 });
+    // Cargar productos de forma asíncrona
+    const products = await fetchProducts(1200); // 1.2 segundos de carga
     
-    localStorage.setItem("cart", JSON.stringify(cart));
-    renderCartBadge(); // Refresca contador global
-  });
+    // Renderizar productos cargados
+    renderCatalogGrid(products);
+    
+    const alerta = document.getElementById("alerta-carrito");
 
-  // 3. Barra de búsqueda: filtra por nombre/descripción
-  const doSearch = () => {
-    const q = (input?.value || "").trim().toLowerCase();
-    const filtered = !q ? PRODUCTS : PRODUCTS.filter(p =>
-      (p.nombre && p.nombre.toLowerCase().includes(q)) ||
-      (p.descripcion && p.descripcion.toLowerCase().includes(q))
-    );
-    renderCatalogGrid(filtered);
-  };
+    // Funcionalidad agregar al carrito con addEventListener
+    grid.addEventListener("click", async (e) => {
+      const btn = e.target.closest(".btn-add-to-cart");
+      if (!btn) return;
+      
+      // Prevenir múltiples clics
+      if (btn.disabled) return;
+      btn.disabled = true;
+      btn.textContent = "Agregando...";
+      
+      try {
+        const id = btn.getAttribute("data-id");
+        const cart = getCart();
+        const item = cart.find(i => i.id === id);
+        
+        // Simular proceso asíncrono de agregar al carrito
+        await new Promise(resolve => setTimeout(resolve, 300));
+        
+        if (item) item.qty += 1; 
+        else cart.push({ id, qty: 1 });
+        
+        localStorage.setItem("cart", JSON.stringify(cart));
+        renderCartBadge();
 
-  input?.addEventListener("input", doSearch);
-  button?.addEventListener("click", (ev) => { 
-    ev.preventDefault(); 
-    doSearch(); 
-  });
+        // Mostrar alerta de confirmación
+        if (alerta) {
+          alerta.classList.add("mostrar");
+          setTimeout(() => {
+            alerta.classList.remove("mostrar");
+          }, 3000);
+        }
+        
+        console.log(`✅ Producto ${id} agregado al carrito`);
+        
+      } catch (error) {
+        console.error('❌ Error al agregar al carrito:', error);
+      } finally {
+        // Restaurar botón
+        btn.disabled = false;
+        btn.textContent = "Agregar al Carrito";
+      }
+    });
+
+    // Funcionalidad de búsqueda asíncrona
+    let searchTimeout;
+    const doSearch = async () => {
+      const query = (input?.value || "").trim();
+      
+      try {
+        // Realizar búsqueda asíncrona
+        const filtered = await searchProducts(query, 300);
+        renderCatalogGrid(filtered);
+        
+        // Remover indicador
+        searchIndicator?.remove();
+        
+      } catch (error) {
+        console.error('❌ Error en búsqueda:', error);
+        // En caso de error, usar búsqueda local como fallback
+        const filtered = query === '' ? products : products.filter(p =>
+          (p.nombre && p.nombre.toLowerCase().includes(query.toLowerCase())) ||
+          (p.descripcion && p.descripcion.toLowerCase().includes(query.toLowerCase()))
+        );
+        renderCatalogGrid(filtered);
+      }
+    };
+
+    // Event listeners para búsqueda con debounce
+    input?.addEventListener("input", () => {
+      clearTimeout(searchTimeout);
+      searchTimeout = setTimeout(doSearch, 500); // Debounce de 500ms
+    });
+    
+    button?.addEventListener("click", (ev) => { 
+      ev.preventDefault(); 
+      clearTimeout(searchTimeout);
+      doSearch(); 
+    });
+    
+    console.log('✅ Catálogo inicializado correctamente');
+    
+  } catch (error) {
+    console.error('❌ Error al inicializar catálogo:', error);
+    grid.innerHTML = `
+      <div class="col-12 text-center py-5">
+        <div class="alert alert-danger">
+          <h4>Error al cargar el catálogo</h4>
+          <p>No se pudieron cargar los productos. Por favor, recarga la página.</p>
+          <button class="btn btn-primary" onclick="location.reload()">Recargar página</button>
+        </div>
+      </div>
+    `;
+  }
 }
 
 // ==========================================
-// 5. FUNCIONALIDAD DE PÁGINA DE PRODUCTO INDIVIDUAL
+// 6. PÁGINA DE PRODUCTO INDIVIDUAL
 // ==========================================
 
 /**
- * Maneja la visualización e interacciones de página de producto individual
- * - Genera carrusel de galería con miniaturas
- * - Muestra especificaciones y detalles del producto
- * - Gestiona funcionalidad de agregar al carrito
- * - Actualiza contador del badge del carrito
+ * Inicializa la página de producto individual con carga asíncrona
  */
 document.addEventListener("DOMContentLoaded", async () => {
   const container = document.getElementById("product");
-  if (!container) return; // Solo se ejecuta en producto.html
+  
+  // Solo ejecutar en producto.html
+  if (!container) return;
 
-  const params = new URLSearchParams(location.search);
-  const productId = Number(params.get("id"));
+  try {
+    console.log('🚀 Inicializando página de producto individual');
+    
+    // Mostrar loader inicial
+    showLoader(container);
+    
+    // Obtener ID del producto de los parámetros URL
+    const params = new URLSearchParams(location.search);
+    const productId = Number(params.get("id"));
+    
+    if (!productId) {
+      container.innerHTML = `
+        <div class="alert alert-warning">
+          <h2>ID de producto no válido</h2>
+          <p><a href="productos.html" class="btn btn-primary">Volver al catálogo</a></p>
+        </div>
+      `;
+      return;
+    }
+    
+    // Cargar producto de forma asíncrona
+    const product = await fetchProductById(productId, 800);
+    
+    if (!product) {
+      container.innerHTML = `
+        <div class="alert alert-warning">
+          <h2>Producto no encontrado</h2>
+          <p>El producto que buscas no existe o ha sido eliminado.</p>
+          <p><a href="productos.html" class="btn btn-primary">Volver al catálogo</a></p>
+        </div>
+      `;
+      return;
+    }
 
-  const p = PRODUCTS.find(x => x.id === productId);
+    // ========== GENERACIÓN DE HTML DEL PRODUCTO ==========
+    
+    console.log('📦 Renderizando producto:', product.nombre);
+    
+    const carouselId = "productGallery";
+    const imgs = (product.imagenes && product.imagenes.length ? product.imagenes : ['img/producto-ejemplo.jpg']);
 
-  if (!p) {
+    // Generar slides del carrusel
+    const slides = imgs.map((src, i) => `
+      <div class="carousel-item ${i===0 ? 'active':''}">
+        <img src="${src}" class="d-block w-100" alt="${product.nombre} ${i+1}">
+      </div>
+    `).join("");
+
+    // Generar indicadores del carrusel
+    const indicators = imgs.map((_, i) => `
+      <button type="button" data-bs-target="#${carouselId}" data-bs-slide-to="${i}" 
+              class="${i===0?'active':''}" aria-label="Slide ${i+1}"></button>
+    `).join("");
+
+    // HTML completo del producto
     container.innerHTML = `
-      <h2>Producto no encontrado</h2>
-      <p><a href="productos.html">Volver al catálogo</a></p>
-    `;
-    return;
-  }
+      <h1 class="product-title">${product.nombre}</h1>
 
-  // ====== Título + Carrusel + Detalle ======
-  const carouselId = "productGallery";
-  const imgs = (p.imagenes && p.imagenes.length ? p.imagenes : ['img/producto-ejemplo.jpg']);
-
-  const slides = imgs.map((src, i) => `
-    <div class="carousel-item ${i===0 ? 'active':''}">
-      <img src="${src}" class="d-block w-100" alt="${p.nombre} ${i+1}">
-    </div>
-  `).join("");
-
-  const indicators = imgs.map((_, i) => `
-    <button type="button" data-bs-target="#${carouselId}" data-bs-slide-to="${i}" class="${i===0?'active':''}" aria-label="Slide ${i+1}"></button>
-  `).join("");
-
-  container.innerHTML = `
-    <h1 class="product-title">${p.nombre}</h1>
-
-    <section class="product-gallery mb-3">
-      <div id="${carouselId}" class="carousel slide" data-bs-ride="false">
-        <div class="carousel-indicators">
-          ${indicators}
+      <section class="product-gallery mb-3">
+        <div id="${carouselId}" class="carousel slide" data-bs-ride="false">
+          <div class="carousel-indicators">
+            ${indicators}
+          </div>
+          <div class="carousel-inner">
+            ${slides}
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#${carouselId}" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Anterior</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#${carouselId}" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Siguiente</span>
+          </button>
         </div>
-        <div class="carousel-inner">
-          ${slides}
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#${carouselId}" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Anterior</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#${carouselId}" data-bs-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Siguiente</span>
-        </button>
-      </div>
 
-      <!-- Miniaturas -->
-      <div class="product-thumbs">
-        ${imgs.map((src, i)=>`<img src="${src}" data-idx="${i}" class="${i===0?'active':''}" alt="Thumb ${i+1}">`).join("")}
-      </div>
-    </section>
-
-    <section class="product-detail">
-      <div class="row g-4">
-        <div class="col-lg-7">
-          ${p.descripcion ? `<p class="product-desc">${p.descripcion}</p>` : ""}
-          <ul class="product-specs">
-            ${p.medidas ? `<li><strong>Medidas:</strong> ${p.medidas}</li>` : ""}
-            ${p.materiales ? `<li><strong>Materiales:</strong> ${p.materiales}</li>` : ""}
-            ${p.acabado ? `<li><strong>Acabado:</strong> ${p.acabado}</li>` : ""}
-          </ul>
+        <!-- Miniaturas -->
+        <div class="product-thumbs">
+          ${imgs.map((src, i)=>`<img src="${src}" data-idx="${i}" class="${i===0?'active':''}" alt="Thumb ${i+1}">`).join("")}
         </div>
-        <div class="col-lg-5">
-          <div class="purchase-card">
-            <div class="price">$ ${Number(p.precio || 0).toLocaleString("es-AR")}</div>
-            <div class="label">Cantidad</div>
-            <div class="qty-input mb-3">
-              <input id="qty" type="number" min="1" max="99" value="1" class="form-control">
-            </div>
-            <div class="d-flex gap-2">
-              <button id="addToCartBtn" class="btn-brand">Añadir al carrito</button>
-              <a href="productos.html" class="btn-outline-brand">Volver al catálogo</a>
+      </section>
+
+      <section class="product-detail">
+        <div class="row g-4">
+          <div class="col-lg-7">
+            ${product.descripcion ? `<p class="product-desc">${product.descripcion}</p>` : ""}
+            <ul class="product-specs">
+              ${product.medidas ? `<li><strong>Medidas:</strong> ${product.medidas}</li>` : ""}
+              ${product.materiales ? `<li><strong>Materiales:</strong> ${product.materiales}</li>` : ""}
+              ${product.acabado ? `<li><strong>Acabado:</strong> ${product.acabado}</li>` : ""}
+            </ul>
+          </div>
+          <div class="col-lg-5">
+            <div class="purchase-card">
+              <div class="price">$ ${Number(product.precio || 0).toLocaleString("es-AR")}</div>
+              <div class="label">Cantidad</div>
+              <div class="qty-input mb-3">
+                <input id="qty" type="number" min="1" max="99" value="1" class="form-control">
+              </div>
+              <div class="d-flex gap-2">
+                <button id="addToCartBtn" class="btn-brand">Añadir al carrito</button>
+                <a href="productos.html" class="btn-outline-brand">Volver al catálogo</a>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
-  `;
+      </section>
+    `;
 
-  // ====== Carrusel: miniaturas + flechas ======
-  const thumbBar = container.querySelector(".product-thumbs");
-  const carouselEl = container.querySelector("#" + carouselId);
+    // ========== FUNCIONALIDAD DEL CARRUSEL ==========
+    
+    const thumbBar = container.querySelector(".product-thumbs");
+    const carouselEl = container.querySelector("#" + carouselId);
 
-  function activateSlideManually(idx) {
-    const items = carouselEl.querySelectorAll(".carousel-item");
-    items.forEach((it,i) => it.classList.toggle("active", i===idx));
-    
-    const indBtns = carouselEl.querySelectorAll(".carousel-indicators [data-bs-slide-to]");
-    indBtns.forEach((b,i) => b.classList.toggle("active", i===idx));
-    
-    thumbBar?.querySelectorAll("img").forEach((t,i) => t.classList.toggle("active", i===idx));
-  }
+    /**
+     * Activa manualmente un slide específico del carrusel
+     * @param {number} idx - Índice del slide a activar
+     */
+    function activateSlideManually(idx) {
+      const items = carouselEl.querySelectorAll(".carousel-item");
+      items.forEach((it,i) => it.classList.toggle("active", i===idx));
+      
+      const indBtns = carouselEl.querySelectorAll(".carousel-indicators [data-bs-slide-to]");
+      indBtns.forEach((b,i) => b.classList.toggle("active", i===idx));
+      
+      thumbBar?.querySelectorAll("img").forEach((t,i) => t.classList.toggle("active", i===idx));
+    }
 
-  let bsCarousel = null;
-  if (carouselEl && window.bootstrap && window.bootstrap.Carousel) {
-    bsCarousel = new bootstrap.Carousel(carouselEl, { interval: false, ride: false });
-    
-    carouselEl.addEventListener("slid.bs.carousel", (e) => {
-      const idx = e.to;
-      thumbBar?.querySelectorAll("img").forEach((t,i) => {
-        t.classList.toggle("active", i===idx);
+    // Inicialización del carrusel Bootstrap
+    let bsCarousel = null;
+    if (carouselEl && window.bootstrap && window.bootstrap.Carousel) {
+      bsCarousel = new bootstrap.Carousel(carouselEl, { interval: false, ride: false });
+      
+      // Sincronizar miniaturas con slides del carrusel
+      carouselEl.addEventListener("slid.bs.carousel", (e) => {
+        const idx = e.to;
+        thumbBar?.querySelectorAll("img").forEach((t,i) => {
+          t.classList.toggle("active", i===idx);
+        });
+      });
+    }
+
+    // Event listeners para miniaturas
+    thumbBar?.querySelectorAll("img").forEach(img => {
+      img.addEventListener("click", () => {
+        const idx = parseInt(img.getAttribute("data-idx"), 10);
+        if (bsCarousel) { 
+          bsCarousel.to(idx); 
+        } else { 
+          activateSlideManually(idx); 
+        }
       });
     });
-  }
 
-  thumbBar?.querySelectorAll("img").forEach(img => {
-    img.addEventListener("click", () => {
-      const idx = parseInt(img.getAttribute("data-idx"), 10);
-      if (bsCarousel) { 
-        bsCarousel.to(idx); 
-      } else { 
-        activateSlideManually(idx); 
+    // Fallback para cuando Bootstrap no está disponible
+    if (!bsCarousel && carouselEl) {
+      const prev = carouselEl.querySelector(".carousel-control-prev");
+      const next = carouselEl.querySelector(".carousel-control-next");
+      const items = carouselEl.querySelectorAll(".carousel-item");
+      let current = [...items].findIndex(it => it.classList.contains("active"));
+      if (current < 0) current = 0;
+
+      function goTo(i) {
+        if (i < 0) i = items.length - 1;
+        if (i >= items.length) i = 0;
+        current = i;
+        activateSlideManually(current);
+      }
+      
+      prev?.addEventListener("click", (e) => { 
+        e.preventDefault(); 
+        goTo(current - 1); 
+      });
+      
+      next?.addEventListener("click", (e) => { 
+        e.preventDefault(); 
+        goTo(current + 1); 
+      });
+    }
+
+    // ========== FUNCIONALIDAD AGREGAR AL CARRITO ==========
+
+    const alerta = document.getElementById("alerta-carrito");
+
+    // Event listener para añadir al carrito con cantidad personalizada
+    const addBtn = document.getElementById("addToCartBtn");
+    addBtn?.addEventListener("click", async () => {
+      if (addBtn.disabled) return; // Prevenir múltiples clics
+      
+      let qty = parseInt(document.getElementById("qty").value, 10);
+      if (isNaN(qty) || qty < 1) qty = 1;
+      if (qty > 99) qty = 99;
+
+      try {
+        // Deshabilitar botón durante el proceso
+        addBtn.disabled = true;
+        addBtn.textContent = "Agregando...";
+        
+        // Simular proceso asíncrono
+        await new Promise(resolve => setTimeout(resolve, 500));
+        
+        const cart = getCart();
+        const item = cart.find(i => i.id === product.id);
+        if (item) item.qty += qty; 
+        else cart.push({ id: product.id, qty });
+        localStorage.setItem("cart", JSON.stringify(cart));
+
+        renderCartBadge(); // Actualizar contador global
+        
+        // Mostrar alerta de confirmación
+        if (alerta) {
+          alerta.classList.add("mostrar");
+          setTimeout(() => {
+            alerta.classList.remove("mostrar");
+          }, 3000);
+        }
+        
+        console.log(`✅ Producto ${product.id} agregado al carrito (cantidad: ${qty})`);
+        
+      } catch(error) {
+        console.error('❌ Error al agregar al carrito:', error);
+        alert('Error al agregar el producto al carrito. Por favor, intenta de nuevo.');
+      } finally {
+        // Restaurar botón
+        addBtn.disabled = false;
+        addBtn.textContent = "Añadir al carrito";
       }
     });
-  });
-
-  if (!bsCarousel && carouselEl) {
-    const prev = carouselEl.querySelector(".carousel-control-prev");
-    const next = carouselEl.querySelector(".carousel-control-next");
-    const items = carouselEl.querySelectorAll(".carousel-item");
-    let current = [...items].findIndex(it => it.classList.contains("active"));
-    if (current < 0) current = 0;
-
-    function goTo(i) {
-      if (i < 0) i = items.length - 1;
-      if (i >= items.length) i = 0;
-      current = i;
-      activateSlideManually(current);
-    }
     
-    prev?.addEventListener("click", (e) => { 
-      e.preventDefault(); 
-      goTo(current - 1); 
-    });
+    console.log('✅ Página de producto inicializada correctamente');
     
-    next?.addEventListener("click", (e) => { 
-      e.preventDefault(); 
-      goTo(current + 1); 
-    });
+  } catch (error) {
+    console.error('❌ Error al cargar producto:', error);
+    container.innerHTML = `
+      <div class="alert alert-danger">
+        <h2>Error al cargar el producto</h2>
+        <p>No se pudo cargar la información del producto. Por favor, intenta de nuevo.</p>
+        <div class="d-flex gap-2">
+          <button class="btn btn-primary" onclick="location.reload()">Recargar página</button>
+          <a href="productos.html" class="btn btn-outline-primary">Volver al catálogo</a>
+        </div>
+      </div>
+    `;
   }
-
-  // ====== Añadir al carrito con cantidad ======
-  const addBtn = document.getElementById("addToCartBtn");
-  addBtn?.addEventListener("click", () => {
-    let qty = parseInt(document.getElementById("qty").value, 10);
-    if (isNaN(qty) || qty < 1) qty = 1;
-    if (qty > 99) qty = 99;
-
-    try {
-      const cart = JSON.parse(localStorage.getItem("cart") || "[]");
-      const item = cart.find(i => i.id === p.id);
-      if (item) item.qty += qty; 
-      else cart.push({ id: p.id, qty });
-      localStorage.setItem("cart", JSON.stringify(cart));
-    } catch(e) {}
-
-    renderCartBadge(); // Refresca el contador global leyendo de localStorage
-    alert(`Se añadieron ${qty} unidad(es) de "${p.nombre}" al carrito.`);
-  });
 });
 
 // ==========================================
-// 6. FUNCIONALIDAD DEL FORMULARIO DE CONTACTO
+// 7. FUNCIONALIDAD DEL FORMULARIO DE CONTACTO
 // ==========================================
 
 /**
- * Inicializa validación y envío del formulario de contacto
- * - Maneja validación de formulario con clases Bootstrap
- * - Proporciona retroalimentación de validación en tiempo real
- * - Muestra mensaje de éxito después de envío válido
- * - Resetea estado del formulario después de envío exitoso
+ * Inicializa validación y envío del formulario de contacto con procesamiento asíncrono
  */
 function initContactForm() {
-  console.log('Inicializando formulario de contacto');
-  
   const form = document.getElementById("contact-form");
   const successMessage = document.getElementById("success-message");
 
@@ -682,32 +980,67 @@ function initContactForm() {
 
   console.log('✅ Formulario de contacto encontrado');
 
-  form.addEventListener("submit", (event) => {
-    console.log('Formulario enviado');
+  // ========== MANEJO DEL ENVÍO DEL FORMULARIO ==========
+  
+  form.addEventListener("submit", async (event) => {
+    console.log('📧 Procesando envío de formulario');
     event.preventDefault();
     event.stopPropagation();
 
+    const submitBtn = form.querySelector('button[type="submit"]');
     const isValid = form.checkValidity();
     form.classList.add('was-validated');
 
-    console.log('Formulario válido:', isValid);
+    if (!isValid) {
+      console.log('❌ Formulario inválido');
+      return;
+    }
 
-    if (isValid) {
-      console.log('🎉 Mostrando mensaje de éxito');
+    try {
+      // Deshabilitar botón durante el envío
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Enviando...";
+      }
+
+      // Simular envío asíncrono del formulario
+      console.log('🔄 Simulando envío del formulario...');
+      await new Promise(resolve => setTimeout(resolve, 2000)); // 2 segundos
+
+      // Simular posible error de red (5% probabilidad)
+      if (Math.random() < 0.05) {
+        throw new Error('Error de conexión al servidor');
+      }
+
+      console.log('✅ Formulario enviado exitosamente');
+      
+      // Mostrar mensaje de éxito
       setTimeout(() => {
         successMessage.classList.remove("d-none");
         form.reset();
         form.classList.remove('was-validated');
         
+        // Scroll suave hacia el mensaje de éxito
         successMessage.scrollIntoView({ 
           behavior: 'smooth', 
           block: 'center' 
         });
       }, 500);
+
+    } catch (error) {
+      console.error('❌ Error al enviar formulario:', error);
+      alert('Error al enviar el formulario. Por favor, intenta de nuevo.');
+    } finally {
+      // Restaurar botón
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Enviar mensaje";
+      }
     }
   });
 
-  // Validación en tiempo real
+  // ========== VALIDACIÓN EN TIEMPO REAL ==========
+  
   const inputs = form.querySelectorAll('.form-control');
   console.log('Inputs encontrados:', inputs.length);
   
@@ -721,23 +1054,32 @@ function initContactForm() {
         input.classList.add('is-invalid');
       }
     });
+    
+    input.addEventListener('blur', () => {
+      if (input.value.trim() !== '') {
+        if (input.checkValidity()) {
+          input.classList.remove('is-invalid');
+          input.classList.add('is-valid');
+        } else {
+          input.classList.remove('is-valid');
+          input.classList.add('is-invalid');
+        }
+      }
+    });
   });
 
-  console.log('Formulario de contacto inicializado correctamente');
+  console.log('✅ Formulario de contacto inicializado correctamente');
 }
 
 // ==========================================
-// 7. MEJORA DE ACCESIBILIDAD DEL CARRUSEL
+// 8. MEJORA DE ACCESIBILIDAD DEL CARRUSEL
 // ==========================================
 
 /**
- * Características mejoradas de accesibilidad del carrusel
- * - Gestiona estados aria-selected para indicadores
- * - Proporciona navegación por teclado para indicadores del carrusel
- * - Sin anuncios de región live para evitar distraer a usuarios de lectores de pantalla
+ * Características mejoradas de accesibilidad del carrusel principal
  */
 function initCarouselAccessibility() {
-  console.log('Inicializando accesibilidad del carrusel');
+  console.log('🔧 Inicializando accesibilidad del carrusel');
   
   const carousel = document.getElementById('heroCarousel');
   
@@ -746,20 +1088,21 @@ function initCarouselAccessibility() {
     return;
   }
   
-  // Escuchar eventos de slide del carrusel para actualizar solo aria-selected
+  // ========== ACTUALIZACIÓN DE ESTADOS ARIA ==========
+  
   carousel.addEventListener('slid.bs.carousel', function(e) {
     const activeIndex = e.to;
     
-    // Actualizar aria-selected para indicadores (actualización silenciosa)
     const indicators = carousel.querySelectorAll('.carousel-indicators button');
     indicators.forEach((indicator, index) => {
       indicator.setAttribute('aria-selected', index === activeIndex ? 'true' : 'false');
     });
     
-    console.log('Carrusel cambió a diapositiva:', activeIndex + 1);
+    console.log('🎠 Carrusel cambió a diapositiva:', activeIndex + 1);
   });
   
-  // Manejar navegación por teclado para indicadores del carrusel
+  // ========== NAVEGACIÓN POR TECLADO ==========
+  
   const indicators = carousel.querySelectorAll('.carousel-indicators button');
   indicators.forEach((indicator, index) => {
     indicator.addEventListener('keydown', function(e) {
@@ -786,62 +1129,107 @@ function initCarouselAccessibility() {
           return;
       }
       
-      // Enfocar y hacer clic en el nuevo indicador
       indicators[newIndex].focus();
       indicators[newIndex].click();
     });
   });
+
+  console.log('✅ Accesibilidad del carrusel inicializada correctamente');
 }
 
 // ==========================================
-// 8. INICIALIZACIÓN DE LA APLICACIÓN
+// 9. INICIALIZACIÓN DE LA APLICACIÓN
 // ==========================================
 
 /**
- * Función principal de inicialización de la aplicación
- * - Coordina la inicialización de todos los componentes de la página
- * - Intenta inicializar productos, formulario de contacto, y accesibilidad del carrusel
- * - Se llama cuando el DOM está listo o inmediatamente si ya está cargado
+ * Función principal de inicialización de la aplicación con manejo asíncrono
  */
-function initApp() {
+async function initApp() {
+  // Prevenir múltiples inicializaciones
   if (window.appInitialized) return;   
   window.appInitialized = true;
-  console.log('Inicializando aplicación');
-  console.log('Estado de document ready:', document.readyState);
   
-  // Inicializar contador de carrito
-  renderCartBadge();
+  console.log('🚀 Inicializando aplicación con carga asíncrona');
+  console.log('📄 Estado de document ready:', document.readyState);
+  console.log('🔗 Página actual:', window.location.pathname);
+  
+  try {
+    // ========== INICIALIZACIÓN INMEDIATA ==========
+    
+    // Inicializar contador de carrito (siempre presente)
+    renderCartBadge();
+    console.log('✅ Badge del carrito inicializado');
 
-  // Intentar inicializar productos
-  initProductos();
-  
-  // Intentar inicializar formulario de contacto
-  initContactForm();
-  
-  // Intentar inicializar accesibilidad del carrusel
-  initCarouselAccessibility();
-
-  // Intentar inicializar catálogo de productos
-  initCatalogPage();
-  
-  console.log('Inicialización completada');
+    // Inicializar accesibilidad del carrusel (si existe)
+    initCarouselAccessibility();
+    
+    // Inicializar formulario de contacto (si existe)
+    initContactForm();
+    
+    // ========== INICIALIZACIÓN ASÍNCRONA ==========
+    
+    // Crear array de promesas para inicialización concurrente
+    const initPromises = [];
+    
+    // Productos destacados (home/catálogo) - asíncrono
+    if (document.getElementById("products-container") || document.getElementById("products-carousel-container")) {
+      initPromises.push(
+        initProductos().catch(error => {
+          console.error('❌ Error en initProductos:', error);
+        })
+      );
+    }
+    
+    // Catálogo completo (productos.html) - asíncrono
+    if (document.querySelector(".grilla")) {
+      initPromises.push(
+        initCatalogPage().catch(error => {
+          console.error('❌ Error en initCatalogPage:', error);
+        })
+      );
+    }
+    
+    // Ejecutar todas las inicializaciones asíncronas en paralelo
+    if (initPromises.length > 0) {
+      console.log(`🔄 Ejecutando ${initPromises.length} inicializaciones asíncronas...`);
+      await Promise.allSettled(initPromises);
+    }
+    
+    console.log('🎉 Inicialización completada exitosamente');
+    
+    // Disparar evento personalizado para indicar que la app está lista
+    window.dispatchEvent(new CustomEvent('hermanos-jota-ready', {
+      detail: { timestamp: Date.now() }
+    }));
+    
+  } catch (error) {
+    console.error('❌ Error crítico durante la inicialización:', error);
+  }
 }
+
+// ========== CONFIGURACIÓN DE EVENT LISTENERS ==========
 
 // Ejecutar cuando el DOM esté listo
 if (document.readyState === 'loading') {
-  console.log('Esperando DOMContentLoaded');
+  console.log('⏳ DOM cargando, esperando DOMContentLoaded...');
   document.addEventListener('DOMContentLoaded', initApp);
 } else {
-  console.log('DOM ya está listo, ejecutando inmediatamente');
+  console.log('✅ DOM ya listo, ejecutando inmediatamente');
   initApp();
 }
 
-// Respaldo: ejecutar también en window.load
+// Respaldo: ejecutar también en window.load por seguridad
 window.addEventListener('load', function() {
-  console.log('🔄 Window load disparado');
-  // Solo como respaldo si no se ejecutó antes
+  console.log('🔄 Window load event disparado');
   if (!window.appInitialized) {
+    console.log('⚠️  Ejecutando inicialización de respaldo');
     initApp();
-    window.appInitialized = true;
+  } else {
+    console.log('✅ Aplicación ya inicializada anteriormente');
   }
+});
+
+// Event listener para el evento personalizado (opcional, para debugging)
+window.addEventListener('hermanos-jota-ready', function(e) {
+  console.log('🎊 Aplicación Hermanos Jota completamente cargada:', new Date(e.detail.timestamp));
 });

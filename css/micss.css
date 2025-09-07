@@ -1392,8 +1392,16 @@ body {
 }
 .btn-brand:hover{ filter:brightness(.96); }
 .btn-outline-brand{
-  background:transparent; color:#A0522D; border:2px solid #A0522D;
-  border-radius:12px; padding:10px 16px; font-weight:700;
+  background:transparent;
+  color:#A0522D;
+  border:2px solid #A0522D;
+  border-radius:12px;
+  padding:10px 16px; font-weight:700;
+  text-decoration: none;
+}
+
+.btn-outline-brand:hover{
+  color: #A0522D;
 }
 .product-desc{ color:#222; }
 .product-specs li{ margin-bottom:6px; color:#444; }
@@ -1466,6 +1474,22 @@ body {
     gap: 40px;
   }
 
+  .grilla .text-center,
+  .grilla .alert,
+  .grilla .spinner-border {
+    grid-column: 1 / -1; /* Ocupa desde la primera hasta la última columna */
+  }
+
+  /* Contenedor específico para mensajes centrados */
+  .grilla .full-width-message {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-height: 200px;
+  }
+
 /* Tarjeta producto */
 .estiloProducto {
     background: white;
@@ -1527,7 +1551,7 @@ body {
 }
 
 .estiloProducto button {
-    background-color: var(--siena-tostado);
+    background-color: #87A96B;
     color: white;
     border: none;
     border-radius: 8px;
@@ -1541,13 +1565,33 @@ body {
 }
 
 .estiloProducto button:hover {
-    background-color: #8a4524;
+    background-color: #5a7048;
 }
 
 .botonAgregarCarro {
    justify-content: space-between;
    flex-direction: column;
 }
+
+  .alerta {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #285232;
+    color: #fff;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: 500;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: 2000;
+  }
+  .alerta.mostrar {
+    opacity: 1;
+    transform: translateY(0);
+  }
 
 /* Media Queries */
 @media (max-width: 992px) {
