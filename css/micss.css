@@ -1,7 +1,7 @@
 
 /*
 ===========================================
-  HERMANOS JOTA - MAIN STYLESHEET
+  HERMANOS JOTA
 ===========================================
   Organización del archivo CSS:
   1. ESTILOS GLOBALES (Para todas las páginas)
@@ -142,7 +142,7 @@ body {
 
 
 /* =================== */
-/* 4. NAVIGATION */
+/* 4. NAVEGACION */
 /* =================== */
 
 /* Estilos personalizados de la barra de navegación */
@@ -291,20 +291,25 @@ body {
 /* Main hero title */
 .hero-title {
   font-family: 'Playfair Display', serif;
-  font-size: 4rem;
+  font-size: 3rem;
   font-weight: 700;
   color: #A0522D;
   margin-bottom: 1.5rem;
   line-height: 1.1;
-  letter-spacing: -2px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-align: center;
 }
 
 /* Hero subtitle */
 .hero-subtitle {
-  font-size: 1.3rem;
-  color: #666;
+  font-size: 1.1rem;
+  color: #6B7280;
   margin-bottom: 3rem;
   font-weight: 400;
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto 2rem;
 }
 
 /* Hero image container */
@@ -852,7 +857,7 @@ body {
   font-family: 'Playfair Display', serif;
   font-size: 4rem;
   font-weight: 700;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   margin-bottom: 1.5rem;
   text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
@@ -1059,24 +1064,6 @@ body {
   padding: 100px 0 40px;
 }
 
-/* Contact hero title */
-.contact-hero .hero-title {
-  font-family: 'Playfair Display', serif;
-  font-weight: 700;
-  font-size: clamp(2.5rem, 5vw, 3.5rem);
-  color: #8B4513;
-  margin-bottom: 1rem;
-  text-align: center;
-}
-
-/* Contact hero subtitle */
-.contact-hero .hero-subtitle {
-  font-size: 1.1rem;
-  color: #6B7280;
-  text-align: center;
-  max-width: 600px;
-  margin: 0 auto 2rem;
-}
 
 /* Contact container wrapper */
 .contact-container {
@@ -1173,11 +1160,14 @@ body {
     padding: 2rem 1.5rem;
     margin: 0 1rem 2rem;
   }
-  
-  .contact-hero {
-    padding: 80px 0 30px;
-  }
 }
+
+  @media (max-width: 576px) {
+    .hero-title {
+      letter-spacing: 0.02em;
+    }
+}
+
 
 /* =================== */
 /* 3. SPLIT SECTION - SUSTAINABILITY */
@@ -1425,43 +1415,10 @@ body {
     --rosa-polvoriento: #C47A6D;
 }
 
-
-/* Contenedor principal */
-.pagina_Princ {
-    max-width: 1200px;
-    padding: 3rem 2rem 4rem;
-    margin: 3rem auto;
-    background: white;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-    border-radius: 12px;
-    position: relative;
-}
-
-.pagina_Princ h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: 3rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
-    color: var(--siena-tostado);
-    text-align: center;
-    text-transform: capitalize;
-    letter-spacing: 0.15em;
-}
-
-.parrafo {
-    font-size: 1.1rem;
-    color: #666;
-    font-style: italic;
-    text-align: center;
-    margin-bottom: 3rem;
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
 /* Barra de búsqueda */
 .barraDeBusqueda {
     display: flex;
+    padding-bottom: 3rem;
     gap: 10px;
     margin-bottom: 3rem;
     max-width: 600px;
@@ -1504,10 +1461,10 @@ body {
 /* Grilla de productos */
 .grilla {
     display: grid;
+    padding: 1rem 3rem 2rem 4rem;
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
     gap: 40px;
-    padding-top: 1rem;
-}
+  }
 
 /* Tarjeta producto */
 .estiloProducto {
@@ -1594,17 +1551,20 @@ body {
 
 /* Media Queries */
 @media (max-width: 992px) {
-    .pagina_Princ {
-        padding: 3rem 1.5rem;
-    }
     .grilla {
+        padding: 3rem 1.5rem;
         grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
         gap: 30px;
+    }
+
+    .barraDeBusqueda{
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
     }
 }
 
 @media (max-width: 768px) {
-    .pagina_Princ {
+    .grilla {
         padding: 2rem 1rem;
     }
     h2 {
@@ -1615,6 +1575,8 @@ body {
     }
     .barraDeBusqueda {
         flex-direction: column;
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
     }
     .barraDeBusqueda input,
     .barraDeBusqueda button {
@@ -1633,5 +1595,9 @@ body {
 @media (max-width: 480px) {
     .titulo-principal {
         font-size: 1.8rem;
+    }
+
+    .hero-title {
+        margin-top: 2rem;
     }
 }
