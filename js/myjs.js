@@ -485,6 +485,7 @@ function initProductos() {
         desktopHTML += `
             <div class="col-md-3 col-sm-6">
                 <article class="product-card text-center h-100">
+                <a href="producto.html?id=${encodeURIComponent(prod.id)}" style="text-decoration:none; color:inherit;">
                     <div class="product-image">
                         <img src="${prod.img}" alt="${prod.nombre}" class="img-fluid">
                     </div>
@@ -492,6 +493,7 @@ function initProductos() {
                         <h3 class="product-dest-title">${prod.nombre}</h3>
                         <p class="product-price">${prod.precio}</p>
                     </div>
+                    </a>
                 </article>
             </div>
         `;
@@ -500,6 +502,7 @@ function initProductos() {
         carouselHTML += `
             <div class="carousel-item ${index === 0 ? "active" : ""}">
                 <article class="product-card mx-auto text-center">
+                  <a href="producto.html?id=${encodeURIComponent(prod.id)}" style="text-decoration:none; color:inherit;">
                     <div class="product-image">
                         <img src="${prod.img}" alt="${prod.nombre}" class="img-fluid">
                     </div>
@@ -507,6 +510,7 @@ function initProductos() {
                         <h3 class="product-dest-title">${prod.nombre}</h3>
                         <p class="product-price">${prod.precio}</p>
                     </div>
+                  </a>
                 </article>
             </div>
         `;
@@ -593,7 +597,7 @@ function initProductos() {
     grid.innerHTML = products.map(p => {
       const img = (p.imagenes && p.imagenes[0]) ? p.imagenes[0] : "img/producto-ejemplo.jpg";
       return `
-        <article class="estiloProducto">
+        <article class="estiloProducto botonAgregarCarro">
           <a href="producto.html?id=${encodeURIComponent(p.id)}" style="text-decoration:none;color:inherit;">
             <img src="${img}" alt="${p.nombre}" />
             <div class="estiloProducto-content">
@@ -602,7 +606,7 @@ function initProductos() {
               <span class="price">${formatARS(p.precio)}</span>
             </div>
           </a>
-          <button class="btn-add-to-cart" data-id="${p.id}">Agregar al Carrito</button>
+          <button class="btn-add-to-cart " data-id="${p.id}">Agregar al Carrito</button>
         </article>
       `;
     }).join("");
