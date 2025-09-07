@@ -486,7 +486,7 @@ function initProductos() {
             <div class="col-md-3 col-sm-6">
                 <article class="product-card text-center h-100">
                     <div class="product-image">
-                        <img src="${prod.imagenes}" alt="${prod.nombre}" class="img-fluid">
+                        <img src="${prod.img}" alt="${prod.nombre}" class="img-fluid">
                     </div>
                     <div class="product-info">
                         <h3 class="product-dest-title">${prod.nombre}</h3>
