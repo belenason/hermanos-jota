@@ -1313,7 +1313,6 @@ body {
   font-size: 1.1rem;
 }
 
-
 /* =================== */
 /* PAGINA PRODUCTO */
 /* =================== */
@@ -1334,6 +1333,7 @@ body {
   --shadow-md: 0 10px 24px rgba(0,0,0,.10);
   --shadow-sm: 0 6px 14px rgba(0,0,0,.08);
 }
+
 /* Barra de navegacion*/
 .breadcrumb .breadcrumb-item a{
   color: var(--sage-green) !important;
@@ -1345,66 +1345,247 @@ body {
   margin: 8px 0 14px;
   font-family: "Playfair Display", serif;
   font-size: clamp(1.6rem, 4vw, 2.4rem);
-  color: #3E2723; /* dark wood */
+  color:#A0522D; /* dark wood */
 }
 
-/* Carrusel + thumbs */
+/* Carrusel + thumbs - MODIFICADO PARA MOSTRAR IMAGEN COMPLETA */
 .product-gallery{
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 10px 24px rgba(0,0,0,.10);
   background: #fff;
+  padding: 1rem;
 }
+
 .product-gallery .carousel-item{
-  aspect-ratio: 16 / 9;
-  background:#eee;
+  /* Galería más compacta */
+  min-height: 300px;
+  max-height: 450px;
+  background:#f8f9fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.product-gallery img{ width:100%; height:100%; object-fit:cover; }
+
+.product-gallery img{ 
+  width: 100%; 
+  height: auto;
+  max-height: 450px;
+  object-fit: contain; /* Cambiado de cover a contain para mostrar imagen completa */
+  border-radius: 0;
+}
+
+/* Para pantallas más pequeñas, ajustamos la altura mínima */
+@media (max-width: 768px) {
+  .product-gallery .carousel-item {
+    min-height: 250px;
+    max-height: 320px;
+  }
+  
+  .product-gallery img {
+    max-height: 320px;
+  }
+}
+
+/* Para pantallas muy pequeñas */
+@media (max-width: 480px) {
+  .product-gallery .carousel-item {
+    min-height: 200px;
+    max-height: 280px;
+  }
+  
+  .product-gallery img {
+    max-height: 280px;
+  }
+}
 
 .product-thumbs{
-  display:flex; gap:10px; padding:12px; overflow:auto;
-  background:#FAF7F2; border-top:1px solid #eee;
+  display:flex; 
+  gap:10px; 
+  padding:12px; 
+  overflow:auto;
+  background:#FAF7F2; 
+  border-top:1px solid #eee;
+  border-radius: 25px;
 }
+
 .product-thumbs img{
-  width:86px; height:64px; object-fit:cover;
-  border-radius:10px; cursor:pointer; flex:0 0 auto;
+  width:86px; 
+  height:64px; 
+  object-fit:cover;
+  border-radius:10px; 
+  cursor:pointer; 
+  flex:0 0 auto;
   border:2px solid transparent;
+  transition: border-color 0.2s ease;
 }
-.product-thumbs img.active{ border-color:#A0522D; } /* burnt sienna */
+
+.product-thumbs img.active{ 
+  border-color:#A0522D; 
+} 
+
+.product-thumbs img:hover {
+  border-color: rgba(160, 82, 45, 0.5);
+}
 
 /* Detalle y compra */
-.product-detail{ margin-top: 26px; }
+.product-detail{ 
+  margin-top: 26px; 
+}
+
 .purchase-card{
-  background:#fff; border-radius:16px; padding:20px;
+  background:#fff; 
+  border-radius:16px; 
+  padding:20px;
   box-shadow:0 10px 24px rgba(0,0,0,.10);
   border:1px solid #f0e6d8;
+  position: sticky;
+  top: 20px; /* Hace que la tarjeta de compra se mantenga visible al hacer scroll */
 }
-.price{ font-size:clamp(1.4rem, 3.6vw, 2rem); color:#A0522D; font-weight:800; }
-.label{ font-size:.9rem; color:#6b6b6b; margin-bottom:6px; }
-.qty-input{ display:flex; align-items:center; gap:10px; }
+
+.price{ 
+  font-size:clamp(1.4rem, 3.6vw, 2rem); 
+  color:#A0522D; 
+  font-weight:800; 
+  margin-bottom: 12px;
+}
+
+.label{ 
+  font-size:.9rem; 
+  color:#6b6b6b; 
+  margin-bottom:6px; 
+}
+
+.qty-input{ 
+  display:flex; 
+  align-items:center; 
+  gap:10px; 
+}
+
 .qty-input input[type="number"]{
-  max-width:100px; border-radius:10px; border:1.5px solid #eadac6;
-  padding:10px 12px; background:#F5E6D3; color:#3E2723;
+  max-width:100px; 
+  border-radius:10px; 
+  border:1.5px solid #eadac6;
+  padding:10px 12px; 
+  background:#F5E6D3; 
+  color:#3E2723;
+  transition: border-color 0.2s ease;
 }
+
+.qty-input input[type="number"]:focus {
+  outline: none;
+  border-color: #A0522D;
+}
+
 .btn-brand{
-  background:#A0522D; color:#fff; border:none; border-radius:12px;
-  padding:12px 16px; font-weight:700;
+  background:#A0522D; 
+  color:#fff; 
+  border:none; 
+  border-radius:12px;
+  padding:12px 16px; 
+  font-weight:700;
+  transition: all 0.2s ease;
+  flex: 1;
 }
-.btn-brand:hover{ filter:brightness(.96); }
+
+.btn-brand:hover{ 
+  filter:brightness(.96); 
+  transform: translateY(-1px);
+}
+
 .btn-outline-brand{
   background:transparent;
   color:#A0522D;
   border:2px solid #A0522D;
   border-radius:12px;
-  padding:10px 16px; font-weight:700;
+  padding:10px 16px; 
+  font-weight:700;
   text-decoration: none;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .btn-outline-brand:hover{
-  color: #A0522D;
+  color: #fff;
+  background: #A0522D;
+  transform: translateY(-1px);
 }
-.product-desc{ color:#222; }
-.product-specs li{ margin-bottom:6px; color:#444; }
+
+.product-desc{ 
+  color:#222; 
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.product-specs li{ 
+  margin-bottom:8px; 
+  color:#444; 
+  padding: 4px 0;
+}
+
+.product-specs strong {
+  color: #3E2723;
+}
+
+/* Mejoras adicionales para la experiencia de usuario */
+.carousel-control-prev,
+.carousel-control-next {
+  width: 50px;
+  background: rgba(160, 82, 45, 0.8);
+  border-radius: 50%;
+  height: 50px;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+}
+
+.carousel-control-prev:hover,
+.carousel-control-next:hover {
+  opacity: 1;
+}
+
+.carousel-control-prev {
+  left: 15px;
+}
+
+.carousel-control-next {
+  right: 15px;
+}
+
+/* Asegurar que los controles estén centrados en el contenedor de la imagen */
+.product-gallery .carousel {
+  position: relative;
+}
+
+.product-gallery .carousel-control-prev,
+.product-gallery .carousel-control-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+}
+
+/* Responsive mejoras */
+@media (max-width: 992px) {
+  .purchase-card {
+    position: static; /* Quita el sticky en tablets y móviles */
+    margin-top: 20px;
+  }
+}
+
+@media (max-width: 576px) {
+  .d-flex.gap-2 {
+    flex-direction: column;
+  }
+  
+  .btn-outline-brand {
+    width: 100%;
+    text-align: center;
+  }
+}
 
 
 /* =================== */

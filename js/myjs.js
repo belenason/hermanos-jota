@@ -1,23 +1,7 @@
 /*
 ===========================================
   HERMANOS JOTA - FUNCIONES JAVASCRIPT
-  Versión con carga asíncrona simulada
 ===========================================
-
-ÍNDICE DE CONTENIDOS:
-1. DATOS DE PRODUCTOS.............................línea 17
-2. FUNCIONES DE UTILIDAD..........................línea 178
-3. SERVICIOS ASÍNCRONOS...........................línea 220
-4. FUNCIONALIDAD DEL NAVBAR.......................línea 285
-5. FUNCIONALIDAD DEL CATÁLOGO.....................línea 355
-   5.1. Inicialización de productos
-   5.2. Renderizado del catálogo
-   5.3. Página del catálogo
-6. PÁGINA DE PRODUCTO INDIVIDUAL..................línea 577
-7. FORMULARIO DE CONTACTO.........................línea 779
-8. ACCESIBILIDAD DEL CARRUSEL.....................línea 840
-9. INICIALIZACIÓN DE LA APLICACIÓN................línea 911
-*/
 
 // ==========================================
 // 1. DATOS DE PRODUCTOS
@@ -372,6 +356,16 @@ async function searchProducts(query, delay = 300) {
   const isDesktop = () => window.matchMedia("(min-width: 768px)").matches;
 
   /**
+   * Detecta si estamos en la página de producto
+   * @returns {boolean} True si estamos en producto.html
+   */
+  const isProductPage = () => {
+    return window.location.pathname.includes('producto.html') || 
+           document.body.classList.contains('product-page') ||
+           document.querySelector('.product-gallery') !== null;
+  };
+
+  /**
    * Aplica el estilo apropiado del navbar basado en posición del scroll y tipo de dispositivo
    */
   function applyNavbarState() {
@@ -382,7 +376,14 @@ async function searchProducts(query, delay = 300) {
       return;
     }
 
-    // En desktop: alternar transparencia basado en posición del scroll
+    // En página de producto: NUNCA transparente, siempre fondo sólido
+    if (isProductPage()) {
+      navbar.classList.add("scrolled");
+      navbar.classList.remove("transparent");
+      return;
+    }
+
+    // En otras páginas desktop: alternar transparencia basado en posición del scroll
     if (window.scrollY > 50) {
       navbar.classList.add("scrolled");     // Fondo sólido + sombra
       navbar.classList.remove("transparent");
