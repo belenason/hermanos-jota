@@ -696,7 +696,7 @@ async function initCatalogPage() {
         <div class="alert alert-danger">
           <h4>Error al cargar el catálogo</h4>
           <p>No se pudieron cargar los productos. Por favor, recarga la página.</p>
-          <button class="btn btn-primary" onclick="location.reload()">Recargar página</button>
+          <button class="btn btn-secondary" onclick="location.reload()">Recargar página</button>
         </div>
       </div>
     `;
