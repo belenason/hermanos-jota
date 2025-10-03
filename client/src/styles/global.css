@@ -1,0 +1,1817 @@
+/*
+===========================================
+  HERMANOS JOTA - ARCHIVO CSS PRINCIPAL
+===========================================
+===========================================
+SECCIÓN 1: ESTILOS GLOBALES (Para todas las páginas)
+===========================================
+*/
+
+:root{
+  --siena-tostado:#A0522D;      /* acento principal */
+  --verde-salvia:#87A96B;        /* acento secundario */
+  --alabastro-calido:#F5E6D3;    /* fondo cálido */
+  --vara-de-oro:#D4A437;         /* detalle */
+  --rosa-polvoriento:#C47A6D;        /* variante */
+  --dark-wood:#3E2723;         /* títulos */
+  --ink:#222;                  /* texto */
+  --muted:#6b6b6b;            /* texto secundario */
+  --surface:#fff;
+}
+
+/* =================== */
+/* 1.1 BASE Y RESET */
+/* =================== */
+
+/* Base HTML */
+html {
+  font-size: 14px;
+  position: relative;
+  min-height: 100%;
+  scroll-behavior: smooth;
+}
+
+/* Para que la letra sea más grande en pantallas más grandes */
+@media (min-width: 768px) {
+  html { 
+    font-size: 16px; 
+  }
+}
+
+/* Configuración de los contenedores en general */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden; /* Para prevenir que se pueda hacer scroll en horizontal */
+}
+
+body {
+  background-color: var(--alabastro-calido);
+  font-family: 'Inter', sans-serif;
+  font-size: 12pt;
+  font-weight: 400; /* Regular */
+  line-height: 1.6;
+  color: var(--dark-wood);
+}
+
+/* =================== */
+/* 1.2 TIPOGRAFÍA */
+/* =================== */
+
+/* Letra de editorial para encabezados */
+.font-encabezado {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 700;
+}
+
+/* Letra del color primario de la marca */
+.color-principal-texto {
+  color: var(--siena-tostado) !important;
+}
+
+/* Diseño de los títulos de las secciones */
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--siena-tostado);
+  margin-bottom: 2rem;
+  line-height: 1.2;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+/* Diseño de las etiquetas de las secciones, etiqueta que van arriba de los títulos */
+.section-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--verde-salvia);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+/* =================== */
+/* 1.3 BOTONES */
+/* =================== */
+
+.btn-secondary-custom {
+  display: inline-block;
+  padding: 12px 28px;
+  background-color: transparent;
+  color: var(--siena-tostado);
+  border: 1px solid var(--siena-tostado);
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.btn-secondary-custom:hover {
+  background-color: var(--verde-salvia);
+  border: 1px solid var(--verde-salvia);
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+/* Insignia para contador del carrito */
+.elbadge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translate(70%, -50%); /* lo acomoda justo en la esquina */
+  background-color: var(--siena-tostado);
+  color: white;
+  font-size: 0.6rem !important;
+  padding: 0.35em 0.55em;
+}
+
+/* =================== */
+/* 1.4 NAVEGACIÓN */
+/* =================== */
+
+/* Estilos personalizados de la barra de navegación */
+.custom-navbar {
+  background-color: var(--alabastro-calido) !important;
+  color: var(--siena-tostado);
+  transition: background-color 0.3s ease-in-out;
+}
+
+/* Estado transparente de la barra de navegación */
+.navbar.custom-navbar.transparent {
+  background-color: transparent !important;
+}
+
+/* Estado de barra de navegación con sombra al hacer scroll */
+.navbar.custom-navbar.scrolled {
+  background-color: var(--alabastro-calido) !important;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Título animado que aparece al pasar el cursor */
+.titulo-navbar {
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: all 0.4s ease;
+  display: inline-block;
+}
+
+.navbar:hover .titulo-navbar {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.navbar-nav .nav-link {
+  position: relative;
+  transition: color 0.3s ease;
+  padding: 0.7rem 1.2rem;
+}
+
+.navbar-nav .nav-link::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 6px;
+  width: 0;
+  height: 2px;
+  background-color: var(--siena-tostado);
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+  border-radius: 2px;
+}
+
+.navbar-nav .nav-link:hover {
+  color: var(--siena-tostado);
+}
+
+.navbar-nav .nav-link:hover::after {
+  width: 60%;
+}
+
+/* Enlace del carrito con efecto sutil */
+.cart-link {
+  position: relative;
+  font-size: 1.2rem;
+  transition: transform 0.2s ease;
+}
+
+.cart-link:hover {
+  transform: scale(1.1);
+}
+
+/* Transparencia de navbar solo en escritorio */
+@media (min-width: 768px) {
+  .custom-navbar.transparent {
+    background-color: transparent !important;
+  }
+}
+
+/* Navbar móvil - siempre fondo sólido para legibilidad */
+@media (max-width: 767.98px) {
+  .custom-navbar,
+  .custom-navbar.transparent,
+  .navbar .navbar-collapse {
+    background-color: var(--alabastro-calido) !important;
+  }
+
+  /* Diseño del menú móvil */
+  .navbar-nav {
+    width: 100%;
+    text-align: center;
+  }
+  
+  .navbar-nav .nav-item { 
+    margin: 0; 
+  }
+  
+  .navbar-nav .nav-link {
+    display: block;
+    width: 100%;
+    padding: 0.9rem 1rem;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+  }
+}
+
+/* =================== */
+/* 1.5 SECCIÓN HERO */
+/* =================== */
+
+/* Contenedor principal hero con altura completa del viewport */
+.hero-section {
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  background-color: var(--alabastro-calido);
+  overflow: hidden;
+}
+
+/* Contenedor de diseño del hero */
+.hero-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  min-height: 100vh;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* Área de contenido del hero con texto */
+.hero-content {
+  padding: 2rem;
+  z-index: 2;
+}
+
+/* Contenedor de texto del hero */
+.hero-text {
+  max-width: 500px;
+}
+
+/* Título principal del hero */
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 30pt;
+  font-weight: 700;
+  color: var(--siena-tostado);
+  margin-bottom: 1rem;
+  line-height: 1.2;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+/* Subtítulo del hero */
+.hero-subtitle {
+  font-size: 1.3rem;
+  color: rgba(62, 39, 35, 0.7);
+  margin-bottom: 3rem;
+  font-weight: 400;
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto 2rem;
+  line-height: 1.5;
+}
+
+/* Contenedor de imagen del hero */
+.hero-image {
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Estilo de imagen del hero */
+.hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Diseño responsivo del hero móvil */
+@media (max-width: 768px) {
+  .hero-container {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr auto;
+    text-align: center;
+  }
+  
+  .hero-content {
+    order: 2;
+    padding: 3rem 1rem;
+    background-color: rgba(245, 230, 211, 0.95);
+  }
+  
+  .hero-image {
+    order: 1;
+    height: 60vh;
+  }
+  
+  .hero-title {
+    font-size: 2.5rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 1.1rem;
+  }
+}
+
+/* =================== */
+/* 1.6 SECCIÓN ACERCA DE */
+/* =================== */
+
+.about-section {
+  background: var(--alabastro-calido);
+  padding: 80px 0;
+}
+
+.about-content {
+  padding-right: 2rem;
+  
+}
+
+.about-text {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: #666666;
+  margin-bottom: 1.5rem;
+}
+
+/* Contenedor para mantener proporción 16:9 */
+.about-media {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%; /* 16:9 */
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+}
+
+/* Video dentro del contenedor */
+.about-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+@media (max-width: 576px){
+  .about-content {
+        padding: 40px 20px
+  }
+}
+
+/* =================== */
+/* 1.7 SECCIÓN DE PRODUCTOS */
+/* =================== */
+
+/* Fondo de la sección de productos */
+.products-section {
+  padding: 100px 0;
+  background: linear-gradient(to bottom, white, var(--alabastro-calido));
+}
+
+/* Diseño de grilla de productos en escritorio */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+/* Estilo de tarjeta de producto individual */
+.product-card {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  text-decoration: none;
+  color: inherit;
+}
+
+.product-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Contenedor de imagen del producto */
+.product-image {
+  aspect-ratio: 1;
+  overflow: hidden;
+  background-color: #f8f8f8;
+}
+
+.product-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.product-card:hover .product-image img {
+  transform: scale(1.05);
+}
+
+/* Área de información del producto */
+.product-info {
+  padding: 1.5rem;
+  text-align: center;
+}
+
+/* Estilo del título del producto */
+.product-dest-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--siena-tostado);
+  margin-bottom: 0.5rem;
+}
+
+/* Estilo del precio del producto */
+.product-price {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--verde-salvia);
+  margin: 0;
+}
+
+
+.product-desc{
+  color: var(--dark-wood);
+}
+
+/* =================== */
+/* 1.8 CARRUSEL MÓVIL */
+/* =================== */
+
+/* Estilos específicos del carrusel móvil */
+@media (max-width: 767.98px) {
+  .products-section {
+    padding: 60px 0;
+  }
+  
+  /* Tarjetas de producto móvil en carrusel */
+  #productCarousel .product-card {
+    max-width: 300px;
+    margin: 0 auto;
+  }
+  
+  /* Estilo de controles del carrusel */
+  .carousel-control-prev,
+  .carousel-control-next {
+    width: 8%;
+  }
+  
+  .carousel-control-prev-icon,
+  .carousel-control-next-icon {
+    background-color: var(--siena-tostado);
+    border-radius: 50%;
+    padding: 20px;
+  }
+  
+  /* Estilo de indicadores del carrusel */
+  #productCarousel .carousel-indicators {
+    bottom: -50px;
+  }
+  
+  #productCarousel .carousel-indicators button {
+    background-color: var(--siena-tostado);
+    border-radius: 50%;
+    width: 12px;
+    height: 12px;
+  }
+}
+
+/* =================== */
+/* 1.9 ESTILOS LEGADOS */
+/* =================== */
+
+/* Estilos de galería de productos legados - manteniendo para compatibilidad */
+#cartelera {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+}
+
+.encabezado {
+  color: var(--siena-tostado);
+  font-family: 'Playfair Display', Georgia, serif;
+  text-align: center;
+}
+
+.producto {
+  border-radius: 40px;
+  margin: 3%;
+  background: white;
+  font-family: 'Playfair Display', Georgia, serif;
+}
+
+.card-hover {
+  display: flex;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-hover:hover {
+  transform: scale(1.05);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+  color: #333;
+}
+
+.letra-producto {
+  text-decoration: none;
+  color: #333;
+}
+
+/* =================== */
+/* 1.10 ESTILOS DEL PIE DE PÁGINA */
+/* =================== */
+
+/* Pie de página moderno con fondo de color de marca */
+.modern-footer {
+  background: var(--siena-tostado);
+  color: #ffffff;
+  padding: 60px 0 30px;
+  position: relative;
+}
+
+/* Área de contenido del pie de página con borde inferior */
+.footer-content {
+  padding-bottom: 40px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Espaciado de la sección de marca del pie de página */
+.footer-brand {
+  padding-right: 2rem;
+}
+
+/* Título principal del pie de página */
+.footer-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 1rem;
+}
+
+/* Texto de descripción del pie de página */
+.footer-description {
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+/* Contenedor de enlaces de redes sociales */
+.footer-social {
+  display: flex;
+  gap: 1rem;
+}
+
+/* Estilo de enlace de redes sociales individual */
+.social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.social-link:hover {
+  background-color: var(--verde-salvia);
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+/* Encabezados de sección del pie de página */
+.footer-heading {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 1.5rem;
+}
+
+/* Diseño de elementos de contacto */
+.contact-item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin-left: 2rem;
+  margin-right: 2rem;
+}
+
+/* Iconos de elementos de contacto */
+.contact-item i {
+  font-size: 1.1rem;
+  margin-right: 0.8rem;
+  margin-top: 0.2rem;
+  color: var(--verde-salvia);
+  min-width: 20px;
+}
+
+/* Enlaces de elementos de contacto */
+.contact-item a {
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.contact-item a:hover {
+  color: #ffffff;
+}
+
+/* Sección inferior del pie de página */
+.footer-bottom {
+  padding-top: 30px;
+  margin-top: 30px;
+}
+
+/* Texto de derechos de autor */
+.copyright {
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+/* Texto de créditos */
+.credits {
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.credits i {
+  color: var(--verde-salvia);
+  margin: 0 4px;
+}
+
+/* =================== */
+/* 1.11 RESPONSIVO MÓVIL */
+/* =================== */
+
+/* Centrado del pie de página móvil */
+@media (max-width: 767.98px) {
+  /* Centrar todas las secciones del pie de página en móvil */
+  .modern-footer .footer-brand,
+  .modern-footer .footer-info,
+  .modern-footer .footer-contact {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  /* Centrar enlaces de redes sociales */
+  .footer-social {
+    justify-content: center;
+  }
+  
+  /* Centrar elementos de contacto */
+  .contact-item {
+    justify-content: center;
+    text-align: center;
+  }
+  
+  .contact-item i {
+    margin-right: 0.8rem;
+  }
+  
+  /* Centrar contenido de la parte inferior del pie de página */
+  .footer-bottom .col-md-8,
+  .footer-bottom .col-md-4 {
+    text-align: center !important;
+  }
+  
+  .copyright,
+  .credits {
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+}
+
+/* =================== */
+/* 1.12 CLASES DE UTILIDAD */
+/* =================== */
+
+/* Ocultar en móvil, mostrar en escritorio */
+@media (max-width: 767.98px) {
+  .d-none.d-md-flex {
+    display: none !important;
+  }
+}
+
+/* Ocultar en escritorio, mostrar en móvil */
+@media (min-width: 768px) {
+  .d-md-none {
+    display: none !important;
+  }
+}
+
+/* =================== */
+/* 1.13 CLASES DE ACCESIBILIDAD */
+/* =================== */
+
+/* Contenido solo para lectores de pantalla */
+.visually-hidden {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0,0,0,0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+}
+
+.skip-link {
+    position: absolute;
+    top: -100px;
+    left: 0.5rem;
+    background: var(--verde-salvia);
+    color: white;
+    border: 1px solid #547936;
+    z-index: 9999;
+    padding: 1rem;
+    text-decoration: none;
+}
+
+.skip-link:focus {
+    top: 0.5rem;
+}
+
+/* Mantener efectos de hover modernos para enlaces de navegación */
+.navbar-nav .nav-link {
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover {
+  background-color: rgba(160, 82, 45, 0.1);
+  transform: translateY(-1px);
+}
+
+.cart-link {
+  position: relative;
+  font-size: 1.1rem;
+}
+
+/*
+===========================================
+SECCIÓN 2: ESTILOS ESPECÍFICOS DEL INDEX
+===========================================
+*/
+
+/* =================== */
+/* 2.1 CARRUSEL HERO */
+/* =================== */
+
+/* Sección del carrusel hero - altura completa del viewport */
+.hero-carousel-section {
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Contenedor de diapositiva hero individual */
+.hero-slide {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Estilo de imagen de diapositiva hero */
+.hero-slide-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 8s ease-in-out;
+}
+
+/* Efecto de zoom sutil durante la transición de diapositiva */
+.carousel-item.active .hero-slide-image {
+  transform: scale(1.02);
+}
+
+/* Superposición elegante del hero */
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(160, 82, 45, 0.1) 0%, rgba(0, 0, 0, 0.3) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Contenedor centrado de contenido hero */
+.hero-content-center {
+  text-align: center;
+  max-width: 700px;
+  padding: 2rem;
+  color: white;
+}
+
+/* Título principal del hero - siguiendo tipografía del manual de marca */
+.hero-main-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 4rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+  line-height: 1.1;
+  color: white;
+}
+
+/* Subtítulo principal del hero */
+.hero-main-subtitle {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 300;
+  margin-bottom: 3rem;
+  opacity: 0.95;
+  line-height: 1.5;
+}
+
+/* Botón primario del hero */
+.btn-hero-primary {
+  display: inline-block;
+  padding: 18px 45px;
+  background-color: rgba(255, 255, 255, 0.95);
+  color: var(--siena-tostado);
+  text-decoration: none;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  border: 2px solid rgba(255, 255, 255, 0.95);
+  transition: all 0.4s ease;
+  backdrop-filter: blur(10px);
+}
+
+.btn-hero-primary:hover {
+  background-color: transparent;
+  color: white;
+  border-color: white;
+  transform: translateY(-3px);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
+  text-decoration: none;
+}
+
+/* Carrusel hero móvil responsivo */
+@media (max-width: 768px) {
+  .hero-main-title {
+    font-size: 2.5rem;
+    letter-spacing: 0.05em;
+  }
+  
+  .hero-main-subtitle {
+    font-size: 1.1rem;
+  }
+  
+  .btn-hero-primary {
+    padding: 15px 35px;
+    font-size: 0.9rem;
+  }
+}
+
+/* =================== */
+/* 2.2 SECCIÓN DE VIDEO */
+/* =================== */
+
+/* Sección acerca de con video - ancho completo */
+.about-section {
+  background-color: white;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+/* Contenedor de medios de video con proporción 16:9 */
+.about-media-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #000;
+}
+
+/* Estilo elegante de video con proporción 16:9 */
+.about-video-elegant {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Superposición de video con etiqueta */
+.video-overlay {
+  position: absolute;
+  bottom: 40px;
+  left: 40px;
+  z-index: 2;
+}
+
+.video-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: white;
+  background: rgba(160, 82, 45, 0.9);
+  padding: 8px 16px;
+  letter-spacing: 2px;
+  backdrop-filter: blur(10px);
+}
+
+/* Estilo elegante del contenido acerca de */
+.about-content-elegant {
+  padding: 80px 60px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Etiqueta de sección con acento siguiendo manual de marca */
+.section-label-accent {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--verde-salvia);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 1.5rem;
+  display: block;
+}
+
+/* Texto de sección refinado */
+.section-text-refined {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 400;
+  line-height: 1.8;
+  color: var(--dark-wood);
+  margin-bottom: 1.8rem;
+}
+
+/* Sección de video móvil responsivo */
+@media (max-width: 991px) {
+  /* Mantener proporción 16:9 en móvil */
+  .about-media-container {
+    aspect-ratio: 16 / 9;
+    width: 100%;
+    max-width: 100vw;
+  }
+  
+  .about-content-elegant {
+    padding: 60px 40px;
+  }
+  
+  .section-title {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 576px) {
+  /* Mantener proporción 16:9 en móvil pequeño */
+  .about-media-container {
+    aspect-ratio: 16 / 9;
+    width: 100%;
+  }
+  
+  .about-content-elegant {
+    padding: 40px 20px;
+  }
+  
+  
+  .video-overlay {
+    bottom: 20px;
+    left: 20px;
+  }
+}
+
+/* =================== */
+/* 2.3 SECCIÓN DIVIDIDA - SOSTENIBILIDAD */
+/* =================== */
+
+/* Contenedor de sección dividida */
+.split-section {
+  background-color: var(--alabastro-calido);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+/* Estilo de contenido dividido */
+.split-content {
+  padding: 80px 60px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Contenedor de estadísticas de sostenibilidad */
+.sustainability-stats {
+  display: flex;
+  gap: 3rem;
+  margin: 3rem 0;
+  padding-left: 0rem;
+}
+
+/* Elemento de estadística individual */
+.stat-item {
+  text-align: center;
+  list-style-type: none;
+}
+
+.stat-number {
+  font-family: 'Playfair Display', serif;
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--vara-de-oro); /* Vara de Oro según manual de marca */
+  margin-bottom: 0.5rem;
+  line-height: 1;
+}
+
+.stat-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--dark-wood);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin: 0;
+}
+
+/* Contenedor de imagen dividida */
+.split-image-container {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.split-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.3s ease;
+}
+
+.split-image-container:hover .split-image {
+  transform: scale(1.02);
+}
+
+/* Superposición de imagen con etiqueta */
+.image-overlay {
+  position: absolute;
+  top: 40px;
+  right: 40px;
+  z-index: 2;
+}
+
+.image-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: white;
+  background: rgba(135, 169, 107, 0.9);
+  padding: 8px 16px;
+  letter-spacing: 2px;
+  backdrop-filter: blur(10px);
+}
+
+/* PArte responsive de la split section */
+@media (max-width: 991px) {
+  .split-image-container {
+    height: 50vh;
+  }
+  
+  .split-content {
+    padding: 60px 20px;
+  }
+  
+  .sustainability-stats {
+    gap: 2rem;
+    margin: 2rem 0;
+  }
+  
+  .stat-number {
+    font-size: 2.5rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .split-content {
+    padding: 40px 20px;
+  }
+  
+  .sustainability-stats {
+    flex-direction: column;
+    gap: 2rem;
+    text-align: center;
+  }
+  
+  .image-overlay {
+    top: 20px;
+    right: 20px;
+  }
+}
+
+/*
+===========================================
+SECCIÓN 3: ESTILOS ESPECÍFICOS DE CONTACTO
+===========================================
+*/
+
+/* =================== */
+/* 3.1 HERO DE CONTACTO */
+/* =================== */
+
+/* Sección hero de página de contacto */
+.contact-hero {
+  background: linear-gradient(180deg, var(--alabastro-calido) 0%, #FFFFFF 100%);
+  padding: 100px 0 40px;
+}
+
+/* =================== */
+/* 3.2 FORMULARIO DE CONTACTO */
+/* =================== */
+
+/* Contenedor de contacto */
+.contact-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Contenedor del formulario de contacto con estilo de tarjeta */
+.contact-form-wrapper {
+  background: #FFFFFF;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  padding: 2.5rem;
+  margin-bottom: 3rem;
+}
+
+/* Inputs flotantes del formulario mejorados */
+.form-floating {
+  margin-bottom: 1.5rem;
+}
+
+.form-floating > .form-control {
+  height: 56px;
+  border: 2px solid #E0E0E0;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: border-color 0.2s ease;
+}
+
+.form-floating > .form-control:focus {
+  border-color: #8B4513;
+  box-shadow: 0 0 0 0.15rem rgba(139, 69, 19, 0.15);
+}
+
+.form-floating > .form-control:focus ~ label {
+  color: #8B4513;
+}
+
+.form-floating > label {
+  color: #6B7280;
+}
+
+.form-floating > textarea.form-control {
+  height: 120px;
+  resize: none;
+}
+
+/* Anulación del botón primario del formulario de contacto */
+.contact-form-wrapper .btn-primary {
+  background-color: var(--verde-salvia);
+  border: none;
+  border-radius: 8px;
+  padding: 0.875rem 2.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+}
+
+.contact-form-wrapper .btn-primary:hover {
+  background-color: #68864f;
+}
+
+.contact-form-wrapper .btn-primary:active,
+.contact-form-wrapper .btn-primary:focus {
+  background-color: var(--verde-salvia) !important;
+  box-shadow: 0 0 0 0.15rem rgba(135, 169, 107, 0.25);
+}
+
+/* Estilo de mensaje de éxito */
+.success-message {
+  background: #326924;
+  color: white;
+  border-radius: 8px;
+  padding: 1.25rem;
+  font-weight: 500;
+}
+
+.success-message .alert-content {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* Retroalimentación de validación del formulario */
+.invalid-feedback {
+  font-size: 14px;
+  margin-top: 0.5rem;
+}
+
+/* Página de contacto móvil responsivo */
+@media (max-width: 768px) {
+  .contact-form-wrapper {
+    padding: 2rem 1.5rem;
+    margin: 0 1rem 2rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .hero-title {
+    letter-spacing: 0.02em;
+  }
+}
+
+/*
+===========================================
+SECCIÓN 4: ESTILOS ESPECÍFICOS DE PRODUCTO
+===========================================
+*/
+
+
+/* =================== */
+/* 4.2 NAVEGACIÓN DE MIGAS DE PAN */
+/* =================== */
+
+/* Barra de navegación de migas de pan */
+.breadcrumb .breadcrumb-item a{
+  color: var(--rosa-polvoriento) !important;
+  text-decoration-color: var(--accent);
+}
+
+/* =================== */
+/* 4.3 INFORMACIÓN DEL PRODUCTO */
+/* =================== */
+
+/* Título del producto */
+.product-title{
+  margin: 8px 0 14px;
+  font-family: "Playfair Display", serif;
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  color:var(--siena-tostado); /* madera oscura */
+}
+
+/* =================== */
+/* 4.4 GALERÍA DE PRODUCTO */
+/* =================== */
+
+/* Carrusel + miniaturas - MODIFICADO PARA MOSTRAR IMAGEN COMPLETA */
+.product-gallery{
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 24px rgba(0,0,0,.10);
+  background: #fff;
+  padding: 1rem;
+}
+
+.product-gallery .carousel-item{
+  /* Galería más compacta */
+  min-height: 300px;
+  max-height: 450px;
+  background:#f8f9fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.product-gallery img{ 
+  width: 100%; 
+  height: auto;
+  max-height: 450px;
+  object-fit: contain; /* Cambiado de cover a contain para mostrar imagen completa */
+  border-radius: 0;
+}
+
+/* Para pantallas más pequeñas, ajustamos la altura mínima */
+@media (max-width: 768px) {
+  .product-gallery .carousel-item {
+    min-height: 250px;
+    max-height: 320px;
+  }
+  
+  .product-gallery img {
+    max-height: 320px;
+  }
+}
+
+/* Para pantallas muy pequeñas */
+@media (max-width: 480px) {
+  .product-gallery .carousel-item {
+    min-height: 200px;
+    max-height: 280px;
+  }
+  
+  .product-gallery img {
+    max-height: 280px;
+  }
+}
+
+/* Miniaturas del producto */
+.product-thumbs{
+  display:flex; 
+  gap:10px; 
+  padding:12px; 
+  overflow:auto;
+  background:#FAF7F2; 
+  border-top:1px solid #eee;
+  border-radius: 25px;
+}
+
+.product-thumbs img{
+  width:86px; 
+  height:64px; 
+  object-fit:cover;
+  border-radius:10px; 
+  cursor:pointer; 
+  flex:0 0 auto;
+  border:2px solid transparent;
+  transition: border-color 0.2s ease;
+}
+
+.product-thumbs img.active{ 
+  border-color:var(--siena-tostado); 
+} 
+
+.product-thumbs img:hover {
+  border-color: rgba(160, 82, 45, 0.5);
+}
+
+/* =================== */
+/* 4.5 DETALLES Y COMPRA */
+/* =================== */
+
+/* Detalle y compra */
+.product-detail{ 
+  margin-top: 26px; 
+}
+
+.purchase-card{
+  background:#fff; 
+  border-radius:16px; 
+  padding:20px;
+  box-shadow:0 10px 24px rgba(0,0,0,.10);
+  border:1px solid #f0e6d8;
+  position: sticky;
+  top: 20px; /* Hace que la tarjeta de compra se mantenga visible al hacer scroll */
+}
+
+.price{ 
+  font-size:clamp(1.4rem, 3.6vw, 2rem); 
+  color:var(--siena-tostado); 
+  font-weight:800; 
+  margin-bottom: 12px;
+}
+
+.label{ 
+  font-size:.9rem; 
+  color:#6b6b6b; 
+  margin-bottom:6px; 
+}
+
+.qty-input{ 
+  display:flex; 
+  align-items:center; 
+  gap:10px; 
+}
+
+.qty-input input[type="number"]{
+  max-width:100px; 
+  border-radius:10px; 
+  border:1.5px solid #eadac6;
+  padding:10px 12px; 
+  background:var(--alabastro-calido); 
+  color:var(--dark-wood);
+  transition: border-color 0.2s ease;
+}
+
+.qty-input input[type="number"]:focus {
+  outline: none;
+  border-color: var(--siena-tostado);
+}
+
+.btn-brand{
+  background:var(--siena-tostado); 
+  color:#fff; 
+  border:none; 
+  border-radius:12px;
+  padding:12px 16px; 
+  font-weight:700;
+  transition: all 0.2s ease;
+  flex: 1;
+}
+
+.btn-brand:hover{ 
+  filter:brightness(.96); 
+  transform: translateY(-1px);
+}
+
+.btn-outline-brand{
+  background:transparent;
+  color:var(--siena-tostado);
+  border:2px solid var(--siena-tostado);
+  border-radius:12px;
+  padding:10px 16px; 
+  font-weight:700;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-outline-brand:hover{
+  color: #fff;
+  background: var(--siena-tostado);
+  transform: translateY(-1px);
+}
+
+.product-specs li{ 
+  margin-bottom:8px; 
+  color:#444; 
+  padding: 4px 0;
+}
+
+.product-specs strong {
+  color: var(--dark-wood);
+}
+
+/* =================== */
+/* 4.6 CONTROLES DE CARRUSEL */
+/* =================== */
+
+.carousel-control-prev:hover,
+.carousel-control-next:hover {
+  opacity: 1;
+}
+
+.carousel-control-prev {
+  left: 15px;
+}
+
+.carousel-control-next {
+  right: 15px;
+}
+
+@media (min-width: 768px) {
+.product-gallery .carousel-control-prev-icon, .product-gallery .carousel-control-next-icon {
+    background-color: var(--siena-tostado);
+    border-radius: 50%;
+  }
+}
+/* Asegurar que los controles estén centrados en el contenedor de la imagen */
+.product-gallery .carousel {
+  position: relative;
+}
+
+.product-gallery .carousel-control-prev,
+.product-gallery .carousel-control-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+}
+
+/* =================== */
+/* 4.7 RESPONSIVO DE PRODUCTO */
+/* =================== */
+
+/* Mejoras responsivas */
+@media (max-width: 992px) {
+  .purchase-card {
+    position: static; /* Quita el sticky en tabletas y móviles */
+    margin-top: 20px;
+  }
+}
+
+@media (max-width: 576px) {
+  .d-flex.gap-2 {
+    flex-direction: column;
+  }
+  
+  .btn-outline-brand {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/*
+===========================================
+SECCIÓN 5: ESTILOS ESPECÍFICOS DE PRODUCTOS
+===========================================
+*/
+
+/* =================== */
+/* 5.1 IMPORTACIÓN DE FUENTES */
+/* =================== */
+
+/* Importación de fuentes */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+
+/* =================== */
+/* 5.3 BARRA DE BÚSQUEDA */
+/* =================== */
+
+/* Barra de búsqueda */
+.barraDeBusqueda {
+    display: flex;
+    padding-bottom: 3rem;
+    gap: 10px;
+    margin-bottom: 3rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.barraDeBusqueda input[type='text'] {
+    flex-grow: 1;
+    padding: 15px 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    color: #444;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.barraDeBusqueda input[type='text']:focus {
+    border-color: var(--siena-tostado);
+}
+
+.barraDeBusqueda button {
+    padding: 15px 30px;
+    background-color: var(--rosa-polvoriento);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: background-color 0.3s ease;
+}
+
+.barraDeBusqueda button:hover {
+    background-color: #aa6356;
+}
+
+/* =================== */
+/* 5.4 GRILLA DE PRODUCTOS */
+/* =================== */
+
+/* Grilla de productos */
+.grilla {
+    display: grid;
+    padding: 1rem 3rem 2rem 4rem;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 40px;
+}
+
+.grilla .text-center,
+.grilla .alert,
+.grilla .spinner-border {
+    grid-column: 1 / -1; /* Ocupa desde la primera hasta la última columna */
+}
+
+/* Contenedor específico para mensajes centrados */
+.grilla .full-width-message {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-height: 200px;
+}
+
+/* =================== */
+/* 5.5 TARJETA DE PRODUCTO */
+/* =================== */
+
+/* Tarjeta producto */
+.estiloProducto {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+}
+
+.estiloProducto:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.estiloProducto img {
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+    border-bottom: 4px solid var(--vara-de-oro);
+    border-radius: 12px 12px 0 0;
+}
+
+.estiloProducto-content {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.estiloProducto h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--siena-tostado);
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    line-height: 1.3;
+}
+
+.estiloProducto p {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 1rem;
+    text-align: justify;
+    flex-grow: 1;
+}
+
+.estiloProducto .price {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--siena-tostado);
+    text-align: right;
+    margin-top: auto;
+}
+
+.estiloProducto button {
+    background-color: var(--verde-salvia);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 15px 25px;
+    text-transform: uppercase;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.estiloProducto button:hover {
+    background-color: #5a7048;
+}
+
+.botonAgregarCarro {
+   justify-content: space-between;
+   flex-direction: column;
+}
+
+/* =================== */
+/* 5.6 ALERTAS Y NOTIFICACIONES */
+/* =================== */
+
+.alerta {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #285232;
+    color: #fff;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: 500;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: 2000;
+}
+
+.alerta.mostrar {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* =================== */
+/* 5.7 RESPONSIVO DE PRODUCTOS */
+/* =================== */
+
+/* Media Queries */
+@media (max-width: 992px) {
+    .grilla {
+        padding: 3rem 1.5rem;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 30px;
+    }
+
+    .barraDeBusqueda{
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .grilla {
+        padding: 2rem 1rem;
+    }
+    
+    h2 {
+        font-size: 2rem;
+    }
+    
+    .parrafo {
+        font-size: 1rem;
+    }
+    
+    .barraDeBusqueda {
+        flex-direction: column;
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+    }
+    
+    .barraDeBusqueda input,
+    .barraDeBusqueda button {
+        width: 100%;
+        border-radius: 8px;
+    }
+    
+    .grilla {
+        grid-template-columns: 1fr;
+    }
+    
+    .estiloProducto img {
+        height: 250px;
+    }
+}
+
+@media (max-width: 480px) {
+    .titulo-principal {
+        font-size: 1.8rem;
+    }
+
+    .hero-title {
+        margin-top: 2rem;
+    }
+}
