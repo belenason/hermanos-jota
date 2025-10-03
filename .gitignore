@@ -176,3 +176,10 @@ sketch
 .ionide
 
 # End of https://www.toptal.com/developers/gitignore/api/react,node,visualstudiocode
+
+# Documentación específica del sprint
+README_SPRINT_3_4.md
+RESUMEN_EJECUTIVO.md
+RESUMEN_FASES_3_Y_4.md
+INICIO_RAPIDO.md
+CHANGELOG_FASES_3_4.md
