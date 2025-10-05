@@ -11,12 +11,12 @@ export default function Catalog({
   onAdd
 }) {
   const [buscado, setQuery] = useState('');
-  
+
   const filteredProducts = products.filter(p => {
     const query = buscado.toLowerCase().trim();
     if (!query) return true;
-    
-    const words = p.nombre.toLowerCase().split(' ');
+
+    const words = (p.nombre || '').toLowerCase().split(' ');
     return words.some(word => word.startsWith(query));
   });
 
@@ -24,9 +24,15 @@ export default function Catalog({
 
   if (error) {
     return (
-      <div className="alert alert-danger text-center">
-        <p>{error}</p>
-        <button className="btn btn-primary" onClick={onRetry}>Reintentar</button>
+      <div className="alert alert-danger text-center" role="alert">
+        <p className="mb-3">{error}</p>
+        <button
+          className="btn btn-primary"
+          onClick={onRetry}
+          disabled={loading}
+        >
+          {loading ? 'Reintentando…' : 'Reintentar'}
+        </button>
       </div>
     );
   }
@@ -44,8 +50,8 @@ export default function Catalog({
           <p className="hero-subtitle">
             Descubrí nuestra selección de muebles, diseñados para transformar tu espacio.
           </p>
-          
-          {/* Barra de búsqueda del segundo código */}
+
+          {/* Barra de búsqueda */}
           <input
             type="text"
             className="form-control my-3"
