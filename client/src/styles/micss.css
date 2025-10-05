@@ -1584,7 +1584,7 @@ SECCIÓN 5: ESTILOS ESPECÍFICOS DE PRODUCTOS
 
 /* Barra de búsqueda */
 .barraDeBusqueda {
-    display: flex;
+    display: table-column;
     padding-bottom: 3rem;
     gap: 10px;
     margin-bottom: 3rem;

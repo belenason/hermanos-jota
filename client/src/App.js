@@ -15,14 +15,15 @@ export default function App() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
+  // Fetch products once on mount so Home can show featured items
   useEffect(() => {
-    if (view !== 'catalog' || products.length) return;
+    if (products.length) return;
     setLoading(true);
     getProductos()
       .then(setProducts)
       .catch(() => setError('No se pudieron cargar los productos'))
       .finally(() => setLoading(false));
-  }, [view, products.length]);
+  }, [products.length]);
 
   const cartCount = cart.reduce((a, i) => a + i.qty, 0);
 
@@ -35,7 +36,10 @@ export default function App() {
   };
 
   const renderView = () => {
-    if (view === 'home') return <Home onGoCatalog={() => setView('catalog')} />;
+    if (view === 'home') {
+      const featured = products.slice(0, 4);
+      return <Home onGoCatalog={() => setView('catalog')} featuredProducts={featured} onOpenProduct={(p)=>{ setSelectedProduct(p); setView('product'); }} />;
+    }
     if (view === 'contact') return <Contact />;
     if (view === 'catalog') {
       return (
@@ -44,7 +48,9 @@ export default function App() {
           loading={loading}
           error={error}
           onSelect={p => { setSelectedProduct(p); setView('product'); }}
-          onRetry={() => { setError(''); setView('catalog'); }} />
+          onRetry={() => { setError(''); }}
+          onAdd={(p, q=1) => addToCart(p, q)}
+        />
       );
     }
     if (view === 'product' && selectedProduct) {
@@ -62,10 +68,10 @@ export default function App() {
   return (
     <>
       <Navbar
-  cartCount={cartCount}
-  currentView={view}
-  onNav={setView}
-/>
+        cartCount={cartCount}
+        currentView={view}
+        onNav={setView}
+      />
 
       <main id='contenido-principal' tabIndex={-1}>
         {renderView()}

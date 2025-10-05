@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import ProductCard from '../components/ProductCard';
 
-export default function Home({ onGoCatalog, featuredProducts = [] }) {
-  // Accesibilidad: mantener aria-selected en indicadores del carrusel
+export default function Home({ onGoCatalog, featuredProducts = [], onOpenProduct }) {
+  // Accesibilidad: mantener aria-selected en indicadores del carrusel (hero)
   useEffect(() => {
     const el = document.getElementById('heroCarousel');
     if (!el || !window.bootstrap) return;
@@ -17,6 +17,8 @@ export default function Home({ onGoCatalog, featuredProducts = [] }) {
     el.addEventListener('slid.bs.carousel', onSlid);
     return () => el.removeEventListener('slid.bs.carousel', onSlid);
   }, []);
+
+  const four = featuredProducts.slice(0, 4);
 
   return (
     <>
@@ -174,7 +176,7 @@ export default function Home({ onGoCatalog, featuredProducts = [] }) {
                   Cada pieza cuenta una historia de artesanía, carácter y precisión. Si querés empezar un proyecto a medida,
                   escribinos: estamos para ayudarte.
                 </p>
-                <button className="btn btn-outline-primary" onClick={onGoCatalog}>Conocé nuestros productos</button>
+                <button className="btn-secondary-custom" onClick={onGoCatalog}>Conocé más</button>
               </div>
             </div>
           </div>
@@ -190,28 +192,27 @@ export default function Home({ onGoCatalog, featuredProducts = [] }) {
                 <span className="section-label-accent">Sustentabilidad</span>
                 <h2 className="section-title">Compromiso con el futuro</h2>
                 <p className="section-text-refined">
-                  Trabajamos con madera certificada FSC® y acabados al aceite natural. Buscamos procesos responsables y
-                  trazables, priorizando maderas nativas.
+                  Nuestro compromiso con el medio ambiente y las futuras generaciones guía cada decisión en nuestro proceso creativo y productivo. Trabajamos con madera certificada FSC de bosques responsables argentinos, priorizando maderas nativas como algarrobo, quebracho y caldén.
                 </p>
                 <ul className="sustainability-stats list-unstyled d-flex gap-4">
                   <li className="stat-item">
-                    <p className="stat-number m-0">30%</p>
-                    <p className="stat-label m-0">Materiales reciclados</p>
+                    <p className="stat-number">30%</p>
+                    <p className="stat-label">Materiales reciclados</p>
                   </li>
                   <li className="stat-item">
-                    <p className="stat-number m-0">100%</p>
-                    <p className="stat-label m-0">Acabados naturales</p>
+                    <p className="stat-number">100%</p>
+                    <p className="stat-label">Acabados naturales</p>
                   </li>
                 </ul>
-                <a href="#contacto" className="btn btn-secondary mt-3">Programa Herencia Viva</a>
+                <a href="#contacto" className="btn-secondary-custom">Programa Herencia Viva</a>
               </div>
             </div>
 
             <div className="col-lg-6">
-              <div className="split-image-container position-relative">
+              <div className="split-image-container">
                 <img src="/img/mesa_de_noche_aconcagua.png" alt="Mesa de noche Aconcagua" className="split-image w-100 h-100 object-fit-cover" />
-                <div className="image-overlay position-absolute top-0 start-0 p-3">
-                  <span className="image-label badge bg-dark">MADERA CERTIFICADA FSC</span>
+                <div className="image-overlay">
+                  <span className="image-label">MADERA CERTIFICADA FSC</span>
                 </div>
               </div>
             </div>
@@ -219,27 +220,62 @@ export default function Home({ onGoCatalog, featuredProducts = [] }) {
         </div>
       </section>
 
-      {/* PRODUCTOS DESTACADOS (usa tu <ProductCard>) */}
+      {/* PRODUCTOS DESTACADOS */}
       <section id="productos" className="products-section py-5">
         <div className="container">
-          <h2 className="section-title text-center mb-5">Productos Destacados</h2>
+          <h2 className="section-title text-center mb-4">Productos Destacados</h2>
 
-          {featuredProducts.length > 0 ? (
-            <div className="row g-4">
-              {featuredProducts.slice(0, 8).map(p => (
-                <div className="col-6 col-md-4 col-lg-3" key={p.id}>
-                  <ProductCard product={p} onClick={() => {/* handled from App if needed */}} />
+          {/* Desktop/Tablet ≥ md: grilla 4 columnas */}
+          <div className="d-none d-md-block">
+            {four.length ? (
+              <div className="row g-4">
+                {four.map(p => (
+                  <div className="col-md-3" key={p.id}>
+                    <ProductCard product={p} onClick={() => onOpenProduct ? onOpenProduct(p) : onGoCatalog()} />
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="text-center">
+                <p className="mb-3">Pronto verás aquí una selección de nuestras piezas favoritas.</p>
+              </div>
+            )}
+          </div>
+
+          {/* Mobile < md: carrusel de tarjetas */}
+          <div className="d-block d-md-none">
+            {four.length ? (
+              <div id="featuredCarousel" className="carousel slide" data-bs-ride="carousel" data-bs-interval="4500">
+                <div className="carousel-inner">
+                  {four.map((p, idx) => (
+                    <div className={"carousel-item" + (idx === 0 ? " active" : "")} key={p.id}>
+                      <div className="px-4">
+                        <ProductCard product={p} onClick={() => onOpenProduct ? onOpenProduct(p) : onGoCatalog()} />
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-          ) : (
-            <div className="text-center">
-              <p className="mb-3">Pronto verás aquí una selección de nuestras piezas favoritas.</p>
-              <button className="btn btn-primary" onClick={onGoCatalog}>
-                Ver todo el catálogo
-              </button>
-            </div>
-          )}
+                <button className="carousel-control-prev" type="button" data-bs-target="#featuredCarousel" data-bs-slide="prev" aria-label="Anterior">
+                  <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+                </button>
+                <button className="carousel-control-next" type="button" data-bs-target="#featuredCarousel" data-bs-slide="next" aria-label="Siguiente">
+                  <span className="carousel-control-next-icon" aria-hidden="true"></span>
+                </button>
+              </div>
+            ) : (
+              <div className="text-center">
+                <p className="mb-3">Pronto verás aquí una selección de nuestras piezas favoritas.</p>
+              </div>
+            )}
+          </div>
+
+          {/* CTA debajo de destacados (siempre visible) */}
+          <div className="text-center mt-4">
+            <button className="btn-secondary-custom mt-3 mb-5" onClick={onGoCatalog} aria-label="Ver todo el catálogo">
+              Ver todo el catálogo
+            </button>
+          </div>
+
         </div>
       </section>
     </>
