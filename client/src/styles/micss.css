@@ -46,17 +46,16 @@ main
 
 /* Configuración de los contenedores en general */
 html, body {
-  margin: 0;
   padding: 0;
   width: 100%;
   overflow-x: hidden; /* Para prevenir que se pueda hacer scroll en horizontal */
 }
 
 body {
-  font-family: 'Inter', sans-serif;
-  font-size: 12pt;
-  font-weight: 400; /* Regular */
-  line-height: 1.6;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 11pt; 
+  font-weight: 400; 
+  line-height: 1.6; 
   color: var(--dark-wood);
 }
 
@@ -77,23 +76,24 @@ body {
 
 /* Diseño de los títulos de las secciones */
 .section-title {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Playfair Display', Georgia, serif;
   font-size: 2rem;
-  font-weight: 700;
+  font-weight: 700; 
   color: var(--siena-tostado);
   margin-bottom: 2rem;
   line-height: 1.2;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
+  text-transform: uppercase; 
+  letter-spacing: 0.1em; 
 }
 
 /* Diseño de las etiquetas de las secciones, etiqueta que van arriba de los títulos */
 .section-label {
-  font-size: 0.9rem;
-  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  font-size: 9pt; 
+  font-weight: 300; 
   color: var(--verde-salvia);
   text-transform: uppercase;
-  letter-spacing: 2px;
+  letter-spacing: 0.02em; 
   margin-bottom: 1rem;
   display: block;
 }
@@ -109,10 +109,11 @@ body {
   color: var(--siena-tostado);
   border: 1px solid var(--siena-tostado);
   border-radius: 8px;
-  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500; 
   font-size: 0.9rem;
-  letter-spacing: 1px;
-  text-transform: uppercase;
+  letter-spacing: 0.08em; 
+  text-transform: uppercase; 
   text-decoration: none;
   transition: all 0.3s ease;
 }
@@ -281,27 +282,28 @@ body {
 
 /* Título principal del hero */
 .hero-title {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Playfair Display', Georgia, serif;
   font-size: 30pt;
-  font-weight: 700;
+  font-weight: 700; /* Bold para títulos según consigna */
   color: var(--siena-tostado);
   margin-bottom: 1rem;
   line-height: 1.2;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  letter-spacing: 0.1em; /* Espaciado 0.1em según consigna */
+  text-transform: uppercase; /* Mayúsculas según consigna */
   text-align: center;
 }
 
 /* Subtítulo del hero */
 .hero-subtitle {
+  font-family: 'Inter', sans-serif;
   font-size: 1.3rem;
   color: rgba(62, 39, 35, 0.7);
   margin-bottom: 3rem;
-  font-weight: 400;
+  font-weight: 400; /* Regular para texto principal según consigna */
   text-align: center;
   max-width: 600px;
   margin: 0 auto 2rem;
-  line-height: 1.5;
+  line-height: 1.6; /* Altura de línea 1.6 según consigna */
 }
 
 /* Contenedor de imagen del hero */
@@ -362,8 +364,10 @@ body {
 }
 
 .about-text {
-  font-size: 1.1rem;
-  line-height: 1.7;
+  font-family: 'Inter', sans-serif;
+  font-size: 11pt; /* Texto del cuerpo: 11-12pt según consigna */
+  font-weight: 400; /* Regular según consigna */
+  line-height: 1.6; /* Altura de línea 1.6 según consigna */
   color: #666666;
   margin-bottom: 1.5rem;
 }
@@ -457,11 +461,13 @@ body {
 
 /* Estilo del título del producto */
 .product-dest-title {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Playfair Display', Georgia, serif;
   font-size: 1.2rem;
-  font-weight: 600;
+  font-weight: 700; /* Bold para títulos según consigna */
   color: var(--siena-tostado);
   margin-bottom: 0.5rem;
+  text-transform: uppercase; /* Mayúsculas según consigna */
+  letter-spacing: 0.1em; /* Espaciado 0.1em según consigna */
 }
 
 /* Estilo del precio del producto */
@@ -585,15 +591,20 @@ body {
 
 /* Título principal del pie de página */
 .footer-title {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Playfair Display', Georgia, serif;
   font-size: 1.8rem;
-  font-weight: 700;
+  font-weight: 700; 
   color: #ffffff;
   margin-bottom: 1rem;
+  text-transform: uppercase; 
+  letter-spacing: 0.1em; 
 }
 
 /* Texto de descripción del pie de página */
 .footer-description {
+  font-family: 'Inter', sans-serif;
+  font-size: 11pt; 
+  font-weight: 400;  
   color: rgba(255, 255, 255, 0.8);
   line-height: 1.6;
   margin-bottom: 2rem;
@@ -627,11 +638,13 @@ body {
 
 /* Encabezados de sección del pie de página */
 .footer-heading {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Playfair Display', Georgia, serif;
   font-size: 1.2rem;
-  font-weight: 600;
+  font-weight: 700; 
   color: #ffffff;
   margin-bottom: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em; 
 }
 
 /* Diseño de elementos de contacto */
@@ -672,16 +685,22 @@ body {
 
 /* Texto de derechos de autor */
 .copyright {
+  font-family: 'Inter', sans-serif;
+  font-size: 9pt; 
+  font-weight: 300; 
   color: rgba(255, 255, 255, 0.7);
   margin: 0;
-  font-size: 0.9rem;
+  letter-spacing: 0.02em;
 }
 
 /* Texto de créditos */
 .credits {
+  font-family: 'Inter', sans-serif;
+  font-size: 9pt; 
+  font-weight: 300; 
   color: rgba(255, 255, 255, 0.7);
   margin: 0;
-  font-size: 0.9rem;
+  letter-spacing: 0.02em;
 }
 
 .credits i {
@@ -859,11 +878,11 @@ SECCIÓN 2: ESTILOS ESPECÍFICOS DEL INDEX
 
 /* Título principal del hero - siguiendo tipografía del manual de marca */
 .hero-main-title {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Playfair Display', Georgia, serif;
   font-size: 4rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  font-weight: 700; 
+  letter-spacing: 0.1em; 
+  text-transform: uppercase; 
   margin-bottom: 1.5rem;
   text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
   line-height: 1.1;
@@ -874,10 +893,10 @@ SECCIÓN 2: ESTILOS ESPECÍFICOS DEL INDEX
 .hero-main-subtitle {
   font-family: 'Inter', sans-serif;
   font-size: 1.4rem;
-  font-weight: 300;
+  font-weight: 300; 
   margin-bottom: 3rem;
   opacity: 0.95;
-  line-height: 1.5;
+  line-height: 1.6;
 }
 
 /* Botón primario del hero */
@@ -888,9 +907,9 @@ SECCIÓN 2: ESTILOS ESPECÍFICOS DEL INDEX
   color: var(--siena-tostado);
   text-decoration: none;
   font-family: 'Inter', sans-serif;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
+  font-weight: 500; 
+  text-transform: uppercase; 
+  letter-spacing: 0.08em; 
   border: 2px solid rgba(255, 255, 255, 0.95);
   transition: all 0.4s ease;
   backdrop-filter: blur(10px);
@@ -964,12 +983,12 @@ SECCIÓN 2: ESTILOS ESPECÍFICOS DEL INDEX
 
 .video-label {
   font-family: 'Inter', sans-serif;
-  font-size: 0.8rem;
-  font-weight: 500;
+  font-size: 9pt; 
+  font-weight: 300; 
   color: white;
   background: rgba(160, 82, 45, 0.9);
   padding: 8px 16px;
-  letter-spacing: 2px;
+  letter-spacing: 0.02em; 
   backdrop-filter: blur(10px);
 }
 
@@ -983,11 +1002,11 @@ SECCIÓN 2: ESTILOS ESPECÍFICOS DEL INDEX
 /* Etiqueta de sección con acento siguiendo manual de marca */
 .section-label-accent {
   font-family: 'Inter', sans-serif;
-  font-size: 0.9rem;
-  font-weight: 500;
+  font-size: 9pt; 
+  font-weight: 300; 
   color: var(--verde-salvia);
   text-transform: uppercase;
-  letter-spacing: 2px;
+  letter-spacing: 0.02em; 
   margin-bottom: 1.5rem;
   display: block;
 }
@@ -995,9 +1014,9 @@ SECCIÓN 2: ESTILOS ESPECÍFICOS DEL INDEX
 /* Texto de sección refinado */
 .section-text-refined {
   font-family: 'Inter', sans-serif;
-  font-size: 1.1rem;
-  font-weight: 400;
-  line-height: 1.8;
+  font-size: 11pt; 
+  font-weight: 400; 
+  line-height: 1.6; 
   color: var(--dark-wood);
   margin-bottom: 1.8rem;
 }
@@ -1072,21 +1091,21 @@ SECCIÓN 2: ESTILOS ESPECÍFICOS DEL INDEX
 }
 
 .stat-number {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Playfair Display', Georgia, serif;
   font-size: 3rem;
-  font-weight: 700;
-  color: var(--vara-de-oro); /* Vara de Oro según manual de marca */
+  font-weight: 700; 
+  color: var(--vara-de-oro); 
   margin-bottom: 0.5rem;
   line-height: 1;
 }
 
 .stat-label {
   font-family: 'Inter', sans-serif;
-  font-size: 0.9rem;
-  font-weight: 500;
+  font-size: 9pt; 
+  font-weight: 300; 
   color: var(--dark-wood);
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 0.02em; 
   margin: 0;
 }
 
@@ -1119,12 +1138,12 @@ SECCIÓN 2: ESTILOS ESPECÍFICOS DEL INDEX
 
 .image-label {
   font-family: 'Inter', sans-serif;
-  font-size: 0.8rem;
-  font-weight: 500;
+  font-size: 9pt; 
+  font-weight: 300; 
   color: white;
   background: rgba(135, 169, 107, 0.9);
   padding: 8px 16px;
-  letter-spacing: 2px;
+  letter-spacing: 0.02em; 
   backdrop-filter: blur(10px);
 }
 
@@ -1316,12 +1335,14 @@ SECCIÓN 4: ESTILOS ESPECÍFICOS DE PRODUCTO
 
 /* Título del producto */
 .product-title{
- 
   margin-top: 0;
   margin-bottom: 8px;
-  font-family: "Playfair Display", serif;
+  font-family: 'Playfair Display', Georgia, serif;
   font-size: clamp(1.6rem, 4vw, 2.4rem);
-  color:var(--siena-tostado); /* madera oscura */
+  font-weight: 700; 
+  color: var(--siena-tostado);
+  text-transform: uppercase; 
+  letter-spacing: 0.1em; 
 }
 
 /* =================== */
@@ -1743,19 +1764,17 @@ SECCIÓN 5: ESTILOS ESPECÍFICOS DE PRODUCTOS
 
 .estiloProducto-content {
     padding: 1.5rem;
-    display: flex;
-    flex-direction: column;
     flex-grow: 1;
 }
 
 .estiloProducto h3 {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Playfair Display', Georgia, serif;
     font-size: 1.6rem;
-    font-weight: 600;
+    font-weight: 700; 
     color: var(--siena-tostado);
     margin-bottom: 0.5rem;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
+    text-transform: uppercase; 
+    letter-spacing: 0.1em; 
     line-height: 1.3;
 }
 
@@ -1983,7 +2002,9 @@ SECCIÓN 5: ESTILOS ESPECÍFICOS DE PRODUCTOS
   font-weight: 700;
   margin: 0;
   color: var(--siena-tostado);
-  font-family: 'Playfair Display', serif;
+  font-family: 'Playfair Display', Georgia, serif;
+  text-transform: uppercase; 
+  letter-spacing: 0.1em; 
 }
 .actions{
   gap: 0.5rem;
