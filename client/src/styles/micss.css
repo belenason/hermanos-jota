@@ -1507,6 +1507,43 @@ SECCIÓN 4: ESTILOS ESPECÍFICOS DE PRODUCTO
   transform: translateY(-1px);
 }
 
+
+.btn-brand-fem{
+  background:var(--rosa-polvoriento); 
+  color:#fff; 
+  border:none; 
+  border-radius:12px;
+  padding:12px 16px; 
+  font-weight:700;
+  transition: all 0.2s ease;
+  flex: 1;
+}
+
+.btn-brand-fem:hover{ 
+  filter:brightness(.96); 
+  transform: translateY(-1px);
+}
+
+.btn-outline-brand-fem{
+  background:transparent;
+  color:var(--rosa-polvoriento);
+  border:2px solid var(--rosa-polvoriento);
+  border-radius:12px;
+  padding:10px 16px; 
+  font-weight:700;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-outline-brand-fem:hover{
+  color: #fff;
+  background: var(--rosa-polvoriento);
+  transform: translateY(-1px);
+}
+
 .product-specs li{ 
   margin-bottom:8px; 
   color:#444; 
@@ -2141,3 +2178,16 @@ SECCIÓN 5: ESTILOS ESPECÍFICOS DE PRODUCTOS
 .dark .cart-page .btn-outline:hover { background: #9aa2ab20; }
 .dark .cart-page .btn-danger-outline { border-color: #ff6b6b; color: #ff6b6b; }
 .dark .cart-page .btn-danger-outline:hover { background: #ff6b6b20; }
+
+/* Hacer que en móvil el título quede arriba de los botones */
+@media (max-width: 768px) {
+  .cart-header-responsive {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
+  
+  .cart-header-responsive .actions {
+    width: 100%;
+    margin-top: 1rem;
+  }
+}

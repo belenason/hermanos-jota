@@ -18,11 +18,11 @@ export default function Cart({ onBack }) {
 
   return (
     <section className="container my-5 cart-page">
-      <div className="cart-header">
+      <div className="cart-header cart-header-responsive">
         <h2 className="cart-title">🛒 Carrito ({totalItems})</h2>
         <div className="actions">
-          <button className="btn-outline seguir-comprando" onClick={onBack}>Seguir comprando</button>
-          <button className="btn-danger-outline" onClick={emptyCart}>Vaciar carrito</button>
+          <button className="btn-brand-fem" onClick={onBack}>Seguir comprando</button>
+          <button className="btn-outline-brand-fem" onClick={emptyCart}>Vaciar carrito</button>
         </div>
       </div>
 
@@ -67,7 +67,7 @@ export default function Cart({ onBack }) {
       <div className="cart-footer">
         <div className="total-label">Total:</div>
         <div className="total-value">{formatARS(cartTotal)}</div>
-        <button className="btn-primary">Finalizar compra</button>
+        <button className="btn-secondary-custom">Finalizar compra</button>
       </div>
     </section>
   );
