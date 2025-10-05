@@ -48,8 +48,8 @@ export default function App() {
           loading={loading}
           error={error}
           onSelect={p => { setSelectedProduct(p); setView('product'); }}
-          onRetry={() => { setError(''); }}
-          onAdd={(p, q=1) => addToCart(p, q)}
+          onRetry={() => { setError(''); setView('catalog'); }}
+          onAdd={(prod, q) => addToCart(prod, q)}
         />
       );
     }

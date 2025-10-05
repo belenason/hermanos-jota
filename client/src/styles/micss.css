@@ -129,7 +129,7 @@ body {
   position: absolute;
   top: 0;
   right: 0;
-  transform: translate(70%, -50%); /* lo acomoda justo en la esquina */
+  transform: translate(20%, -110%); /* lo acomoda justo en la esquina */
   background-color: var(--siena-tostado);
   color: white;
   font-size: 0.6rem !important;
@@ -1316,7 +1316,9 @@ SECCIÓN 4: ESTILOS ESPECÍFICOS DE PRODUCTO
 
 /* Título del producto */
 .product-title{
-  margin: 8px 0 14px;
+ 
+  margin-top: 0;
+  margin-bottom: 8px;
   font-family: "Playfair Display", serif;
   font-size: clamp(1.6rem, 4vw, 2.4rem);
   color:var(--siena-tostado); /* madera oscura */
@@ -1417,13 +1419,17 @@ SECCIÓN 4: ESTILOS ESPECÍFICOS DE PRODUCTO
 }
 
 .purchase-card{
+  margin-left: 2%;
   background:#fff; 
   border-radius:16px; 
   padding:20px;
   box-shadow:0 10px 24px rgba(0,0,0,.10);
   border:1px solid #f0e6d8;
   position: sticky;
-  top: 20px; /* Hace que la tarjeta de compra se mantenga visible al hacer scroll */
+  width: 100%;
+  min-width: 320px;   /* Puedes ajustar este valor */
+  max-width: 100%;    /* O un valor mayor si lo prefieres */
+  top: 68px; /* Hace que la tarjeta de compra se mantenga visible al hacer scroll */
 }
 
 .price{ 
@@ -1550,8 +1556,10 @@ SECCIÓN 4: ESTILOS ESPECÍFICOS DE PRODUCTO
 @media (max-width: 992px) {
   .purchase-card {
     position: static; /* Quita el sticky en tabletas y móviles */
-    margin-top: 20px;
+    margin: 20px;
+    
   }
+
 }
 
 @media (max-width: 576px) {
@@ -1826,7 +1834,25 @@ SECCIÓN 5: ESTILOS ESPECÍFICOS DE PRODUCTOS
         margin-top: 2rem;
     }
 }
-
+/* =================== */
+/* 5.8 PAGINA PRODUCTO */
+/* =================== */
+.catalog-container {
+  margin-top: 65px;
+  margin-bottom: 0;
+}
+.catalog-container .breadcrumb {
+  margin-bottom: 0;
+}
+.espacio{
+  padding-left: 2%;
+  margin-top: 0;
+}
+.textito{
+  font-size: 5.2mm;
+  color: var(--verde-salvia)!important; 
+  text-decoration: none;
+}
 /* === FIX HERO CAROUSEL FULL-HEIGHT & OVERLAY (React version) === */
 .hero-carousel-section {
   height: 100dvh;

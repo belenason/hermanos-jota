@@ -7,19 +7,18 @@ export default function ProductDetail({ product, onBack, onAdd }) {
 
   return (
     <>
-      <nav aria-label="breadcrumb" className="mb-3">
-        <ol className="breadcrumb">
-          <li className="breadcrumb-item"><button className="btn btn-link p-0" onClick={onBack}>Catálogo</button></li>
-          <li className="breadcrumb-item active" aria-current="page">{product.nombre}</li>
+      <nav aria-label="breadcrumb " className=" catalog-container">
+        <ol className="breadcrumb espacio">
+          <li className="textito breadcrumb-item "><button className="btn btn-link p-0 textito espacio" onClick={onBack}>Catálogo</button></li>
+          <li className="textito breadcrumb-item active " aria-current="page">{product.nombre}</li>
         </ol>
       </nav>
-
-      <h1 className="product-title">{product.nombre}</h1>
+      <h1 className="product-title espacio">{product.nombre}</h1>
       <div className="row g-4">
-        <div className="col-lg-7">
+        <div className="col-lg-7 espacio">
           <img src={product.imagenes?.[0] || '/img/producto-ejemplo.jpg'} alt={product.nombre} className="img-fluid rounded" />
           <p className="product-desc mt-3">{product.descripcion}</p>
-          <ul className="product-specs">
+          <ul className="product-specs ">
             {product.medidas && <li><strong>Medidas:</strong> {product.medidas}</li>}
             {product.materiales && <li><strong>Materiales:</strong> {product.materiales}</li>}
             {product.acabado && <li><strong>Acabado:</strong> {product.acabado}</li>}
