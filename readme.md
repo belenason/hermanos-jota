@@ -7,20 +7,66 @@
 ⭐ Belén Ason  
 ⭐ Valentin Baigorria  
 
-## 🛠️ Tecnologías utilizadas
-
-🖥️ HTML5  
-🎨 CSS3  
-📟 JavaScript  
-⟁ Vercel  
-🗄️ GitHub  
-💻 VS Code  
-
 ## 📝 Descripción
-Entre las principales funcionalidades se destacan:
-- Una página principal con barra de navegación, un carrito donde se visualizan los productos seleccionados y una sección de productos destacados.
-- Un catálogo con buscador, que permite recorrer y explorar los diferentes productos de manera sencilla.
-- Una pestaña de contacto para comunicarse directamente con la empresa.
-- Un pie de página con accesos a todas las redes sociales de la marca de manera intectiva.
-- Una página individual para cada producto, con información detallada sobre sus características.
+Hermanos Jota es un e-commerce de muebles artesanales que combina tradición y modernidad. El proyecto incluye:
 
+- **Página principal** con navegación intuitiva y productos destacados
+- **Catálogo completo** con buscador 
+- **Carrito de compras** funcional con persistencia de datos
+- **Páginas individuales** de productos con información detallada
+- **Formulario de contacto** para comunicación directa
+- **Diseño responsive** adaptado a todos los dispositivos
+
+## 🛠️ Tecnologías Utilizadas
+
+**Frontend:**
+- React 
+- Bootstrap 5
+- CSS3 
+
+**Backend:**
+- Node.js
+- Express
+
+**Herramientas:**
+- Git & GitHub
+- VS Code
+
+## 🚀 Instalación y Ejecución
+
+### Prerrequisitos
+- Node.js (v14 o superior)
+- Git
+
+### 1. Clonar el repositorio
+```bash
+git clone https://github.com/belenason/hermanos-jota.git
+cd hermanos-jota
+```
+
+### 2. Instalar dependencias del backend
+```bash
+cd backend
+npm install
+```
+
+### 3. Iniciar el servidor backend
+```bash
+# Desde la carpeta backend
+npm run dev
+```
+El servidor estará corriendo en `http://localhost:4000`
+
+### 4. Instalar dependencias del frontend
+```bash
+# Abrir una nueva terminal
+cd client
+npm install
+```
+
+### 5. Iniciar el servidor frontend
+```bash
+# Desde la carpeta client
+npm start
+```
+La aplicación estará disponible en `http://localhost:3000`
