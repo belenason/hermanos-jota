@@ -11,7 +11,7 @@ export default function Cart({ onBack }) {
       <section className="container my-5 cart-page pt-5">
         <h2 className="cart-title">🛒 Carrito</h2>
         <p className="empty">Tu carrito está vacío.</p>
-        <button className="btn-primary" onClick={onBack}>Volver al catálogo</button>
+        <button className="btn-secondary-custom" onClick={onBack}>Volver al catálogo</button>
       </section>
     );
   }
