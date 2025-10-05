@@ -31,7 +31,7 @@ Hermanos Jota es un e-commerce de muebles artesanales que combina tradición y m
 **Herramientas:**
 - Git & GitHub
 - VS Code
-
+____________________________________
 ## 🚀 Instalación y Ejecución
 
 ### Prerrequisitos
