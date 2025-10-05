@@ -1,51 +1,139 @@
+import { useEffect } from 'react';
 import ProductCard from '../components/ProductCard';
 
 export default function Home({ onGoCatalog, featuredProducts = [] }) {
+  // Accesibilidad: mantener aria-selected en indicadores del carrusel
+  useEffect(() => {
+    const el = document.getElementById('heroCarousel');
+    if (!el || !window.bootstrap) return;
+    const instance = window.bootstrap.Carousel.getInstance(el) || new window.bootstrap.Carousel(el, { interval: 5000, ride: false });
+    const onSlid = (e) => {
+      const indicators = el.querySelectorAll('.carousel-indicators button');
+      indicators.forEach((btn, idx) => {
+        btn.setAttribute('aria-selected', String(idx === e.to));
+        if (idx === e.to) btn.setAttribute('aria-current', 'true'); else btn.removeAttribute('aria-current');
+      });
+    };
+    el.addEventListener('slid.bs.carousel', onSlid);
+    return () => el.removeEventListener('slid.bs.carousel', onSlid);
+  }, []);
+
   return (
     <>
-      {/* HERO con carrusel (usa imágenes que ya tenés en /public/img) */}
+      {/* HERO con carrusel a pantalla completa con overlay centrado */}
       <section className="hero-carousel-section" aria-label="Presentación principal">
-        <div id="heroCarousel" className="carousel slide" data-bs-ride="carousel" data-bs-interval="5000" role="region" aria-roledescription="carrusel">
+        <div
+          id="heroCarousel"
+          className="carousel slide"
+          data-bs-ride="carousel"
+          data-bs-interval="5000"
+          role="region"
+          aria-roledescription="carrusel"
+        >
           {/* Indicadores */}
-          <div className="carousel-indicators">
-            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" className="active" aria-current="true" aria-label="Diapositiva 1"></button>
-            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1" aria-label="Diapositiva 2"></button>
-            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2" aria-label="Diapositiva 3"></button>
+          <div className="carousel-indicators" aria-label="Seleccionar diapositiva">
+            <button
+              type="button"
+              data-bs-target="#heroCarousel"
+              data-bs-slide-to="0"
+              className="active"
+              aria-current="true"
+              aria-label="Diapositiva 1: Nueva Colección"
+              aria-selected="true"
+            ></button>
+            <button
+              type="button"
+              data-bs-target="#heroCarousel"
+              data-bs-slide-to="1"
+              aria-label="Diapositiva 2: Artesanía Sustentable"
+              aria-selected="false"
+            ></button>
+            <button
+              type="button"
+              data-bs-target="#heroCarousel"
+              data-bs-slide-to="2"
+              aria-label="Diapositiva 3: Showroom Buenos Aires"
+              aria-selected="false"
+            ></button>
           </div>
 
           {/* Slides */}
           <div className="carousel-inner">
-            <div className="carousel-item active">
-              <img src="/img/fondohero.jpg" className="d-block w-100" alt="Ambiente con mobiliario de madera de Hermanos Jota" />
-              <div className="carousel-caption d-none d-md-block">
-                <h2 className="section-title">Muebles con alma</h2>
-                <p>Diseño honesto y materiales nobles para toda la vida.</p>
-                <button className="btn btn-primary" onClick={onGoCatalog}>Ver catálogo</button>
+            <div className="carousel-item active" role="group" aria-roledescription="diapositiva" aria-label="1 de 3">
+              <div className="hero-slide">
+                <img
+                  src="/img/fondohero.jpg"
+                  className="hero-slide-image"
+                  alt="Ambiente con mobiliario de madera de Hermanos Jota"
+                />
+                <div className="hero-overlay">
+                  <div className="hero-content-center">
+                    <h2 className="hero-main-title">NUEVA COLECCIÓN</h2>
+                    <p className="hero-main-subtitle">Diseño con historia, muebles con alma</p>
+                    <button className="btn-hero-primary" onClick={onGoCatalog}>
+                      Descubrir colección
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
 
-            <div className="carousel-item">
-              <img src="/img/ImagenHero1.png" className="d-block w-100" alt="Detalle de texturas y terminaciones artesanales" />
-              <div className="carousel-caption d-none d-md-block">
-                <h2 className="section-title">Artesanía + precisión</h2>
-                <p>Unimos lo mejor del oficio con procesos modernos.</p>
+            <div className="carousel-item" role="group" aria-roledescription="diapositiva" aria-label="2 de 3">
+              <div className="hero-slide">
+                <img
+                  src="/img/ImagenHero1.png"
+                  className="hero-slide-image"
+                  alt="Taller y materiales sustentables"
+                />
+                <div className="hero-overlay">
+                  <div className="hero-content-center">
+                    <h2 className="hero-main-title">ARTESANÍA SUSTENTABLE</h2>
+                    <p className="hero-main-subtitle">Materiales nobles, futuro responsable</p>
+                    <a href="#sustentabilidad" className="btn-hero-primary">
+                      Nuestro compromiso
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
 
-            <div className="carousel-item">
-              <img src="/img/ImagenHero2.png" className="d-block w-100" alt="Showroom de Hermanos Jota" />
-              <div className="carousel-caption d-none d-md-block">
-                <h2 className="section-title">Showroom Buenos Aires</h2>
-                <p>Vení a ver, tocar y elegir tu próxima pieza favorita.</p>
+            <div className="carousel-item" role="group" aria-roledescription="diapositiva" aria-label="3 de 3">
+              <div className="hero-slide">
+                <img
+                  src="/img/ImagenHero2.png"
+                  className="hero-slide-image"
+                  alt="Showroom de Hermanos Jota en Buenos Aires"
+                />
+                <div className="hero-overlay">
+                  <div className="hero-content-center">
+                    <h2 className="hero-main-title">SHOWROOM BA</h2>
+                    <p className="hero-main-subtitle">Vení a ver y elegir tu próxima pieza favorita</p>
+                    <a href="#contacto" className="btn-hero-primary">
+                      Visitanos
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
 
           {/* Controles */}
-          <button className="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev" aria-label="Anterior">
+          <button
+            className="carousel-control-prev"
+            type="button"
+            data-bs-target="#heroCarousel"
+            data-bs-slide="prev"
+            aria-label="Anterior"
+          >
             <span className="carousel-control-prev-icon" aria-hidden="true"></span>
           </button>
-          <button className="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next" aria-label="Siguiente">
+          <button
+            className="carousel-control-next"
+            type="button"
+            data-bs-target="#heroCarousel"
+            data-bs-slide="next"
+            aria-label="Siguiente"
+          >
             <span className="carousel-control-next-icon" aria-hidden="true"></span>
           </button>
         </div>
@@ -140,7 +228,7 @@ export default function Home({ onGoCatalog, featuredProducts = [] }) {
             <div className="row g-4">
               {featuredProducts.slice(0, 8).map(p => (
                 <div className="col-6 col-md-4 col-lg-3" key={p.id}>
-                  <ProductCard product={p} onClick={() => {/* manejalo desde App si querés: seleccionar y cambiar de vista */}} />
+                  <ProductCard product={p} onClick={() => {/* handled from App if needed */}} />
                 </div>
               ))}
             </div>

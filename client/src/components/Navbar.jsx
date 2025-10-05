@@ -110,7 +110,7 @@ export default function Navbar({ cartCount, currentView, onNav }) {
             <span className="navbar-toggler-icon"></span>
           </button>
 
-          <div className="navbar navbar-collapse collapse d-sm-inline-flex justify-content-end me-2" id="mainNav">
+          <div className="collapse navbar-collapse d-sm-inline-flex justify-content-end me-2" id="mainNav">
             <ul className="navbar-nav">
               <li className="nav-item">
                 <button 
@@ -129,10 +129,11 @@ export default function Navbar({ cartCount, currentView, onNav }) {
                 </button>
               </li>
               <li className="nav-item">
-                <button 
+                <button
                   className="nav-link btn btn-link fs-5 px-3 py-2 fw-semibold color-principal-texto text-decoration-none"
-                  onClick={() => onNav('cart')}
+                  type="button"
                   aria-label="Carrito de compras"
+                  // onClick removido para que no navegue
                 >
                   <span className="position-relative d-inline-block">
                     <i className="bi bi-cart3 fs-4"></i>
@@ -140,6 +141,7 @@ export default function Navbar({ cartCount, currentView, onNav }) {
                   </span>
                 </button>
               </li>
+
             </ul>
           </div>
         </div>
