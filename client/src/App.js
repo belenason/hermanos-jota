@@ -6,14 +6,17 @@ import Catalog from './pages/Catalog';
 import Contact from './pages/Contact';
 import ProductDetail from './components/ProductDetail';
 import { getProductos } from './api';
+import { useCart } from 'react-use-cart';
+import ProductList from './pages/ProductList';
 
 export default function App() {
   const [view, setView] = useState('home');
   const [products, setProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const [cart, setCart] = useState([]);
+  //const [cart, setCart] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const {addItem,totalItems} =useCart();
 
   // Fetch products once on mount so Home can show featured items
   useEffect(() => {
@@ -25,15 +28,20 @@ export default function App() {
       .finally(() => setLoading(false));
   }, [products.length]);
 
-  const cartCount = cart.reduce((a, i) => a + i.qty, 0);
+  //const cartCount = cart.reduce((a, i) => a + i.qty, 0);
+  const cartCount = totalItems;
 
-  const addToCart = (prod, qty = 1) => {
-    setCart(prev => {
-      const found = prev.find(i => i.id === prod.id);
-      if (found) return prev.map(i => i.id === prod.id ? ({...i, qty: i.qty + qty}) : i);
-      return [...prev, { id: prod.id, qty }];
-    });
-  };
+const addToCart = (prod, qty = 1) => {
+  const normalize = (p) => ({
+    id: p.id,
+    price: Number(p.precio || 0),                 // react-use-cart usa 'price' numérico
+    nombre: p.nombre,
+    imagen: p.imagenes?.[0] || '/img/producto-ejemplo.jpg',
+    ...p,
+  });
+  const cantidad = Number(qty) || 1;
+  addItem(normalize(prod), cantidad);
+};
 
   const renderView = () => {
     if (view === 'home') {
@@ -59,6 +67,13 @@ export default function App() {
           product={selectedProduct}
           onBack={() => setView('catalog')}
           onAdd={(q)=> addToCart(selectedProduct, q)}
+        />
+      );
+    }
+    if (view === 'cart') {
+      return (
+        <ProductList
+          onBack={() => setView('catalog')}
         />
       );
     }

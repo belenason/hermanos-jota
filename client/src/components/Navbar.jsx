@@ -133,6 +133,7 @@ export default function Navbar({ cartCount, currentView, onNav }) {
                   className="nav-link btn btn-link fs-5 px-3 py-2 fw-semibold color-principal-texto text-decoration-none"
                   type="button"
                   aria-label="Carrito de compras"
+                  onClick={()=>onNav('cart')}
                 >
                   <span className="position-relative d-inline-block">
                     <i className="bi bi-cart3 fs-4"></i>
