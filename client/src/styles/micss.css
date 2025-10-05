@@ -47,7 +47,6 @@ html, body {
 }
 
 body {
-  background-color: var(--alabastro-calido);
   font-family: 'Inter', sans-serif;
   font-size: 12pt;
   font-weight: 400; /* Regular */
@@ -512,6 +511,7 @@ body {
     width: 12px;
     height: 12px;
   }
+  
 }
 
 /* =================== */
@@ -802,29 +802,45 @@ SECCIÓN 2: ESTILOS ESPECÍFICOS DEL INDEX
 /* 2.1 CARRUSEL HERO */
 /* =================== */
 
-/* Sección del carrusel hero - altura completa del viewport */
 .hero-carousel-section {
-  height: 100vh;
-  position: relative;
+  height: 500px;
+  width: 100%;
+  position: relative; /* contenedor relativo para los elementos absolutos */
   overflow: hidden;
 }
 
-/* Contenedor de diapositiva hero individual */
 .hero-slide {
-  position: relative;
-  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   overflow: hidden;
 }
 
-/* Estilo de imagen de diapositiva hero */
+.hero-slide img,
 .hero-slide-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center;
-  transition: transform 8s ease-in-out;
+  display: block;
 }
 
+.hero-content-center {
+  position: absolute;         /* absolutamente centrado */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* centro exacto */
+  z-index: 2;                 /* sobre las imágenes */
+  text-align: center;
+  max-width: 700px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;     /* títulos y botones en columna */
+  gap: 1.5rem;                /* espacio consistente entre elementos */
+  color: white;
+}
 /* Efecto de zoom sutil durante la transición de diapositiva */
 .carousel-item.active .hero-slide-image {
   transform: scale(1.02);
@@ -843,13 +859,7 @@ SECCIÓN 2: ESTILOS ESPECÍFICOS DEL INDEX
   justify-content: center;
 }
 
-/* Contenedor centrado de contenido hero */
-.hero-content-center {
-  text-align: center;
-  max-width: 700px;
-  padding: 2rem;
-  color: white;
-}
+
 
 /* Título principal del hero - siguiendo tipografía del manual de marca */
 .hero-main-title {
@@ -1814,4 +1824,14 @@ SECCIÓN 5: ESTILOS ESPECÍFICOS DE PRODUCTOS
     .hero-title {
         margin-top: 2rem;
     }
+}
+
+/* GLOBAL*/ 
+.container, .container-fluid {
+  width: 100% !important;
+  max-width: 100% !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  padding: 0;
+  margin: 0;
 }

@@ -61,8 +61,13 @@ export default function App() {
 
   return (
     <>
-      <Navbar onNav={setView} cartCount={cartCount} />
-      <main className="container py-4">
+      <Navbar
+  cartCount={cartCount}
+  currentView={view}
+  onNav={setView}
+/>
+
+      <main id='contenido-principal' tabIndex={-1}>
         {renderView()}
       </main>
       <Footer />
