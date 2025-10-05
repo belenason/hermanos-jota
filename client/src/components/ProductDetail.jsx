@@ -94,7 +94,7 @@ export default function ProductDetail({ product, onBack, onAdd }) {
       <nav aria-label="breadcrumb" className="mb-3 mt-4">
         <ol className="breadcrumb">
           <li className="breadcrumb-item">
-            <button className="btn btn-link p-0 bread-personalizado" onClick={onBack}>Catálogo</button>
+            <button className=" bread-personalizado btn btn-link p-0 " onClick={onBack}>Catálogo</button>
           </li>
           <li className="breadcrumb-item active" aria-current="page">{product?.nombre}</li>
         </ol>

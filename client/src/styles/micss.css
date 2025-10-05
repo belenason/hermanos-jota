@@ -1402,7 +1402,7 @@ SECCIÓN 4: ESTILOS ESPECÍFICOS DE PRODUCTO
 }
 
 .bread-personalizado{
-  color: var(--rosa-polvoriento);
+  color: var(--rosa-polvoriento) !important;
 }
 
 .product-thumbs img.active{ 

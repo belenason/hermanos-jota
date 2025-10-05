@@ -72,9 +72,11 @@ const addToCart = (prod, qty = 1) => {
     }
     if (view === 'cart') {
       return (
-        <ProductList
-          onBack={() => setView('catalog')}
-        />
+        <div className="pt-5"> {/* Ajusta el valor según necesites */}
+          <ProductList
+            onBack={() => setView('catalog')}
+          />
+        </div>
       );
     }
     return null;
