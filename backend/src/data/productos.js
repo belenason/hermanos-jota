@@ -1,8 +1,4 @@
-/**
- * Catálogo de datos de productos
- * Migrado desde la aplicación original
- */
-const PRODUCTS = [
+export const PRODUCTS = [
   {
     id: 1,
     nombre: "Aparador Uspallata",
@@ -172,5 +168,3 @@ const PRODUCTS = [
     ]
   }
 ];
-
-module.exports = PRODUCTS;

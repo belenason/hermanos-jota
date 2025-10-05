@@ -1,21 +1,21 @@
 {
-  "name": "hermanos-jota-backend",
+  "name": "backend",
   "version": "1.0.0",
-  "description": "API REST para E-commerce Mueblería Hermanos Jota",
-  "main": "server.js",
+  "description": "",
+  "type": "module",
+  "main": "src/server.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "nodemon server.js"
+    "dev": "nodemon src/server.js",
+    "start": "node src/server.js"
   },
-  "keywords": ["express", "api", "ecommerce"],
+  "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.18.2",
     "cors": "^2.8.5",
-    "dotenv": "^16.3.1"
+    "express": "^5.1.0"
   },
   "devDependencies": {
-    "nodemon": "^3.0.1"
+    "nodemon": "^3.1.10"
   }
 }

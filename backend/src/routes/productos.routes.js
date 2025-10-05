@@ -1,15 +1,19 @@
-/**
- * Rutas de productos
- * Define los endpoints de la API para productos
- */
-const express = require('express');
-const router = express.Router();
-const productosController = require('../controllers/productos.controller');
+import { Router } from "express";
+import { PRODUCTS } from "../data/productos.js";
 
-// GET /api/productos - Obtener todos los productos
-router.get('/', productosController.getAllProductos);
+export const productosRouter = Router();
 
-// GET /api/productos/:id - Obtener un producto por ID
-router.get('/:id', productosController.getProductoById);
+// GET /api/productos
+productosRouter.get("/", (req, res) => {
+  res.json(PRODUCTS);
+});
 
-module.exports = router;
+// GET /api/productos/:id
+productosRouter.get("/:id", (req, res) => {
+  const id = Number(req.params.id);
+  const found = PRODUCTS.find(p => p.id === id);
+  if (!found) {
+    return res.status(404).json({ error: "Producto no encontrado" });
+  }
+  res.json(found);
+});
