@@ -1401,6 +1401,10 @@ SECCIÓN 4: ESTILOS ESPECÍFICOS DE PRODUCTO
   transition: border-color 0.2s ease;
 }
 
+.bread-personalizado{
+  color: var(--rosa-polvoriento);
+}
+
 .product-thumbs img.active{ 
   border-color:var(--siena-tostado); 
 } 
@@ -1418,18 +1422,19 @@ SECCIÓN 4: ESTILOS ESPECÍFICOS DE PRODUCTO
   margin-top: 26px; 
 }
 
-.purchase-card{
-  margin-left: 2%;
-  background:#fff; 
-  border-radius:16px; 
-  padding:20px;
-  box-shadow:0 10px 24px rgba(0,0,0,.10);
-  border:1px solid #f0e6d8;
+.purchase-card {
+  /* margin-left: 2%; */      /* Elimina o comenta esta línea */
+  margin: 0 auto;             /* Centra el globo en su contenedor */
+  background: #fff;
+  border-radius: 16px;
+  padding: 32px 32px;         /* Más grande y cómodo */
+  box-shadow: 0 10px 24px rgba(0,0,0,.10);
+  border: 1px solid #f0e6d8;
   position: sticky;
   width: 100%;
-  min-width: 320px;   /* Puedes ajustar este valor */
-  max-width: 100%;    /* O un valor mayor si lo prefieres */
-  top: 68px; /* Hace que la tarjeta de compra se mantenga visible al hacer scroll */
+  min-width: 320px;
+  max-width: 420px;           /* Ajusta el ancho máximo a tu gusto */
+  top: 68px;
 }
 
 .price{ 
@@ -1555,11 +1560,19 @@ SECCIÓN 4: ESTILOS ESPECÍFICOS DE PRODUCTO
 /* Mejoras responsivas */
 @media (max-width: 992px) {
   .purchase-card {
-    position: static; /* Quita el sticky en tabletas y móviles */
-    margin: 20px;
-    
+    max-width: 95vw;
+    margin: 20px auto;
+    padding: 24px 10px;
   }
+}
 
+/* Celulares */
+@media (max-width: 576px) {
+  .purchase-card {
+    max-width: 98vw;
+    margin: 16px 1vw;
+    padding: 18px 4vw;
+  }
 }
 
 @media (max-width: 576px) {
@@ -1853,6 +1866,7 @@ SECCIÓN 5: ESTILOS ESPECÍFICOS DE PRODUCTOS
   color: var(--verde-salvia)!important; 
   text-decoration: none;
 }
+
 /* === FIX HERO CAROUSEL FULL-HEIGHT & OVERLAY (React version) === */
 .hero-carousel-section {
   height: 100dvh;
