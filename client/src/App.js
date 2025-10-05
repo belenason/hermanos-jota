@@ -18,7 +18,7 @@ export default function App() {
     (async () => {
       try {
         setLoading(true);
-        const data = await fetchProducts();   // devuelve objetos con nombre/precio/imagenes
+        const data = await fetchProducts();
         setProducts(Array.isArray(data) ? data : []);
       } catch (e) {
         setErr(e.message || 'Error al cargar productos');
@@ -28,45 +28,36 @@ export default function App() {
     })();
   }, []);
 
-  const header = React.createElement(Navbar, { cartCount: cart.length });
+  const header = React.createElement(Navbar, {
+    cartCount: cart.length,
+    onGoHome: () => { setSelected(null); setView('catalog'); },
+    onGoContact: () => setView('contact')
+  });
   const footer = React.createElement(Footer);
 
+  let main;
   if (loading) {
-    return React.createElement('div', { style: { padding: 16 } }, header, React.createElement('p', null, 'Cargando...'), footer);
-  }
-  if (err) {
-    return React.createElement('div', { style: { padding: 16 } }, header, React.createElement('p', { style: { color: 'red' } }, err), footer);
-  }
-
-  let main = null;
-
-  if (view === 'catalog') {
+    main = React.createElement('div', { className: 'container my-4' }, React.createElement('p', null, 'Cargando...'));
+  } else if (err) {
+    main = React.createElement('div', { className: 'container my-4' }, React.createElement('div', { className: 'alert alert-danger' }, err));
+  } else if (view === 'catalog') {
     main = React.createElement(
       'div',
-      { style: { display: 'grid', gap: 24 } },
-      React.createElement('h2', null, 'Catálogo'),
+      { className: 'container my-4' },
+      React.createElement('h2', { className: 'mb-3' }, 'Catálogo'),
       React.createElement(ProductList, { products, onSelect: (p) => { setSelected(p); setView('detail'); } }),
-      React.createElement('div', null, React.createElement('button', { onClick: () => setView('contact') }, 'Ir a Contacto'))
     );
-  }
-
-  if (view === 'detail' && selected) {
+  } else if (view === 'detail' && selected) {
     main = React.createElement(ProductDetail, {
       product: selected,
       onAddToCart: (p) => setCart(prev => [...prev, p]),
       onBack: () => { setSelected(null); setView('catalog'); }
     });
+  } else if (view === 'contact') {
+    main = React.createElement(ContactForm, null);
+  } else {
+    main = React.createElement('div', { className: 'container my-4' }, 'Sin contenido');
   }
 
-  if (view === 'contact') {
-    main = React.createElement(
-      'div',
-      { style: { display: 'grid', gap: 16 } },
-      React.createElement('h2', null, 'Contacto'),
-      React.createElement(ContactForm, null),
-      React.createElement('button', { onClick: () => setView('catalog') }, 'Volver al catálogo')
-    );
-  }
-
-  return React.createElement('div', { style: { padding: 16, display: 'grid', gap: 16 } }, header, main, footer);
+  return React.createElement(React.Fragment, null, header, main, footer);
 }

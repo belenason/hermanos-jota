@@ -1,27 +1,30 @@
 import React from 'react';
 
+function formatCurrency(n) {
+  try {
+    return new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS', maximumFractionDigits: 0 }).format(Number(n)||0);
+  } catch { return `$${n}`; }
+}
+
 export default function ProductCard(props) {
   const { product, onSelect } = props;
-
   const imgSrc = (product.imagenes && product.imagenes[0]) ? product.imagenes[0] : '/assets/placeholder.png';
-  const nombre = product.nombre || 'Producto';
-  const precio = (typeof product.precio === 'number') ? product.precio : 0;
 
   return React.createElement(
     'div',
-    {
-      style: {
-        border: '1px solid #e5e5e5', borderRadius: 8, padding: 12, width: 260,
-        display: 'flex', flexDirection: 'column', gap: 8
-      }
-    },
-    React.createElement('img', { src: imgSrc, alt: nombre, style: { width: '100%', borderRadius: 6, objectFit: 'cover' } }),
-    React.createElement('div', { style: { fontWeight: 600 } }, nombre),
-    React.createElement('div', null, `$${precio}`),
+    { className: 'card h-100' },
+    React.createElement('img', { src: imgSrc, className: 'card-img-top', alt: product.nombre }),
     React.createElement(
-      'button',
-      { onClick: () => onSelect(product), style: { padding: '8px 10px', cursor: 'pointer' } },
-      'Ver detalle'
+      'div',
+      { className: 'card-body d-flex flex-column' },
+      React.createElement('h5', { className: 'card-title' }, product.nombre || 'Producto'),
+      React.createElement('p', { className: 'card-text mb-2 text-muted' }, product.descripcion ? String(product.descripcion).slice(0, 90) + '…' : ''),
+      React.createElement('div', { className: 'mt-auto fw-semibold' }, formatCurrency(product.precio)),
+      React.createElement(
+        'button',
+        { className: 'btn btn-primary mt-2', onClick: () => onSelect(product) },
+        'Ver detalle'
+      )
     )
   );
 }

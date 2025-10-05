@@ -13,25 +13,53 @@ export default function ContactForm() {
 
   return React.createElement(
     'div',
-    { style: { border: '1px solid #eee', borderRadius: 8, padding: 16 } },
-    React.createElement('h3', null, 'Contacto'),
-    ok && React.createElement('p', { style: { color: 'green' } }, '¡Mensaje enviado con éxito!'),
+    { className: 'container my-3' },
+    React.createElement('h3', { className: 'mb-3' }, 'Contacto'),
+    ok && React.createElement('div', { className: 'alert alert-success' }, '¡Mensaje enviado con éxito!'),
     React.createElement(
       'form',
-      { onSubmit },
-      React.createElement('div', { style: { marginBottom: 8 } },
-        React.createElement('label', null, 'Nombre'),
-        React.createElement('input', { name: 'nombre', value: form.nombre, onChange, style: { width: '100%' } })
+      { className: 'row g-3', onSubmit },
+      React.createElement(
+        'div',
+        { className: 'col-12 col-md-6' },
+        React.createElement('label', { className: 'form-label' }, 'Nombre'),
+        React.createElement('input', {
+          className: 'form-control',
+          name: 'nombre',
+          value: form.nombre,
+          onChange
+        })
       ),
-      React.createElement('div', { style: { marginBottom: 8 } },
-        React.createElement('label', null, 'Email'),
-        React.createElement('input', { name: 'email', type: 'email', value: form.email, onChange, style: { width: '100%' } })
+      React.createElement(
+        'div',
+        { className: 'col-12 col-md-6' },
+        React.createElement('label', { className: 'form-label' }, 'Email'),
+        React.createElement('input', {
+          className: 'form-control',
+          type: 'email',
+          name: 'email',
+          value: form.email,
+          onChange
+        })
       ),
-      React.createElement('div', { style: { marginBottom: 8 } },
-        React.createElement('label', null, 'Mensaje'),
-        React.createElement('textarea', { name: 'mensaje', value: form.mensaje, onChange, rows: 4, style: { width: '100%' } })
+      React.createElement(
+        'div',
+        { className: 'col-12' },
+        React.createElement('label', { className: 'form-label' }, 'Mensaje'),
+        React.createElement('textarea', {
+          className: 'form-control',
+          name: 'mensaje',
+          rows: 4,
+          value: form.mensaje,
+          onChange
+        })
       ),
-      React.createElement('button', { type: 'submit' }, 'Enviar')
+      React.createElement(
+        'div',
+        { className: 'col-12' },
+        React.createElement('button', { className: 'btn btn-primary' }, 'Enviar')
+      )
     )
   );
 }
+
