@@ -15,7 +15,7 @@ export default function ContactForm() {
       return;
     }
 
-    console.log('Formulario:', form); // pedido por consigna
+    console.log('Formulario:', form);
     setOk(true);
     setValidated(false);
     setForm({ nombre: '', email: '', mensaje: '' });

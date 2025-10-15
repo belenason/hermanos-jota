@@ -110,7 +110,6 @@ export default function ProductDetail({ product, onBack, onAdd }) {
             <section
               className="product-gallery mb-3"
               ref={galleryRef}
-              role="region"
               aria-label={`Galería de imágenes de ${product?.nombre}`}
             >
               {/* Imagen activa */}
