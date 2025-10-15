@@ -308,6 +308,21 @@ async function fetchProductById(id, delay = 500) {
  * @param {number} delay - Tiempo de retraso en milisegundos
  * @returns {Promise<Array>} Promise que resuelve con productos filtrados
  */
+
+/**
+ * Elimina los acentos y diacríticos de un texto.
+ * Ej: "Sillón" -> "Sillon"
+ * @param {string} str - El texto a normalizar.
+ * @returns {string} El texto sin acentos.
+ */
+function removeAccents(str) {
+  if (!str) return "";
+  // El método normalize('NFD') descompone los caracteres en su forma base y su diacrítico
+  // (ej: 'ó' se convierte en 'o' + '´').
+  // Luego, la expresión regular /[\u0300-\u036f]/g elimina esos diacríticos.
+  return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+}
+
 async function searchProducts(query, delay = 300) {
   try {
     console.log(`🔍 Buscando productos: "${query}"...`);
@@ -315,12 +330,21 @@ async function searchProducts(query, delay = 300) {
     // Simular retraso de búsqueda
     await new Promise(resolve => setTimeout(resolve, delay));
     
-    const filtered = query.trim() === '' 
+    // Normalizamos la búsqueda del usuario: minúsculas, sin espacios y sin acentos.
+    const normalizedQuery = removeAccents(query.toLowerCase().trim());
+
+    const filtered = normalizedQuery === '' 
       ? [...PRODUCTS]
-      : PRODUCTS.filter(p =>
-          (p.nombre && p.nombre.toLowerCase().includes(query.toLowerCase())) ||
-          (p.descripcion && p.descripcion.toLowerCase().includes(query.toLowerCase()))
-        );
+      : PRODUCTS.filter(p => {
+          if (!p.nombre) {
+            return false;
+          }
+          // Dividimos el nombre del producto en palabras
+          const wordsInName = p.nombre.toLowerCase().split(' ');
+          
+          // Verificamos si alguna palabra, ya sin acentos, comienza con la búsqueda normalizada.
+          return wordsInName.some(word => removeAccents(word).startsWith(normalizedQuery));
+        });
     
     console.log(`✅ Encontrados ${filtered.length} productos`);
     return filtered;
@@ -660,9 +684,6 @@ async function initCatalogPage() {
         // Realizar búsqueda asíncrona
         const filtered = await searchProducts(query, 300);
         renderCatalogGrid(filtered);
-        
-        // Remover indicador
-        searchIndicator?.remove();
         
       } catch (error) {
         console.error('❌ Error en búsqueda:', error);
