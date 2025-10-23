@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import ProductCard from '../components/ProductCard';
 
 export default function Home({ onGoCatalog, featuredProducts = [], onOpenProduct }) {
-  // Accesibilidad: mantener aria-selected en indicadores del carrusel (hero)
+  // Accesibilidad: mantener aria-current en indicadores del carrusel (hero)
   useEffect(() => {
     const el = document.getElementById('heroCarousel');
     if (!el || !window.bootstrap) return;
@@ -10,8 +10,8 @@ export default function Home({ onGoCatalog, featuredProducts = [], onOpenProduct
     const onSlid = (e) => {
       const indicators = el.querySelectorAll('.carousel-indicators button');
       indicators.forEach((btn, idx) => {
-        btn.setAttribute('aria-selected', String(idx === e.to));
-        if (idx === e.to) btn.setAttribute('aria-current', 'true'); else btn.removeAttribute('aria-current');
+        if (idx === e.to) btn.setAttribute('aria-current', 'true');
+        else btn.removeAttribute('aria-current');
       });
     };
     el.addEventListener('slid.bs.carousel', onSlid);
@@ -41,21 +41,18 @@ export default function Home({ onGoCatalog, featuredProducts = [], onOpenProduct
               className="active"
               aria-current="true"
               aria-label="Diapositiva 1: Nueva Colección"
-              aria-selected="true"
             ></button>
             <button
               type="button"
               data-bs-target="#heroCarousel"
               data-bs-slide-to="1"
               aria-label="Diapositiva 2: Artesanía Sustentable"
-              aria-selected="false"
             ></button>
             <button
               type="button"
               data-bs-target="#heroCarousel"
               data-bs-slide-to="2"
               aria-label="Diapositiva 3: Showroom Buenos Aires"
-              aria-selected="false"
             ></button>
           </div>
 
