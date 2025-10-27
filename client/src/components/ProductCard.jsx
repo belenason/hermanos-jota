@@ -1,5 +1,5 @@
 export default function ProductCard({ product, onClick }) {
-  const img = product.imagenes?.[0] || '/img/producto-ejemplo.jpg';
+  const img = product.imagenUrl || '/img/producto-ejemplo.jpg';
   return (
     <article className="product-card h-100 text-center" role="button" onClick={onClick}>
       <div className="product-image"><img src={img} alt={product.nombre} className="img-fluid" /></div>

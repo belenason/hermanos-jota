@@ -1,46 +1,127 @@
 import { Router } from "express";
-import { PRODUCTS } from "../data/productos.js";
+import { Producto } from "../models/Producto.js";
 
 export const productosRouter = Router();
 
-// FALTA: LOS ENDPOINTS MARCADOS Y MODIFICAR LOS HECHOS PARA Q SE CONECTEN A LA BD
-
-// GET /api/productos
-productosRouter.get("/", (req, res) => {
-  res.json(PRODUCTS);
+// Ruta para LEER todos los productos
+// Método HTTP: GET
+// URL: /api/productos
+productosRouter.get("/", async (req, res, next) => {
+  try {
+    const productos = await Producto.find({});
+    res.status(200).json(productos);
+  } catch (error) {
+    console.error('Error al obtener los productos:', error.message);
+    next(error); // Pasa el error al middleware de errores
+  }
 });
 
-// GET /api/productos/:id
-productosRouter.get("/:id", (req, res, next) => {
-  const id = parseInt(req.params.id);
-  const producto = PRODUCTS.find(p => p.id === id);
-  if (!producto) {
-    const error = new Error('Producto no encontrado');
-    error.status = 404;
-    return next(error); 
+
+// Ruta para LEER un producto por su ID
+// Método HTTP: GET
+// URL: /api/productos/:id
+productosRouter.get("/:id", async (req, res, next) => {
+  try {
+    const productoId = req.params.id;
+    console.log('Buscando producto con ID:', productoId);
+
+    const producto = await Producto.findById(productoId);
+
+    if (!producto) {
+      const error = new Error('Producto no encontrado');
+      error.status = 404;
+      return next(error); 
+    }
+
+    res.status(200).json(producto);
+  } catch (error) {
+    console.error('Error al buscar producto por ID:', error.message);
+    error.status = 400; // Generalmente, un ID malformado es un Bad Request (400)
+    next(error);
   }
-  res.json(producto);
 });
 
-// POST /api/productos: Recibe los datos de un nuevo producto en req.body, crea un nuevo documento en la base de datos y lo devuelve con un estado 201.
-productosRouter.post('/', (req, res, next) => {
-  const nuevoProducto = req.body; 
-  console.log('Producto recibido:', nuevoProducto);
+// Ruta para CREAR un nuevo producto
+// Método HTTP: POST
+// URL: /api/productos
+productosRouter.post('/', async (req, res, next) => {
+  try {
+    const datosNuevoProducto = req.body;
+    console.log('Datos recibidos para crear producto:', datosNuevoProducto);
 
-  if (!nuevoProducto.nombre || !nuevoProducto.precio) {
-    const error = new Error('Nombre y precio son obligatorios');
-    error.status = 400;
-    return next(error);
+    const nuevoProducto = new Producto(datosNuevoProducto);
+
+    const productoGuardado = await nuevoProducto.save();
+
+    res.status(201).json({
+      mensaje: 'Producto creado con éxito',
+      producto: productoGuardado // Enviamos el documento completo con el _id generado por MongoDB
+    });
+
+  } catch (error) {
+    console.error('Error al crear el producto:', error.message);
+    error.status = 400; // Generalmente, un error de validación es un Bad Request (400)
+    next(error);
   }
+});
+
+// Ruta para ACTUALIZAR un produto por su ID
+// Método HTTP: PUT
+// URL: /api/produtos/:id
+productosRouter.put('/:id', async (req, res, next) => {
+  try {
+    const productoId = req.params.id;
+    const datosActualizados = req.body;
+    console.log(`Actualizando producto con ID ${productoId} con datos:`, datosActualizados);
+
+    const productoActualizado = await Producto.findByIdAndUpdate(
+      productoId,
+      datosActualizados,
+      { new: true, runValidators: true }
+    );
+
+    if (!productoActualizado) {
+      const error = new Error('Producto no encontrado para actualizar');
+      error.status = 404;
+      return next(error);
+    }
  
-  // Aquí iría la lógica para guardar en la base de datos...
-  
-  res.status(201).json({ 
-    mensaje: 'Producto creado con éxito', 
-    producto: nuevoProducto 
-  });
+    res.status(200).json({
+      mensaje: 'Producto actualizado con éxito',
+      usuario: productoActualizado
+    });
+  } catch (error) {
+    console.error('Error al actualizar producto:', error.message);
+    error.status = 400;
+    next(error);
+  }
 });
 
-// PUT /api/productos/:id: Recibe datos actualizados en req.body y modifica el producto correspondiente en la base de datos.
-
+// Ruta para ELIMINAR un producto por su ID
+// Método HTTP: DELETE
+// URL: /api/productos/:id
 // DELETE /api/productos/:id: Elimina un producto de la base de datos por su _id.
+productosRouter.delete('/:id', async (req, res, next) => {
+  try {
+    const productoId = req.params.id;
+    console.log('Eliminando producto con ID:', productoId);
+ 
+    const productoEliminado = await Producto.findByIdAndDelete(productoId);
+ 
+    if (!productoEliminado) {
+      const error = new Error('Producto no encontrado para eliminar');
+      error.status = 404;
+      return next(error);
+    }
+ 
+    res.status(200).json({
+      mensaje: 'Producto eliminado con éxito',
+      producto: productoEliminado 
+    });
+ 
+  } catch (error) {
+    console.error('Error al eliminar producto:', error.message);
+    error.status = 400; // Puede ser por un ID malformado
+    next(error);
+  }
+});

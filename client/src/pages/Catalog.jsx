@@ -1,4 +1,3 @@
-// src/pages/Catalog.jsx
 import { useState } from 'react';
 import ProductCardGrid from '../components/ProductCardGrid';
 
@@ -15,35 +14,57 @@ export default function Catalog({
   const filteredProducts = products.filter(p => {
     const query = buscado.toLowerCase().trim();
     if (!query) return true;
-
     const words = (p.nombre || '').toLowerCase().split(' ');
     return words.some(word => word.startsWith(query));
   });
 
-  if (loading) return <p className="text-center my-5">Cargando productos…</p>;
-
-  if (error) {
+  // ---- Estado: cargando ----
+  if (loading) {
     return (
-      <div className="alert alert-danger text-center" role="alert">
-        <p className="mb-3">{error}</p>
-        <button
-          className="btn btn-primary"
-          onClick={onRetry}
-          disabled={loading}
-        >
-          {loading ? 'Reintentando…' : 'Reintentar'}
-        </button>
+      <div className="catalog-loading text-center">
+        <div className="spinner-border text-siena mb-3" role="status" />
+        <p className="loading-text">Cargando productos…</p>
       </div>
     );
   }
 
-  if (!products.length) {
-    return <p className="text-center my-5">No hay productos.</p>;
+  // ---- Estado: error ----
+  if (error) {
+    return (
+      <div className="catalog-error text-center">
+        <div className="error-card">
+          <h5 className="error-title">Ocurrió un error</h5>
+          <p className="error-message">Lamentamos los problemas. Estamos trabajando para mejorar tu experiencia.</p>
+          <button
+            className="btn-secondary-custom"
+            onClick={onRetry}
+            disabled={loading}
+          >
+            {loading ? 'Reintentando…' : 'Reintentar'}
+          </button>
+        </div>
+      </div>
+    );
   }
 
+  // ---- Sin productos ----
+  if (!products.length) {
+    return (
+      <div className="catalog-empty">
+        <div className="empty-content">
+          <div className="empty-icon">🪑</div>
+          <h5 className="empty-title">No hay productos disponibles</h5>
+          <p className="empty-text">
+            Vuelve más tarde o revisá nuevamente nuestra selección.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  // ---- Vista normal ----
   return (
     <>
-      {/* Hero simple (opcional) */}
       <section className="contact-hero">
         <div className="contact-container">
           <h2 className="hero-title">Nuestros Productos</h2>
@@ -51,7 +72,6 @@ export default function Catalog({
             Descubrí nuestra selección de muebles, diseñados para transformar tu espacio.
           </p>
 
-          {/* Barra de búsqueda */}
           <input
             type="text"
             className="form-control my-3"
@@ -62,12 +82,11 @@ export default function Catalog({
         </div>
       </section>
 
-      {/* Grilla responsiva estilo productos.html */}
       <section className="grilla mb-4" id="catalog-grid">
         {filteredProducts.length === 0 ? (
-          <div className="full-width-message">
+          <div className="text-center py-5">
             <h3 className="text-muted">No se encontraron productos</h3>
-            <p>Probá con otros términos de búsqueda</p>
+            <p>Probá con otros términos de búsqueda.</p>
           </div>
         ) : (
           filteredProducts.map((p) => (

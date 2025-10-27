@@ -1,5 +1,5 @@
 export default function ProductCardGrid({ product, onOpen, onAdd }) {
-  const img = product.imagenes?.[0] || '/img/producto-ejemplo.jpg';
+  const img = product.imagenUrl || '/img/producto-ejemplo.jpg';
   const precio = Number(product.precio || 0).toLocaleString('es-AR');
 
   return (

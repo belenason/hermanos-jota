@@ -2212,3 +2212,56 @@ SECCIÓN 5: ESTILOS ESPECÍFICOS DE PRODUCTOS
     margin-top: 1rem;
   }
 }
+.catalog-loading,
+.catalog-error,
+.catalog-empty {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  min-height: 90vh; /* misma altura visible en ambos estados */
+}
+
+.catalog-empty{
+  display: flex;
+}
+
+/* ---------- Estado: cargando ---------- */
+.catalog-loading {
+  padding: 14rem 1rem;
+}
+
+.text-siena {
+  color: var(--siena-tostado) !important;
+}
+
+.loading-text {
+  color: var(--muted);
+  font-size: 1.05rem;
+}
+
+/* ---------- Estado: error ---------- */
+.catalog-error {
+  padding: 8rem 1rem;
+  display: flex;
+  justify-content: center;
+}
+
+.error-card {
+  background: var(--surface);
+  border-radius: 1rem;
+  padding: 3rem 2rem;
+  max-width: 420px;
+  text-align: center;
+}
+
+.error-title {
+  color: var(--dark-wood);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.error-message {
+  color: var(--muted);
+  margin-bottom: 1.5rem;
+}

@@ -29,7 +29,8 @@ export default function App() {
       setLoading(true);
       setError('');
       const data = await getProductos();
-      setProducts(data);
+      const productsWithId = data.map(p => ({ ...p, id: p._id }));
+      setProducts(productsWithId);
     } catch (e) {
       setError(e?.message ?? 'No se pudieron cargar los productos');
     } finally {
@@ -46,10 +47,11 @@ export default function App() {
 
   const addToCart = (prod, qty = 1) => {
     const normalize = (p) => ({
-      id: p.id,
+      // Los productos de MongoDB tienen _id, no id.
+      id: p._id,
       price: Number(p.precio || 0), // react-use-cart usa 'price' numérico
       nombre: p.nombre,
-      imagen: p.imagenes?.[0] || '/img/producto-ejemplo.jpg',
+      imagen: p.imagenUrl || '/img/producto-ejemplo.jpg',
       ...p,
     });
     const cantidad = Number(qty) || 1;
@@ -105,7 +107,6 @@ export default function App() {
           onBack={() => setView('catalog')}
           onAdd={(q) => {
             addToCart(selectedProduct, q);
-            // ✅ cartelito abajo-derecha
             showToast('¡Agregado al carrito exitosamente!');
           }}
         />
@@ -135,10 +136,12 @@ export default function App() {
         show={toast.show}
         message={toast.message}
         onClose={hideToast}
-        duration={2000} // opcional
+        duration={2000}
       />
 
       <Footer />
     </>
   );
 }
+
+

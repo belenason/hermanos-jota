@@ -16,10 +16,12 @@ export default function ProductDetail({ product, onBack, onAdd }) {
   const thumbsRef = useRef(null);
 
   const images = useMemo(() => {
-    const arr = Array.isArray(product?.imagenes) && product.imagenes.length
-      ? product.imagenes
-      : ['/img/producto-ejemplo.jpg'];
-    return arr;
+    if (product?.imagenUrl) {
+      // Si hay imagenUrl, la ponemos dentro de un array
+      return [product.imagenUrl];
+    }
+    // Si no, usamos el fallback
+    return ['/img/producto-ejemplo.jpg'];
   }, [product]);
 
   const price = useMemo(() => Number(product?.precio || 0).toLocaleString('es-AR'), [product]);
@@ -31,7 +33,7 @@ export default function ProductDetail({ product, onBack, onAdd }) {
     const known = order.filter(k => product[k]);
 
     // Incluir cualquier otra key “descriptiva” (no técnicas) que no esté ya
-    const excluded = new Set(['id','nombre','precio','descripcion','imagenes']);
+    const excluded = new Set(['_id', 'id','nombre','precio','descripcion', 'createdAt','updatedAt','imagenUrl', 'Id', '__v']);
     const dynamic = Object.keys(product)
       .filter(k => !excluded.has(k) && !known.includes(k) && typeof product[k] === 'string' && product[k].length < 120);
 
