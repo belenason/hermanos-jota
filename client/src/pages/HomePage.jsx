@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import ProductCard from '../components/ProductCard';
 
-export default function Home({ onGoCatalog, featuredProducts = [], onOpenProduct }) {
+export default function HomePage({ onGoCatalog, featuredProducts = [], onOpenProduct }) {
   // Accesibilidad: mantener aria-current en indicadores del carrusel (hero)
   useEffect(() => {
     const el = document.getElementById('heroCarousel');

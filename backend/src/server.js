@@ -1,5 +1,5 @@
 import express from "express";
-import mongoose from "mongoose"; // <-- Faltaba esta importación
+import mongoose from "mongoose";
 import { logger } from "./middlewares/logger.js";
 import { productosRouter } from "./routes/productos.routes.js";
 import cors from "cors";

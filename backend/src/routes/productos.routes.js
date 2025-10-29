@@ -65,7 +65,7 @@ productosRouter.post('/', async (req, res, next) => {
   }
 });
 
-// Ruta para ACTUALIZAR un produto por su ID
+// Ruta para ACTUALIZAR un producto por su ID
 // Método HTTP: PUT
 // URL: /api/produtos/:id
 productosRouter.put('/:id', async (req, res, next) => {

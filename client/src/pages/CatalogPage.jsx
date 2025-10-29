@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import ProductCardGrid from '../components/ProductCardGrid';
 
-export default function Catalog({
+export default function CatalogPage({
   products = [],
   loading,
   error,

@@ -1,14 +1,18 @@
 import { useEffect, useState, useCallback } from 'react';
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
-import Home from './pages/Home';
-import Catalog from './pages/Catalog';
-import Contact from './pages/Contact';
-import ProductDetail from './components/ProductDetail';
 import { getProductos } from './api';
 import { useCart } from 'react-use-cart';
-import ProductList from './pages/ProductList';
+import { Routes, Route } from 'react-router-dom';
+
+import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 import Toast from './components/Toast';
+
+import HomePage from './pages/HomePage';
+import CatalogPage from './pages/CatalogPage';
+import ContactPage from './pages/ContactPage';
+import ProductDetailPage from './pages/ProductDetailPage';
+import CartPage from './pages/CartPage';
+
 
 export default function App() {
   const [view, setView] = useState('home');
@@ -64,81 +68,21 @@ export default function App() {
     loadProducts();
   };
 
-  const renderView = () => {
-    if (view === 'home') {
-      const featured = products.slice(0, 4);
-      return (
-        <Home
-          onGoCatalog={() => setView('catalog')}
-          featuredProducts={featured}
-          onOpenProduct={(p) => {
-            setSelectedProduct(p);
-            setView('product');
-          }}
-        />
-      );
-    }
-
-    if (view === 'contact') return <Contact />;
-
-    if (view === 'catalog') {
-      return (
-        <Catalog
-          products={products}
-          loading={loading}
-          error={error}
-          onSelect={(p) => {
-            setSelectedProduct(p);
-            setView('product');
-          }}
-          onRetry={handleRetry}
-          onAdd={(prod, q) => {
-            addToCart(prod, q);
-            showToast('¡Agregado al carrito exitosamente!');
-          }}
-        />
-      );
-    }
-
-    if (view === 'product' && selectedProduct) {
-      return (
-        <ProductDetail
-          product={selectedProduct}
-          onBack={() => setView('catalog')}
-          onAdd={(q) => {
-            addToCart(selectedProduct, q);
-            showToast('¡Agregado al carrito exitosamente!');
-          }}
-        />
-      );
-    }
-
-    if (view === 'cart') {
-      return (
-        <div className="pt-5">
-          <ProductList onBack={() => setView('catalog')} />
-        </div>
-      );
-    }
-
-    return null;
-  };
-
   return (
     <>
       <Navbar cartCount={cartCount} currentView={view} onNav={setView} />
       <main id="contenido-principal" tabIndex={-1}>
-        {renderView()}
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/productos" element={<CatalogPage />} />
+        <Route path="/productos/:id" element={<ProductDetailPage />} />
+        <Route path="/contacto" element={<ContactPage />} />
+        {/*FIJARME COMO CAMBIAR LO DE SET VIEW*/}
+        <Route path="/carrito" element={<CartPage onBack={() => setView('catalog')} />} />
+        <Route path="/admin/crear-producto" element={<HomePage />} />
+      </Routes>
       </main>
-
-      {/* Toast abajo a la derecha */}
-      <Toast
-        show={toast.show}
-        message={toast.message}
-        onClose={hideToast}
-        duration={2000}
-      />
-
+      <Toast show={toast.show} message={toast.message} onClose={hideToast} duration={2000}/>
       <Footer />
     </>
   );

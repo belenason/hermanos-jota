@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 export default function Navbar({ cartCount, currentView, onNav }) {
   useEffect(() => {
@@ -82,10 +83,7 @@ export default function Navbar({ cartCount, currentView, onNav }) {
     <header>
       <nav className="navbar navbar-expand-sm navbar-light custom-navbar mb-3 fixed-top">
         <div className="container-fluid">
-          <button 
-            className="navbar-brand d-flex align-items-center me-auto ms-4 btn btn-link p-0 text-decoration-none"
-            onClick={() => onNav('home')}
-          >
+          <Link to="/" className='navbar-brand d-flex align-items-center me-auto ms-4 btn btn-link p-0 text-decoration-none'>
             <img 
               className="rounded-circle me-3" 
               src="/img/logo.svg" 
@@ -96,7 +94,7 @@ export default function Navbar({ cartCount, currentView, onNav }) {
             <span className="fs-2 color-principal-texto font-encabezado titulo-navbar m-0">
               Hermanos Jota
             </span>
-          </button>
+          </Link>
 
           <button 
             className="navbar-toggler" 
@@ -113,33 +111,18 @@ export default function Navbar({ cartCount, currentView, onNav }) {
           <div className="collapse navbar-collapse d-sm-inline-flex justify-content-end me-2" id="mainNav">
             <ul className="navbar-nav">
               <li className="nav-item">
-                <button 
-                  className="nav-link btn btn-link fs-5 px-3 py-2 fw-semibold color-principal-texto text-decoration-none"
-                  onClick={() => onNav('catalog')}
-                >
-                  Catálogo
-                </button>
+                <Link to="/productos" className="nav-link btn btn-link fs-5 px-3 py-2 fw-semibold color-principal-texto text-decoration-none">Catálogo</Link>
               </li>
               <li className="nav-item">
-                <button 
-                  className="nav-link btn btn-link fs-5 px-3 py-2 fw-semibold color-principal-texto text-decoration-none"
-                  onClick={() => onNav('contact')}
-                >
-                  Contacto
-                </button>
+                <Link to="/contacto" className="nav-link btn btn-link fs-5 px-3 py-2 fw-semibold color-principal-texto text-decoration-none">Contacto</Link>
               </li>
               <li className="nav-item">
-                <button
-                  className="nav-link btn btn-link fs-5 px-3 py-2 fw-semibold color-principal-texto text-decoration-none"
-                  type="button"
-                  aria-label="Carrito de compras"
-                  onClick={()=>onNav('cart')}
-                >
+                <Link to="/carrito" className="nav-link btn btn-link fs-5 px-3 py-2 fw-semibold color-principal-texto text-decoration-none" aria-label="Carrito de compras">
                   <span className="position-relative d-inline-block">
                     <i className="bi bi-cart3 fs-4"></i>
                     <span className="badge rounded-pill elbadge">{cartCount}</span>
                   </span>
-                </button>
+                </Link>
               </li>
 
             </ul>
