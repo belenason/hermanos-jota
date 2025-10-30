@@ -1,5 +1,5 @@
 // src/App.js
-import { Link, Routes, Route, useNavigate } from 'react-router-dom';
+import { Link, Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { getProductos } from './api';
 import { useCart } from 'react-use-cart';
@@ -21,6 +21,7 @@ export default function App() {
   const [error, setError] = useState('');
   const { addItem, totalItems } = useCart();
   const navigate = useNavigate();
+  const location = useLocation();
 
   // Toast
   const [toast, setToast] = useState({ show: false, message: '' });
@@ -51,6 +52,12 @@ export default function App() {
     loadProducts();
   }, []);
 
+  useEffect(() => {
+    if (location.pathname === '/productos') {
+      loadProducts();
+    }
+  }, [location.pathname]);
+
   // Agregar al carrito + toast
   const addToCart = (prod, qty = 1) => {
     const normalize = (p) => ({
@@ -70,7 +77,6 @@ export default function App() {
     loadProducts();
   };
 
-  // Elegí 4 destacados simples (podés cambiar por un flag p.destacado si existe)
   const featuredProducts = products.slice(0, 4);
 
   return (
@@ -78,28 +84,8 @@ export default function App() {
       <Navbar cartCount={totalItems} />
       <main id="contenido-principal" tabIndex={-1}>
         <Routes>
-          <Route
-            path="/"
-            element={
-              <HomePage
-                onGoCatalog={() => navigate('/productos')}
-                featuredProducts={featuredProducts}
-                loading={loading}
-              />
-            }
-          />
-          <Route
-            path="/productos"
-            element={
-              <CatalogPage
-                products={products}
-                loading={loading}
-                error={error}
-                onRetry={handleRetry}
-                onAdd={addToCart}
-              />
-            }
-          />
+          <Route path="/" element={ <HomePage onGoCatalog={() => navigate('/productos')} featuredProducts={featuredProducts} loading={loading}/>}/>
+          <Route path="/productos" element={ <CatalogPage products={products} loading={loading} error={error} onRetry={handleRetry} onAdd={addToCart}/>}/>
           <Route path="/productos/:id" element={<ProductDetailRoute onAdd={addToCart} />} />
           <Route path="/contacto" element={<ContactPage />} />
           <Route path="/carrito" element={<CartPage onBack={() => navigate('/productos')} />} />
