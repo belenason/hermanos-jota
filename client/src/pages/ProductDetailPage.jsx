@@ -94,19 +94,16 @@ export default function ProductDetailPage({ onBack, onAdd }) {
     );
   }
 
-  if (err || !product) {
-    return (
-      <section className="container py-5">
-        <div className="alert alert-danger" role="alert">
-          {err || 'Producto no encontrado'}
-        </div>
-        <Link to>Volver al catálogo</Link>
-        <button className="btn btn-outline-secondary" onClick={() => navigate('/productos')}>
-          
-        </button>
-      </section>
-    );
-  }
+if (err || !product) {
+  return (
+    <section className="container product-error-container mt-5">
+      <h2>{err || 'Producto no encontrado'}</h2>
+      <Link to="/productos" className="btn-secondary-custom mt-3">
+        Volver al catálogo
+      </Link>
+    </section>
+  );
+}
 
   return (
     <div className="container mt-5 pt-4 pt-md-5 mb-5">
