@@ -1,9 +1,8 @@
 // src/App.js
-import { Link } from 'react-router-dom';
+import { Link, Routes, Route, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { getProductos } from './api';
 import { useCart } from 'react-use-cart';
-import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -28,14 +27,17 @@ export default function App() {
   const showToast = (message) => setToast({ show: true, message });
   const hideToast = () => setToast((t) => ({ ...t, show: false }));
 
-  // Cargar productos
+  // Cargar productos (se llama al montar y cuando hace retry)
   const loadProducts = async () => {
     try {
       setLoading(true);
       setError('');
-      const data = await getProductos();
+      const data = await getProductos(); // devuelve un array de productos
       // normalizo id desde Mongo (_id)
-      const productsWithId = data.map(p => ({ ...p, id: p._id }));
+      const productsWithId = (Array.isArray(data) ? data : []).map((p) => ({
+        ...p,
+        id: p._id,
+      }));
       setProducts(productsWithId);
     } catch (e) {
       setError(e?.message ?? 'No se pudieron cargar los productos');
@@ -44,12 +46,10 @@ export default function App() {
     }
   };
 
-  const location = useLocation();
+  // Cargar al montar la App (para que Home tenga data en el primer ingreso)
   useEffect(() => {
-    if (location.pathname === '/productos') {
-      loadProducts();
-    }
-  }, [location.pathname]);
+    loadProducts();
+  }, []);
 
   // Agregar al carrito + toast
   const addToCart = (prod, qty = 1) => {
@@ -70,24 +70,52 @@ export default function App() {
     loadProducts();
   };
 
+  // Elegí 4 destacados simples (podés cambiar por un flag p.destacado si existe)
+  const featuredProducts = products.slice(0, 4);
+
   return (
     <>
       <Navbar cartCount={totalItems} />
       <main id="contenido-principal" tabIndex={-1}>
         <Routes>
-          <Route path="/" element={<HomePage onGoCatalog={() => navigate('/productos')} featuredProducts={products}/>} />
-          <Route path="/productos" element={ <CatalogPage products={products} loading={loading} error={error} onRetry={handleRetry} onAdd={addToCart} />} />
+          <Route
+            path="/"
+            element={
+              <HomePage
+                onGoCatalog={() => navigate('/productos')}
+                featuredProducts={featuredProducts}
+                loading={loading}
+              />
+            }
+          />
+          <Route
+            path="/productos"
+            element={
+              <CatalogPage
+                products={products}
+                loading={loading}
+                error={error}
+                onRetry={handleRetry}
+                onAdd={addToCart}
+              />
+            }
+          />
           <Route path="/productos/:id" element={<ProductDetailRoute onAdd={addToCart} />} />
           <Route path="/contacto" element={<ContactPage />} />
           <Route path="/carrito" element={<CartPage onBack={() => navigate('/productos')} />} />
           <Route path="/admin/crear-producto" element={<CreateProductPage />} />
-          <Route path="*" element={
-            <div className="container py-5 mt-5">
-              <h2 className="mb-3">Página no encontrada</h2>
-              <p>Revisá la URL o volvé al catálogo.</p>
-              <Link to="/productos" className="btn-secondary-custom">Ir al catálogo</Link>
-            </div>
-          } />
+          <Route
+            path="*"
+            element={
+              <div className="container py-5 mt-5">
+                <h2 className="mb-3">Página no encontrada</h2>
+                <p>Revisá la URL o volvé al catálogo.</p>
+                <Link to="/productos" className="btn-secondary-custom">
+                  Ir al catálogo
+                </Link>
+              </div>
+            }
+          />
         </Routes>
       </main>
       <Toast show={toast.show} message={toast.message} onClose={hideToast} duration={2000} />
