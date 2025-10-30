@@ -202,15 +202,22 @@ if (err || !product) {
                 </button>
               </div>
 
-              <div className="d-flex flex-wrap gap-2">
-                <button className="btn-brand" onClick={() => onAdd(product, clampQty(qty))}>
-                  Añadir al carrito
-                </button>
-                <Link to="/productos" className="btn-outline-brand">Volver al catálogo</Link>
-                <button className="btn btn-outline-danger ms-auto" onClick={handleDelete}>
-                  <i className="bi bi-trash me-1" /> Eliminar
-                </button>
-              </div>
+<div className="d-flex flex-column gap-2">
+  <button className="btn-brand w-100" onClick={() => onAdd(product, clampQty(qty))}>
+    <i className="bi bi-cart-plus me-2" aria-hidden="true"></i>
+    Añadir al carrito
+  </button>
+  <div className="d-flex gap-2">
+    <Link to="/productos" className="btn-outline-brand flex-fill">
+      <i className="bi bi-arrow-left me-2" aria-hidden="true"></i>
+      Volver
+    </Link>
+    <button className="btn-delete flex-fill" onClick={handleDelete}>
+      <i className="bi bi-trash me-2" aria-hidden="true"></i>
+      Eliminar
+    </button>
+  </div>
+</div>
             </aside>
           </div>
         </div>
