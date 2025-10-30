@@ -88,7 +88,7 @@ productosRouter.put('/:id', async (req, res, next) => {
  
     res.status(200).json({
       mensaje: 'Producto actualizado con éxito',
-      usuario: productoActualizado
+      producto: productoActualizado
     });
   } catch (error) {
     console.error('Error al actualizar producto:', error.message);
