@@ -24,7 +24,8 @@ export async function createProducto(productData) {
     body: JSON.stringify(productData),
   });
   if (!res.ok) throw new Error('Error creando el producto');
-  return res.json();
+  const data = await res.json();
+  return { ...data.producto, id: data.producto._id };
 }
 
 // PUT actualizar un producto

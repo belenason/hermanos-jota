@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { getProductos } from './api';
 import { useCart } from 'react-use-cart';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -13,8 +13,6 @@ import HomePage from './pages/HomePage';
 import CatalogPage from './pages/CatalogPage';
 import ContactPage from './pages/ContactPage';
 import CartPage from './pages/CartPage';
-
-// NUEVOS contenedores/páginas
 import ProductDetailRoute from './pages/ProductDetailPage';
 import CreateProductPage from './pages/CreateProductPage';
 
@@ -46,9 +44,12 @@ export default function App() {
     }
   };
 
-  useEffect(() => { 
-    loadProducts(); 
-  }, []); // Array vacío: solo se ejecuta al montar el componente
+  const location = useLocation();
+  useEffect(() => {
+    if (location.pathname === '/productos') {
+      loadProducts();
+    }
+  }, [location.pathname]);
 
   // Agregar al carrito + toast
   const addToCart = (prod, qty = 1) => {
