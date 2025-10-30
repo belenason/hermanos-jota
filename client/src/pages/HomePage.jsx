@@ -228,7 +228,7 @@ export default function HomePage({ onGoCatalog, featuredProducts = [], onOpenPro
               <div className="row g-4">
                 {four.map(p => (
                   <div className="col-md-3" key={p.id}>
-                    <ProductCard product={p} onClick={() => onOpenProduct ? onOpenProduct(p) : onGoCatalog()} />
+                    <ProductCard product={p} />
                   </div>
                 ))}
               </div>
@@ -247,7 +247,7 @@ export default function HomePage({ onGoCatalog, featuredProducts = [], onOpenPro
                   {four.map((p, idx) => (
                     <div className={"carousel-item" + (idx === 0 ? " active" : "")} key={p.id}>
                       <div className="px-4">
-                        <ProductCard product={p} onClick={() => onOpenProduct ? onOpenProduct(p) : onGoCatalog()} />
+                        <ProductCard product={p} />
                       </div>
                     </div>
                   ))}

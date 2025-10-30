@@ -1,12 +1,14 @@
-export default function ProductCardGrid({ product, onOpen, onAdd }) {
+import { Link } from 'react-router-dom';
+
+export default function ProductCardGrid({ product, onAdd }) {
   const img = product.imagenUrl || '/img/producto-ejemplo.jpg';
   const precio = Number(product.precio || 0).toLocaleString('es-AR');
 
   return (
     <article className="estiloProducto botonAgregarCarro">
-      <button
-        onClick={onOpen}
-        className="letra-producto"
+      <Link
+        to={`/productos/${product.id}`}
+        className="letra-producto text-decoration-none"
         style={{ all: 'unset', cursor: 'pointer', display: 'block' }}
         aria-label={`Ver ${product.nombre}`}
       >
@@ -16,7 +18,7 @@ export default function ProductCardGrid({ product, onOpen, onAdd }) {
           {product.descripcion && <p>{product.descripcion}</p>}
           <span className="price">${precio}</span>
         </div>
-      </button>
+      </Link>
 
       <button
         className="btn-add-to-cart"

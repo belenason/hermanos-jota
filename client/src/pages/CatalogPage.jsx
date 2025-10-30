@@ -5,7 +5,6 @@ export default function CatalogPage({
   products = [],
   loading,
   error,
-  onSelect,
   onRetry,
   onAdd
 }) {
@@ -35,11 +34,7 @@ export default function CatalogPage({
         <div className="error-card">
           <h5 className="error-title">Ocurrió un error</h5>
           <p className="error-message">Lamentamos los problemas. Estamos trabajando para mejorar tu experiencia.</p>
-          <button
-            className="btn-secondary-custom"
-            onClick={onRetry}
-            disabled={loading}
-          >
+          <button className="btn-secondary-custom" onClick={onRetry} disabled={loading}>
             {loading ? 'Reintentando…' : 'Reintentar'}
           </button>
         </div>
@@ -72,13 +67,7 @@ export default function CatalogPage({
             Descubrí nuestra selección de muebles, diseñados para transformar tu espacio.
           </p>
 
-          <input
-            type="text"
-            className="form-control my-3"
-            placeholder="Buscar producto..."
-            value={buscado}
-            onChange={e => setQuery(e.target.value)}
-          />
+          <input type="text" className="form-control my-3" placeholder="Buscar producto..." value={buscado} onChange={e => setQuery(e.target.value)}/>
         </div>
       </section>
 
@@ -93,7 +82,6 @@ export default function CatalogPage({
             <ProductCardGrid
               key={p.id ?? p.nombre}
               product={p}
-              onOpen={() => onSelect(p)}
               onAdd={onAdd}
             />
           ))
