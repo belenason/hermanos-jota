@@ -31,7 +31,7 @@ export default function ContactForm() {
 
     setForm({ nombre: '', email: '', mensaje: '' }); //Limpia el formulario
   };
-
+ 
   return (
     <>
       <form 
