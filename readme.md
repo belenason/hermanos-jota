@@ -1,10 +1,10 @@
-# 🪑 Proyecto Final — Hermanos Jota (Sprint 5 & 6 – NEXUS)
+# 🪑 Proyecto Final — Hermanos Jota
 
 ## 👥 Integrantes
+- Belén Ason
 - Leonel Cabrera  
 - Tomás Vallejos  
-- Mora Arrossi  
-- Belén Ason  
+- Mora Arrossi    
 - Valentín Baigorria  
 
 ---
@@ -66,9 +66,12 @@ Crea un archivo `.env` en la carpeta `/backend` con:
 DB_URI=mongodb+srv://belenason_db_user:belen.proy.mhj@muebleriahjota.ekvzo16.mongodb.net/muebleria-hermanos-jota?appName=MuebleriaHJota
 PORT=4000
 NODE_ENV=development
+```
 
 Y otro en `/client` con:
+```env
 REACT_APP_API_URL = https://hermanos-jota.onrender.com
+```
 
 ---
 
@@ -90,6 +93,7 @@ REACT_APP_API_URL = https://hermanos-jota.onrender.com
 ```bash
 git clone https://github.com/belenason/hermanos-jota.git
 cd hermanos-jota
+```
 
 ### 2️⃣ Configurar e iniciar el Backend
 ```bash
@@ -97,6 +101,7 @@ cd backend
 npm install
 # Crear archivo .env (ver arriba)
 npm run dev
+```
 
 El servidor estará disponible en http://localhost:4000
 
@@ -105,5 +110,6 @@ El servidor estará disponible en http://localhost:4000
 cd ../client
 npm install
 npm start
+```
 
 La aplicación estará disponible en http://localhost:3000
