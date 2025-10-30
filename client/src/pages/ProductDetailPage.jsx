@@ -4,7 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { getProductoById, deleteProducto } from '../api';
 import { Link } from 'react-router-dom';
 
-export default function ProductDetailPage({ onBack, onAdd }) {
+export default function ProductDetailPage({ onAdd }) {
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -14,6 +14,8 @@ export default function ProductDetailPage({ onBack, onAdd }) {
 
   const [idx, setIdx] = useState(0);
   const [qty, setQty] = useState(1);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [deleting, setDeleting] = useState(false);
 
   // Cargar producto por id
   useEffect(() => {
@@ -75,15 +77,25 @@ export default function ProductDetailPage({ onBack, onAdd }) {
 
   const clampQty = (n) => Math.max(1, Math.min(99, Number.isFinite(n) ? n : 1));
 
-  const handleDelete = async () => {
+  const handleDeleteClick = () => {
+    setShowDeleteModal(true);
+  };
+
+  const handleConfirmDelete = async () => {
     if (!product) return;
-    if (!window.confirm('¿Eliminar este producto? Esta acción no se puede deshacer.')) return;
     try {
+      setDeleting(true);
       await deleteProducto(product.id);
       navigate('/productos');
     } catch (e) {
       alert(e?.message ?? 'No se pudo eliminar el producto');
+      setDeleting(false);
+      setShowDeleteModal(false);
     }
+  };
+
+  const handleCancelDelete = () => {
+    setShowDeleteModal(false);
   };
 
   if (loading) {
@@ -94,134 +106,166 @@ export default function ProductDetailPage({ onBack, onAdd }) {
     );
   }
 
-if (err || !product) {
-  return (
-    <section className="container product-error-container mt-5">
-      <h2>{err || 'Producto no encontrado'}</h2>
-      <Link to="/productos" className="btn-secondary-custom mt-3">
-        Volver al catálogo
-      </Link>
-    </section>
-  );
-}
+  if (err || !product) {
+    return (
+      <section className="container product-error-container mt-5">
+        <h2>{err || 'Producto no encontrado'}</h2>
+        <Link to="/productos" className="btn-secondary-custom mt-3">
+          Volver al catálogo
+        </Link>
+      </section>
+    );
+  }
 
   return (
-    <div className="container mt-5 pt-4 pt-md-5 mb-5">
-      {/* Migas */}
-      <nav aria-label="breadcrumb" className="mb-3 mt-4">
-        <ol className="breadcrumb">
-          <li className="breadcrumb-item">
-            <Link to="/productos" className=" bread-personalizado btn btn-link p-0 ">Catálogo</Link>
-          </li>
-          <li className="breadcrumb-item active" aria-current="page">{product?.nombre}</li>
-        </ol>
-      </nav>
+    <>
+      <div className="container mt-5 pt-4 pt-md-5 mb-5">
+        {/* Migas */}
+        <nav aria-label="breadcrumb" className="mb-3 mt-4">
+          <ol className="breadcrumb">
+            <li className="breadcrumb-item">
+              <Link to="/productos" className=" bread-personalizado btn btn-link p-0 ">Catálogo</Link>
+            </li>
+            <li className="breadcrumb-item active" aria-current="page">{product?.nombre}</li>
+          </ol>
+        </nav>
 
-      <h2 className="product-title">{product?.nombre}</h2>
+        <h2 className="product-title">{product?.nombre}</h2>
 
-      <section className="product-detail">
-        <div className="row g-4 align-items-start">
-          {/* Galería */}
-          <div className="col-lg-7">
-            <section className="product-gallery mb-3" aria-label={`Galería de imágenes de ${product?.nombre}`}>
-              <div className="position-relative">
-                <button className="carousel-control-prev" aria-label="Imagen anterior" onClick={() => go(idx - 1)} type="button">
-                  <span className="carousel-control-prev-icon" aria-hidden="true" />
-                  <span className="visually-hidden">Anterior</span>
-                </button>
+        <section className="product-detail">
+          <div className="row g-4 align-items-start">
+            {/* Galería */}
+            <div className="col-lg-7">
+              <section className="product-gallery mb-3" aria-label={`Galería de imágenes de ${product?.nombre}`}>
+                <div className="position-relative">
+                  <button className="carousel-control-prev" aria-label="Imagen anterior" onClick={() => go(idx - 1)} type="button">
+                    <span className="carousel-control-prev-icon" aria-hidden="true" />
+                    <span className="visually-hidden">Anterior</span>
+                  </button>
 
-                <img
-                  src={images[idx]}
-                  alt={`${product?.nombre} ${idx + 1}`}
-                  className="d-block w-100"
-                  style={{ objectFit: 'contain', maxHeight: 450 }}
-                />
-
-                <button className="carousel-control-next" aria-label="Imagen siguiente" onClick={() => go(idx + 1)} type="button">
-                  <span className="carousel-control-next-icon" aria-hidden="true" />
-                  <span className="visually-hidden">Siguiente</span>
-                </button>
-              </div>
-
-              <div className="product-thumbs mt-2" aria-label="Miniaturas">
-                {images.map((src, i) => (
-                  <img 
-                    key={src + i} 
-                    src={src} 
-                    data-idx={i} 
-                    alt={`Vista ${i + 1}`} 
-                    className={i === idx ? 'active' : ''} 
-                    onClick={() => go(i)} 
+                  <img
+                    src={images[idx]}
+                    alt={`${product?.nombre} ${idx + 1}`}
+                    className="d-block w-100"
+                    style={{ objectFit: 'contain', maxHeight: 450 }}
                   />
-                ))}
-              </div>
-            </section>
 
-            {product?.descripcion && <p className="product-desc mt-3">{product.descripcion}</p>}
-            {specs.length > 0 && (
-              <ul className="product-specs mt-3">
-                {specs.map(({ label, value }) => (
-                  <li key={label}><strong>{label}:</strong> {value}</li>
-                ))}
-              </ul>
-            )}
+                  <button className="carousel-control-next" aria-label="Imagen siguiente" onClick={() => go(idx + 1)} type="button">
+                    <span className="carousel-control-next-icon" aria-hidden="true" />
+                    <span className="visually-hidden">Siguiente</span>
+                  </button>
+                </div>
+
+                <div className="product-thumbs mt-2" aria-label="Miniaturas">
+                  {images.map((src, i) => (
+                    <img 
+                      key={src + i} 
+                      src={src} 
+                      data-idx={i} 
+                      alt={`Vista ${i + 1}`} 
+                      className={i === idx ? 'active' : ''} 
+                      onClick={() => go(i)} 
+                    />
+                  ))}
+                </div>
+              </section>
+
+              {product?.descripcion && <p className="product-desc mt-3">{product.descripcion}</p>}
+              {specs.length > 0 && (
+                <ul className="product-specs mt-3">
+                  {specs.map(({ label, value }) => (
+                    <li key={label}><strong>{label}:</strong> {value}</li>
+                  ))}
+                </ul>
+              )}
+            </div>
+
+            {/* Compra */}
+            <div className="col-lg-5 d-flex justify-content-center">
+              <aside className="purchase-card w-100" style={{ maxWidth: 460 }}>
+                <div className="price">$ {price}</div>
+
+                <div className="label">Cantidad</div>
+                <div className="qty-input mb-3">
+                  <button 
+                    type="button" 
+                    className="btn btn-outline-secondary" 
+                    onClick={() => setQty(q => clampQty(q - 1))} 
+                    aria-label="Disminuir cantidad"
+                  >
+                    −
+                  </button>
+                  <input 
+                    id="qty" 
+                    type="number" 
+                    min={1} 
+                    max={99} 
+                    className="form-control text-center" 
+                    style={{ maxWidth: 100 }} 
+                    value={qty} 
+                    onChange={(e) => setQty(clampQty(parseInt(e.target.value, 10)))} 
+                  />
+                  <button 
+                    type="button" 
+                    className="btn btn-outline-secondary" 
+                    onClick={() => setQty(q => clampQty(q + 1))} 
+                    aria-label="Aumentar cantidad"
+                  >
+                    +
+                  </button>
+                </div>
+                <div className="d-flex flex-column gap-2">
+                  <button className="btn-brand w-100" onClick={() => onAdd(product, clampQty(qty))}>
+                    <i className="bi bi-cart-plus me-2" aria-hidden="true"></i>
+                    Añadir al carrito
+                  </button>
+                  <div className="d-flex gap-2">
+                    <Link to="/productos" className="btn-outline-brand flex-fill">
+                      <i className="bi bi-arrow-left me-2" aria-hidden="true"></i>
+                      Volver
+                    </Link>
+                    <button className="btn-delete flex-fill" onClick={handleDeleteClick}>
+                      <i className="bi bi-trash me-2" aria-hidden="true"></i>
+                      Eliminar
+                    </button>
+                  </div>
+                </div>
+              </aside>
+            </div>
           </div>
+        </section>
+      </div>
 
-          {/* Compra */}
-          <div className="col-lg-5 d-flex justify-content-center">
-            <aside className="purchase-card w-100" style={{ maxWidth: 460 }}>
-              <div className="price">$ {price}</div>
-
-              <div className="label">Cantidad</div>
-              <div className="qty-input mb-3">
-                <button 
-                  type="button" 
-                  className="btn btn-outline-secondary" 
-                  onClick={() => setQty(q => clampQty(q - 1))} 
-                  aria-label="Disminuir cantidad"
-                >
-                  −
-                </button>
-                <input 
-                  id="qty" 
-                  type="number" 
-                  min={1} 
-                  max={99} 
-                  className="form-control text-center" 
-                  style={{ maxWidth: 100 }} 
-                  value={qty} 
-                  onChange={(e) => setQty(clampQty(parseInt(e.target.value, 10)))} 
-                />
-                <button 
-                  type="button" 
-                  className="btn btn-outline-secondary" 
-                  onClick={() => setQty(q => clampQty(q + 1))} 
-                  aria-label="Aumentar cantidad"
-                >
-                  +
-                </button>
-              </div>
-
-<div className="d-flex flex-column gap-2">
-  <button className="btn-brand w-100" onClick={() => onAdd(product, clampQty(qty))}>
-    <i className="bi bi-cart-plus me-2" aria-hidden="true"></i>
-    Añadir al carrito
-  </button>
-  <div className="d-flex gap-2">
-    <Link to="/productos" className="btn-outline-brand flex-fill">
-      <i className="bi bi-arrow-left me-2" aria-hidden="true"></i>
-      Volver
-    </Link>
-    <button className="btn-delete flex-fill" onClick={handleDelete}>
-      <i className="bi bi-trash me-2" aria-hidden="true"></i>
-      Eliminar
-    </button>
-  </div>
-</div>
-            </aside>
+      {/* Modal de confirmación */}
+      {showDeleteModal && (
+        <div className="delete-modal-overlay" onClick={handleCancelDelete}>
+          <div className="delete-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="delete-modal-header">
+              <h3>Confirmar eliminación</h3>
+            </div>
+            <div className="delete-modal-body">
+              <p>¿Estás seguro de que deseas eliminar este producto?</p>
+              <p className="delete-modal-warning">Esta acción no se puede deshacer.</p>
+            </div>
+            <div className="delete-modal-footer">
+              <button 
+                className="btn-modal-cancel" 
+                onClick={handleCancelDelete}
+                disabled={deleting}
+              >
+                Cancelar
+              </button>
+              <button 
+                className="btn-modal-delete" 
+                onClick={handleConfirmDelete}
+                disabled={deleting}
+              >
+                {deleting ? 'Eliminando...' : 'Eliminar'}
+              </button>
+            </div>
           </div>
         </div>
-      </section>
-    </div>
+      )}
+    </>
   );
 }

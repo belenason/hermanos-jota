@@ -2,7 +2,6 @@ import express from "express";
 import mongoose from "mongoose";
 import { logger } from "./middlewares/logger.js";
 import { productosRouter } from "./routes/productos.routes.js";
-import cors from "cors";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -25,7 +24,6 @@ const conectarDB = async () => {
 // Middlewares
 app.use(express.json());
 app.use(logger);
-app.use(cors());
 
 // Rutas API
 app.use("/api/productos", productosRouter);

@@ -6,7 +6,6 @@ export default function HomePage({ onGoCatalog, featuredProducts = [], onOpenPro
   useEffect(() => {
     const el = document.getElementById('heroCarousel');
     if (!el || !window.bootstrap) return;
-    const instance = window.bootstrap.Carousel.getInstance(el) || new window.bootstrap.Carousel(el, { interval: 5000, ride: false });
     const onSlid = (e) => {
       const indicators = el.querySelectorAll('.carousel-indicators button');
       indicators.forEach((btn, idx) => {
