@@ -1,4 +1,5 @@
 // src/App.js
+import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { getProductos } from './api';
 import { useCart } from 'react-use-cart';
@@ -79,6 +80,13 @@ export default function App() {
           <Route path="/contacto" element={<ContactPage />} />
           <Route path="/carrito" element={<CartPage onBack={() => navigate('/productos')} />} />
           <Route path="/admin/crear-producto" element={<CreateProductPage />} />
+          <Route path="*" element={
+            <div className="container py-5 mt-5">
+              <h2 className="mb-3">Página no encontrada</h2>
+              <p>Revisá la URL o volvé al catálogo.</p>
+              <Link to="/productos" className="btn-secondary-custom">Ir al catálogo</Link>
+            </div>
+          } />
         </Routes>
       </main>
       <Toast show={toast.show} message={toast.message} onClose={hideToast} duration={2000} />

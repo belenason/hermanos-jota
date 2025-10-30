@@ -1,43 +1,21 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-export default function Navbar({ cartCount, currentView, onNav }) {
+export default function Navbar({ cartCount, onNav }) {
   useEffect(() => {
     const navbar = document.querySelector('.custom-navbar');
     const collapse = document.getElementById('mainNav');
-    const mainEl = document.querySelector('main'); // contenedor que puede estar scrollando
-
     if (!navbar) return;
 
-    const isDesktop = () => window.matchMedia('(min-width: 768px)').matches;
-    const isProductView = currentView === 'product';
+    const updateNavbar = () => {
+      const isMobile = window.innerWidth < 768;
+      const scrollTop =
+        window.scrollY ||
+        document.documentElement.scrollTop ||
+        document.body.scrollTop ||
+        0;
 
-    const getScrollTop = () => {
-      const w = window.scrollY || 0;
-      const d = document.documentElement?.scrollTop || document.body?.scrollTop || 0;
-      const m = mainEl?.scrollTop || 0;
-      // tomamos el mayor por si distintos motores actualizan lugares distintos
-      return Math.max(w, d, m);
-    };
-
-    const applyNavbarState = () => {
-      // Mobile: siempre sólido
-      if (!isDesktop()) {
-        navbar.classList.add('scrolled');
-        navbar.classList.remove('transparent');
-        return;
-      }
-
-      // Página de producto: siempre sólido
-      if (isProductView) {
-        navbar.classList.add('scrolled');
-        navbar.classList.remove('transparent');
-        return;
-      }
-
-      // Desktop otras vistas: transparente solo "arriba"
-      const top = getScrollTop();
-      if (top > 50) {
+      if (isMobile || scrollTop > 50) {
         navbar.classList.add('scrolled');
         navbar.classList.remove('transparent');
       } else {
@@ -46,22 +24,16 @@ export default function Navbar({ cartCount, currentView, onNav }) {
       }
     };
 
-    // Inicial (dos ticks por si el layout tarda en pintar)
-    applyNavbarState();
-    requestAnimationFrame(applyNavbarState);
-    setTimeout(applyNavbarState, 0);
+    updateNavbar();
+    window.addEventListener('scroll', updateNavbar, { passive: true });
+    window.addEventListener('resize', updateNavbar);
 
-    // Escuchas de scroll y resize
-    window.addEventListener('scroll', applyNavbarState, { passive: true });
-    window.addEventListener('resize', applyNavbarState);
-    if (mainEl) mainEl.addEventListener('scroll', applyNavbarState, { passive: true });
-
-    // Colapso móvil: al abrir, forzá sólido; al cerrar, recalculá
+    // Manejo del menú móvil (para que siempre sea sólido al abrir)
     const onShow = () => {
       navbar.classList.add('scrolled');
       navbar.classList.remove('transparent');
     };
-    const onHide = () => applyNavbarState();
+    const onHide = updateNavbar;
 
     if (collapse) {
       collapse.addEventListener('show.bs.collapse', onShow);
@@ -69,15 +41,14 @@ export default function Navbar({ cartCount, currentView, onNav }) {
     }
 
     return () => {
-      window.removeEventListener('scroll', applyNavbarState);
-      window.removeEventListener('resize', applyNavbarState);
-      if (mainEl) mainEl.removeEventListener('scroll', applyNavbarState);
+      window.removeEventListener('scroll', updateNavbar);
+      window.removeEventListener('resize', updateNavbar);
       if (collapse) {
         collapse.removeEventListener('show.bs.collapse', onShow);
         collapse.removeEventListener('hide.bs.collapse', onHide);
       }
     };
-  }, [currentView]);
+  }, []);
 
   return (
     <header>
@@ -124,7 +95,6 @@ export default function Navbar({ cartCount, currentView, onNav }) {
                   </span>
                 </Link>
               </li>
-
             </ul>
           </div>
         </div>
