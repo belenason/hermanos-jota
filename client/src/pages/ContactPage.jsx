@@ -16,7 +16,7 @@ export default function ContactPage() {
 
       {/* SECCIÓN DEL FORMULARIO DE CONTACTO */}
       <section className="contact-container">
-        <div className="contact-form-wrapper">
+        <div className="contact-form-wrapper-general">
           <ContactForm />
         </div>
       </section>

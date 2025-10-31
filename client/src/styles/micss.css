@@ -2544,3 +2544,20 @@ SECCIÓN 5: ESTILOS ESPECÍFICOS DE PRODUCTOS
 .boton-flotante i {
   font-weight: bold;
 }
+
+/* === FORMULARIO MÁS ANCHO EN CELULAR === */
+@media (max-width: 576px) {
+  .contact-form-wrapper-general {
+    width: 95vw;            /* ocupa casi todo el ancho del viewport */
+    margin: 0 auto 2rem;    /* centrado y con margen inferior */
+    padding: 1.75rem 1rem;  /* más aire interno */
+    border-radius: 12px;
+  }
+
+  .contact-form-wrapper-general .form-floating > .form-control,
+  .contact-form-wrapper-general .form-floating > textarea.form-control {
+    font-size: 1rem;
+    padding: 0.9rem 1rem;
+  }
+}
+

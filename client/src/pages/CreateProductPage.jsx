@@ -26,7 +26,7 @@ export default function CreateProductPage() {
       // Redirigir luego de un breve delay (deja ver el toast)
       setTimeout(() => {
         navigate(`/productos/${created.id}`, { replace: true });
-      }, 900);
+      }, 2000);
     } catch (err) {
       setError(err?.message ?? 'No se pudo crear el producto');
     } finally {
