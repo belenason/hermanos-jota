@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
 import ProductCard from '../components/ProductCard';
+import { Link } from 'react-router-dom';
 
-export default function HomePage({ onGoCatalog, featuredProducts = [], onOpenProduct }) {
+export default function HomePage({ featuredProducts = [] }) {
   // Accesibilidad: mantener aria-current en indicadores del carrusel (hero)
   useEffect(() => {
     const el = document.getElementById('heroCarousel');
@@ -68,9 +69,7 @@ export default function HomePage({ onGoCatalog, featuredProducts = [], onOpenPro
                   <div className="hero-content-center">
                     <h2 className="hero-main-title">NUEVA COLECCIÓN</h2>
                     <p className="hero-main-subtitle">Diseño con historia, muebles con alma</p>
-                    <button className="btn-hero-primary" onClick={onGoCatalog}>
-                      Descubrir colección
-                    </button>
+                    <Link to="/productos" className="btn-hero-primary" aria-label="Descubrir colección"> Descubrir colección </Link>
                   </div>
                 </div>
               </div>
@@ -172,7 +171,7 @@ export default function HomePage({ onGoCatalog, featuredProducts = [], onOpenPro
                   Cada pieza cuenta una historia de artesanía, carácter y precisión. Si querés empezar un proyecto a medida,
                   escribinos: estamos para ayudarte.
                 </p>
-                <button className="btn-secondary-custom" onClick={onGoCatalog}>Conocé más</button>
+                <Link to="/contacto" className="btn-secondary-custom" aria-label="Contactar a Hermanos Jota"> Contactanos </Link>
               </div>
             </div>
           </div>
@@ -267,9 +266,7 @@ export default function HomePage({ onGoCatalog, featuredProducts = [], onOpenPro
 
           {/* CTA debajo de destacados (siempre visible) */}
           <div className="text-center mt-4">
-            <button className="btn-secondary-custom mt-3 mb-5" onClick={onGoCatalog} aria-label="Ver todo el catálogo">
-              Ver todo el catálogo
-            </button>
+          <Link to="/productos" className="btn-secondary-custom mt-3 mb-5" aria-label="Ver todo el catálogo"> Ver todo el catálogo </Link>
           </div>
 
         </div>

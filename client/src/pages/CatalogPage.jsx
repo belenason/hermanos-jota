@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import ProductCardGrid from '../components/ProductCardGrid';
 
 export default function CatalogPage({
@@ -87,6 +88,8 @@ export default function CatalogPage({
           ))
         )}
       </section>
+      <Link to="/admin/crear-producto" className="boton-flotante" aria-label="Agregar nuevo producto" title="Crear nuevo producto"> <i className="bi bi-plus-lg"></i> </Link>
+
     </>
   );
 }

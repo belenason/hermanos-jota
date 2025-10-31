@@ -1,5 +1,5 @@
 // src/App.js
-import { Link, Routes, Route, useNavigate, useLocation } from 'react-router-dom';
+import { Link, Routes, Route, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { getProductos } from './api';
 import { useCart } from 'react-use-cart';
@@ -20,7 +20,6 @@ export default function App() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const { addItem, totalItems } = useCart();
-  const navigate = useNavigate();
   const location = useLocation();
 
   // Toast
@@ -84,11 +83,11 @@ export default function App() {
       <Navbar cartCount={totalItems} />
       <main id="contenido-principal" tabIndex={-1}>
         <Routes>
-          <Route path="/" element={ <HomePage onGoCatalog={() => navigate('/productos')} featuredProducts={featuredProducts} loading={loading}/>}/>
+          <Route path="/" element={ <HomePage featuredProducts={featuredProducts} loading={loading}/>}/>
           <Route path="/productos" element={ <CatalogPage products={products} loading={loading} error={error} onRetry={handleRetry} onAdd={addToCart}/>}/>
           <Route path="/productos/:id" element={<ProductDetailRoute onAdd={addToCart} />} />
           <Route path="/contacto" element={<ContactPage />} />
-          <Route path="/carrito" element={<CartPage onBack={() => navigate('/productos')} />} />
+          <Route path="/carrito" element={<CartPage/>} />
           <Route path="/admin/crear-producto" element={<CreateProductPage />} />
           <Route
             path="*"

@@ -1,9 +1,10 @@
 import { useCart } from "react-use-cart";
+import { Link } from "react-router-dom";
 import "../styles/micss.css"; // ← importa el CSS
 
 const formatARS = (n) => `$ ${Number(n || 0).toLocaleString("es-AR")}`;
 
-export default function CartPage({ onBack }) {
+export default function CartPage({ }) {
   const { items, totalItems, cartTotal, updateItemQuantity, removeItem, emptyCart } = useCart();
 
   if (!items.length) {
@@ -11,7 +12,7 @@ export default function CartPage({ onBack }) {
       <section className="container my-5 cart-page pt-5">
         <h2 className="cart-title">🛒 Carrito</h2>
         <p className="empty">Tu carrito está vacío.</p>
-        <button className="btn-secondary-custom" onClick={onBack}>Volver al catálogo</button>
+        <Link to="/productos" className="btn-secondary-custom">Volver al catálogo</Link>
       </section>
     );
   }
@@ -22,7 +23,7 @@ export default function CartPage({ onBack }) {
         <div className="cart-header cart-header-responsive">
           <h2 className="cart-title">🛒 Carrito ({totalItems})</h2>
           <div className="actions">
-            <button className="btn-brand-fem" onClick={onBack}>Seguir comprando</button>
+            <Link to="/productos" className="btn-brand-fem">Seguir comprando</Link>
             <button className="btn-outline-brand-fem" onClick={emptyCart}>Vaciar carrito</button>
           </div>
         </div>
