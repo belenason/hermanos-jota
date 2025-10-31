@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 
 export default function ProductCardGrid({ product, onAdd }) {
-  const img = product.imagenUrl || '/img/producto-ejemplo.jpg';
+  const img = product.imagenUrl || '/img/producto-ejemplo.png';
   const precio = Number(product.precio || 0).toLocaleString('es-AR');
 
   return (

@@ -3,24 +3,30 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createProducto } from '../api';
 import ProductForm from '../components/ProductForm';
+import Toast from '../components/Toast';
 
 export default function CreateProductPage() {
   const navigate = useNavigate();
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
-  const [success, setSuccess] = useState(false);
+  const [toast, setToast] = useState({ show: false, message: '' });
+
+  const showToast = (message) => setToast({ show: true, message });
+  const hideToast = () => setToast((t) => ({ ...t, show: false }));
 
   const handleSubmit = async (formData) => {
     setError('');
     setSaving(true);
     try {
       const created = await createProducto(formData);
-      setSuccess(true);
-      
-      // Redirigir después de un breve delay para mostrar el mensaje
+
+      // Toast de confirmación
+      showToast('¡Producto creado con éxito!');
+
+      // Redirigir luego de un breve delay (deja ver el toast)
       setTimeout(() => {
         navigate(`/productos/${created.id}`, { replace: true });
-      }, 1500);
+      }, 900);
     } catch (err) {
       setError(err?.message ?? 'No se pudo crear el producto');
     } finally {
@@ -47,7 +53,7 @@ export default function CreateProductPage() {
 
       {/* SECCIÓN DEL FORMULARIO */}
       <section className="contact-container">
-        <div className="contact-form-wrapper">
+        <div className="contact-form-wrapper-general">
           {error && (
             <div className="alert alert-danger mb-4" role="alert">
               <i className="bi bi-exclamation-triangle-fill me-2"></i>
@@ -62,21 +68,14 @@ export default function CreateProductPage() {
               </div>
               <p className="mt-3">Guardando producto...</p>
             </div>
-          ) : success ? (
-            <div className="success-message" role="alert" aria-live="assertive">
-              <div className="alert-content">
-                <i className="bi bi-check-circle-fill" aria-hidden="true"></i>
-                <p>
-                  <strong>¡Producto creado con éxito!</strong><br />
-                  Redirigiendo al producto...
-                </p>
-              </div>
-            </div>
           ) : (
             <ProductForm onSubmit={handleSubmit} onCancel={handleCancel} />
           )}
         </div>
       </section>
+
+      {/* Toast local a esta página */}
+      <Toast show={toast.show} message={toast.message} onClose={hideToast} duration={1600} />
     </>
   );
 }

@@ -63,7 +63,7 @@ export default function App() {
       id: p._id || p.id,
       price: Number(p.precio || 0),
       nombre: p.nombre,
-      imagen: p.imagenUrl || '/img/producto-ejemplo.jpg',
+      imagen: p.imagenUrl || '/img/producto-ejemplo.png',
       ...p,
     });
     const cantidad = Number(qty) || 1;

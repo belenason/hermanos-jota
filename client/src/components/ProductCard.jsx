@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 export default function ProductCard({ product}) {
-  const img = product.imagenUrl || '/img/producto-ejemplo.jpg';
+  const img = product.imagenUrl || '/img/producto-ejemplo.png';
   return (
     <Link to={`/productos/${product.id}`} className="text-decoration-none">
       <article className="product-card h-100 text-center" role="button">

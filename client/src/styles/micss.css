@@ -1225,6 +1225,12 @@ SECCIÓN 3: ESTILOS ESPECÍFICOS DE CONTACTO
   margin-bottom: 3rem;
 }
 
+.contact-form-wrapper-general {
+  background: #FFFFFF;
+  padding: 2.5rem;
+  margin-bottom: 3rem;
+}
+
 /* Inputs flotantes del formulario mejorados */
 .form-floating {
   margin-bottom: 1.5rem;
@@ -1256,8 +1262,7 @@ SECCIÓN 3: ESTILOS ESPECÍFICOS DE CONTACTO
   resize: none;
 }
 
-/* Anulación del botón primario del formulario de contacto */
-.contact-form-wrapper .btn-primary {
+.contact-form-wrapper-general .btn-primary {
   background-color: var(--verde-salvia);
   border: none;
   border-radius: 8px;
@@ -1267,12 +1272,12 @@ SECCIÓN 3: ESTILOS ESPECÍFICOS DE CONTACTO
   transition: background-color 0.2s ease;
 }
 
-.contact-form-wrapper .btn-primary:hover {
+.contact-form-wrapper-general .btn-primary:hover {
   background-color: #68864f;
 }
 
-.contact-form-wrapper .btn-primary:active,
-.contact-form-wrapper .btn-primary:focus {
+.contact-form-wrapper-general .btn-primary:active,
+.contact-form-wrapper-general .btn-primary:focus {
   background-color: var(--verde-salvia) !important;
   box-shadow: 0 0 0 0.15rem rgba(135, 169, 107, 0.25);
 }

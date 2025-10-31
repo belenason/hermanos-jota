@@ -33,7 +33,7 @@ export default function CartPage() {
             <div key={it.id} className="cart-item">
               <div className="item-left">
                 <img
-                  src={it.imagen || it.imagenes?.[0] || "/img/producto-ejemplo.jpg"}
+                  src={it.imagen || it.imagenes?.[0] || "/img/producto-ejemplo.png"}
                   alt={it.nombre}
                   className="item-thumb"
                 />

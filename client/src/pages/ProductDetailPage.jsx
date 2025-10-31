@@ -33,31 +33,48 @@ export default function ProductDetailPage({ onAdd }) {
     })();
   }, [id]);
 
+  const SPEC_FIELDS = [
+    ['medidas', 'Medidas'],
+    ['materiales', 'Materiales'],
+    ['acabado', 'Acabado'],
+    ['peso', 'Peso'],
+    ['capacidad', 'Capacidad'],
+    ['cargaMaxima', 'Carga máxima'],
+    ['apilables', 'Apilables'],
+    ['modulares', 'Modulares'],
+    ['extension', 'Extensión'],
+    ['almacenamiento', 'Almacenamiento'],
+    ['tapizado', 'Tapizado'],
+    ['confort', 'Confort'],
+    ['relleno', 'Relleno'],
+    ['colchon', 'Colchón'],
+    ['estructura', 'Estructura'],
+    ['rotacion', 'Rotación'],
+    ['regulacion', 'Regulación'],
+    ['cables', 'Cables'],
+    ['sostenibilidad', 'Sostenibilidad'],
+    ['certificacion', 'Certificación'],
+    ['incluye', 'Incluye'],
+    ['caracteristicas', 'Características'],
+  ];
+
+  // Solo los que tienen valor no vacío
+  const nonEmptySpecs = SPEC_FIELDS.filter(([key]) => {
+    const v = product?.[key];
+    if (v === null || v === undefined) return false;
+    return String(v).trim() !== '';
+  });
+
+
   useEffect(() => { 
     window.scrollTo({ top: 0, behavior: 'smooth' }); 
   }, []); 
 
   // Calcular imágenes
-  const images = product?.imagenUrl ? [product.imagenUrl] : ['/img/producto-ejemplo.jpg'];
+  const images = product?.imagenUrl ? [product.imagenUrl] : ['/img/producto-ejemplo.png'];
 
   // Calcular precio formateado
   const price = Number(product?.precio || 0).toLocaleString('es-AR');
-
-  // Calcular especificaciones
-  const getSpecs = () => {
-    if (!product) return [];
-    const order = [
-      'medidas','materiales','acabado','peso','capacidad','tapizado','confort',
-      'estructura','relleno','sostenibilidad','extension','apilables','incluye','garantia'
-    ];
-    const known = order.filter(k => product[k]);
-    const excluded = new Set(['_id','id','nombre','precio','descripcion','createdAt','updatedAt','imagenUrl','Id','__v']);
-    const dynamic = Object.keys(product)
-      .filter(k => !excluded.has(k) && !known.includes(k) && typeof product[k] === 'string' && product[k].length < 120);
-    const toLabel = (key) => key.replace(/([A-Z])/g, ' $1').replace(/_/g, ' ').replace(/^\w/, s => s.toUpperCase());
-    return [...known, ...dynamic].map(k => ({ label: toLabel(k), value: product[k] }));
-  };
-  const specs = getSpecs();
 
   const go = (nextIdx) => {
     const total = images.length;
@@ -171,13 +188,16 @@ export default function ProductDetailPage({ onAdd }) {
               </section>
 
               {product?.descripcion && <p className="product-desc mt-3">{product.descripcion}</p>}
-              {specs.length > 0 && (
-                <ul className="product-specs mt-3">
-                  {specs.map(({ label, value }) => (
-                    <li key={label}><strong>{label}:</strong> {value}</li>
+              {nonEmptySpecs.length > 0 && (
+                <ul className="product-specs">
+                  {nonEmptySpecs.map(([key, label]) => (
+                    <li key={key}>
+                      <strong>{label}:</strong> {String(product[key])}
+                    </li>
                   ))}
                 </ul>
               )}
+
             </div>
 
             {/* Compra */}
