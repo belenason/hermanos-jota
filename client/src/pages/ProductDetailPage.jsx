@@ -126,7 +126,7 @@ export default function ProductDetailPage({ onAdd }) {
   if (err || !product) {
     return (
       <section className="container product-error-container mt-5">
-        <h2>{err || 'Producto no encontrado'}</h2>
+        <h2>{'Ha ocurrido un error.'}</h2>
         <Link to="/productos" className="btn-secondary-custom mt-3">
           Volver al catálogo
         </Link>
