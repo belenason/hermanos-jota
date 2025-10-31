@@ -1327,6 +1327,8 @@ SECCIÓN 4: ESTILOS ESPECÍFICOS DE PRODUCTO
 .breadcrumb .breadcrumb-item a{
   color: var(--rosa-polvoriento) !important;
   text-decoration-color: var(--accent);
+  display: flex;
+  align-items: center;
 }
 
 /* =================== */

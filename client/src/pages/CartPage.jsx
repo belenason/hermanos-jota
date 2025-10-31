@@ -4,7 +4,7 @@ import "../styles/micss.css"; // ← importa el CSS
 
 const formatARS = (n) => `$ ${Number(n || 0).toLocaleString("es-AR")}`;
 
-export default function CartPage({ }) {
+export default function CartPage() {
   const { items, totalItems, cartTotal, updateItemQuantity, removeItem, emptyCart } = useCart();
 
   if (!items.length) {

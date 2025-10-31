@@ -1,5 +1,5 @@
 import express from "express";
-import mongoose from "mongoose";
+import { conectarDB } from "./config/db.js";
 import { logger } from "./middlewares/logger.js";
 import { productosRouter } from "./routes/productos.routes.js";
 import dotenv from "dotenv";
@@ -8,18 +8,6 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 4000;
-
-const conectarDB = async () => {
-  try {
-    await mongoose.connect(process.env.DB_URI);
-    console.log('¡Conexión exitosa a MongoDB! ✅');
-  } catch (error) {
-
-    console.error('Error al conectar a MongoDB: ❌', error);
-    // Si la conexión falla, es un error fatal, salimos del proceso
-    process.exit(1);
-  }
-};
 
 // Middlewares
 app.use(express.json());
@@ -44,7 +32,6 @@ app.use((err, req, res, next) => {
     stack: process.env.NODE_ENV === 'production' ? '🥞' : err.stack,
   });
 });
-
 
 const startServer = async () => {
   try {
