@@ -2078,6 +2078,7 @@ SECCIÓN 5: ESTILOS ESPECÍFICOS DE PRODUCTOS
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  color: #464242;
 }
 
 .cart-page .item-price {
@@ -2144,11 +2145,13 @@ SECCIÓN 5: ESTILOS ESPECÍFICOS DE PRODUCTOS
 
 .cart-page .total-label {
   font-size: 1.05rem;
+  color: #464242;
 }
 
 .cart-page .total-value {
   font-size: 1.35rem;
   font-weight: 800;
+  color: #574d4d;
 }
 
 .cart-page .btn-primary {
