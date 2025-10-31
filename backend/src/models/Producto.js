@@ -26,7 +26,6 @@ const productoSchema = new mongoose.Schema({
     type: String,
   },
 
-  //Agrego los campos que no tienen todos los productos, preguntar si deberían estar o no
   medidas: { type: String, trim: true },
   materiales: { type: String, trim: true },
   acabado: { type: String, trim: true },
