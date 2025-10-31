@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { getProductos } from './api';
 import { useCart } from 'react-use-cart';
 
+
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Toast from './components/Toast';
@@ -14,6 +15,7 @@ import ContactPage from './pages/ContactPage';
 import CartPage from './pages/CartPage';
 import ProductDetailRoute from './pages/ProductDetailPage';
 import CreateProductPage from './pages/CreateProductPage';
+import EditProductPage from './pages/EditProductPage';
 
 export default function App() {
   const [products, setProducts] = useState([]);
@@ -89,6 +91,7 @@ export default function App() {
           <Route path="/contacto" element={<ContactPage />} />
           <Route path="/carrito" element={<CartPage/>} />
           <Route path="/admin/crear-producto" element={<CreateProductPage />} />
+          <Route path="/productos/editar/:id" element={<EditProductPage />} />
           <Route
             path="*"
             element={

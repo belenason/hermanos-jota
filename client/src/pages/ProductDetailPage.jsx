@@ -244,6 +244,10 @@ export default function ProductDetailPage({ onAdd }) {
                       <i className="bi bi-arrow-left me-2" aria-hidden="true"></i>
                       Volver
                     </Link>
+                    <Link to={`/productos/editar/${product.id}`} className="btn-edit flex-fill">
+                      <i className="bi bi-pencil me-2" aria-hidden="true"></i>
+                      Editar
+                    </Link>
                     <button className="btn-delete flex-fill" onClick={handleDeleteClick}>
                       <i className="bi bi-trash me-2" aria-hidden="true"></i>
                       Eliminar

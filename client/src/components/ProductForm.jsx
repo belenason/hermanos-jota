@@ -2,40 +2,17 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 
 const SECTIONS = {
-  materialesMedidas: {
-    title: 'Materiales y Medidas',
-    fields: ['medidas','materiales','acabado','peso'],
-  },
-  usoCapacidad: {
-    title: 'Uso y Capacidad',
-    fields: ['capacidad','cargaMaxima','apilables','modulares','extension','almacenamiento'],
-  },
-  confortTapizado: {
-    title: 'Confort y Tapizado',
-    fields: ['tapizado','confort','relleno','colchon','estructura'],
-  },
-  mecanismos: {
-    title: 'Mecanismos',
-    fields: ['rotacion','regulacion','cables'],
-  },
-  sustentabilidad: {
-    title: 'Sustentabilidad',
-    fields: ['sostenibilidad','certificacion'],
-  },
-  extras: {
-    title: 'Extras',
-    fields: ['incluye','caracteristicas','garantia'],
-  },
+  materialesMedidas: { title: 'Materiales y Medidas', fields: ['medidas','materiales','acabado','peso'] },
+  usoCapacidad:      { title: 'Uso y Capacidad',      fields: ['capacidad','cargaMaxima','apilables','modulares','extension','almacenamiento'] },
+  confortTapizado:   { title: 'Confort y Tapizado',   fields: ['tapizado','confort','relleno','colchon','estructura'] },
+  mecanismos:        { title: 'Mecanismos',           fields: ['rotacion','regulacion','cables'] },
+  sustentabilidad:   { title: 'Sustentabilidad',       fields: ['sostenibilidad','certificacion'] },
+  extras:            { title: 'Extras',               fields: ['incluye','caracteristicas','garantia'] },
 };
 
 const INITIAL_FORM = {
   // Básicos
-  nombre: '',
-  descripcion: '',
-  precio: '',
-  stock: '',
-  imagenUrl: '',
-
+  nombre: '', descripcion: '', precio: '', stock: '', imagenUrl: '',
   // Opcionales
   medidas: '', materiales: '', acabado: '', peso: '',
   capacidad: '', modulares: '', tapizado: '', confort: '',
@@ -45,24 +22,42 @@ const INITIAL_FORM = {
   cables: '', regulacion: '', certificacion: ''
 };
 
-export default function ProductForm({ onSubmit, onCancel }) {
+export default function ProductForm({
+  initialValues = null,           // ← NUEVO: valores iniciales para editar
+  onSubmit,
+  onCancel,
+  submitLabel = 'Crear Producto', // ← NUEVO: texto del botón
+}) {
   const [form, setForm] = useState(INITIAL_FORM);
-  const [validated, setValidated] = useState(false); // indica si se intentó enviar
-  const [touched, setTouched] = useState({});        // campos tocados (para feedback más fino)
+  const [validated, setValidated] = useState(false);
+  const [touched, setTouched] = useState({});
 
   // Secciones colapsables
-  const [openSections, setOpenSections] = useState(() => ({
+  const [openSections, setOpenSections] = useState({
     materialesMedidas: false,
     usoCapacidad: false,
     confortTapizado: false,
     mecanismos: false,
     sustentabilidad: false,
     extras: false,
-  }));
+  });
 
   // Accesibilidad / foco
   const firstInvalidRef = useRef(null);
   const formRef = useRef(null);
+
+  // Al montar y cada vez que cambien initialValues, pre-cargamos el form
+  useEffect(() => {
+    if (!initialValues) {
+      setForm(INITIAL_FORM);
+      return;
+    }
+    // Merge seguro: prioriza valores provistos por initialValues
+    setForm(prev => ({
+      ...prev,
+      ...mapInitials(initialValues),
+    }));
+  }, [initialValues]);
 
   const requiredFields = useMemo(
     () => ([
@@ -112,13 +107,11 @@ export default function ProductForm({ onSubmit, onCancel }) {
       if (!show) return base;
       return isRequiredValid(name) ? `${base} is-valid` : `${base} is-invalid`;
     } else {
-      if (!hasValue) return base;  // opcional vacío → sin borde
-      // opcional con valor → marcá válido
+      if (!hasValue) return base;
       return `${base} is-valid`;
     }
   };
 
-  // Validación global (solo requeridos)
   const validate = () => {
     const errors = [];
     if (!isRequiredValid('nombre')) errors.push('nombre');
@@ -126,7 +119,6 @@ export default function ProductForm({ onSubmit, onCancel }) {
 
     if (errors.length) {
       setValidated(true);
-      // foco al primer error
       setTimeout(() => {
         const el = formRef.current?.querySelector(`#${errors[0]}`);
         if (el) {
@@ -160,20 +152,10 @@ export default function ProductForm({ onSubmit, onCancel }) {
   }, [validated]);
 
   return (
-    <form
-      id="product-form"
-      ref={formRef}
-      // OJO: no usamos 'was-validated' para no pintar todo de verde.
-      noValidate
-      onSubmit={handleSubmit}
-    >
-      {/* CTA abrir detalles */}
-      <div className="mb-3 d-flex justify-content-end">
-      </div>
-
+    <form id="product-form" ref={formRef} noValidate onSubmit={handleSubmit}>
       {/* DATOS BÁSICOS */}
       <div className="contact-form-wrapper mb-4">
-        {/* NOMBRE (requerido) */}
+        {/* NOMBRE */}
         <div className="form-floating mb-4">
           <input
             type="text"
@@ -194,7 +176,7 @@ export default function ProductForm({ onSubmit, onCancel }) {
           </div>
         </div>
 
-        {/* DESCRIPCIÓN (opcional) */}
+        {/* DESCRIPCIÓN */}
         <div className="form-floating mb-4">
           <textarea
             id="descripcion"
@@ -209,7 +191,7 @@ export default function ProductForm({ onSubmit, onCancel }) {
           <label htmlFor="descripcion">Descripción</label>
         </div>
 
-        {/* PRECIO (requerido) & STOCK (opcional) */}
+        {/* PRECIO & STOCK */}
         <div className="row g-3 mb-4">
           <div className="col-md-6">
             <div className="form-floating">
@@ -231,15 +213,22 @@ export default function ProductForm({ onSubmit, onCancel }) {
               <div className="invalid-feedback" id="error-precio">
                 Ingresá un precio válido (número ≥ 0).
               </div>
-              <div className="form-text" id="precio-help">
-                Ej: 129999.99
-              </div>
+              <div className="form-text" id="precio-help">Ej: 129999.99</div>
             </div>
           </div>
 
           <div className="col-md-6">
             <div className="form-floating">
-              <input type="number" id="stock" name="stock" placeholder="Stock" min="0" step="1" className={fieldClass('stock')} aria-describedby="stock-help" value={form.stock}
+              <input
+                type="number"
+                id="stock"
+                name="stock"
+                placeholder="Stock"
+                min="0"
+                step="1"
+                className={fieldClass('stock')}
+                aria-describedby="stock-help"
+                value={form.stock}
                 onChange={handleChange}
                 onBlur={handleBlur}
               />
@@ -248,7 +237,7 @@ export default function ProductForm({ onSubmit, onCancel }) {
           </div>
         </div>
 
-        {/* IMAGEN URL (opcional) */}
+        {/* IMAGEN URL */}
         <div className="form-floating mb-2">
           <input
             type="url"
@@ -262,9 +251,7 @@ export default function ProductForm({ onSubmit, onCancel }) {
             onBlur={handleBlur}
           />
           <label htmlFor="imagenUrl">URL de la imagen</label>
-          <div className="form-text" id="imagen-help">
-            Ingresa el enlace de la imagen.
-          </div>
+          <div className="form-text" id="imagen-help">Ingresá el enlace de la imagen.</div>
         </div>
       </div>
 
@@ -317,7 +304,7 @@ export default function ProductForm({ onSubmit, onCancel }) {
       <div className="d-flex gap-2 mt-4">
         <button type="submit" className="btn btn-primary">
           <i className="bi bi-check-circle me-2" aria-hidden="true"></i>
-          Crear Producto
+          {submitLabel}
         </button>
         <button type="button" className="btn btn-outline-secondary" onClick={onCancel}>
           Cancelar
@@ -327,14 +314,13 @@ export default function ProductForm({ onSubmit, onCancel }) {
   );
 }
 
-/* Utils de etiquetas/ayudas */
+/* Utils */
 function toLabel(key) {
   return key
     .replace(/([A-Z])/g, ' $1')
     .replace(/_/g, ' ')
     .replace(/^./, (s) => s.toUpperCase());
 }
-
 function helperText(name) {
   switch (name) {
     case 'medidas': return 'Ej: 120×60×75 cm';
@@ -351,4 +337,22 @@ function helperText(name) {
     case 'certificacion': return 'Ej: FSC, ISO 14001';
     default: return '';
   }
+}
+
+// Convierte initialValues a strings donde corresponda para inputs controlados
+function mapInitials(iv) {
+  const out = { ...INITIAL_FORM };
+  for (const k of Object.keys(out)) {
+    const v = iv?.[k];
+    if (v === null || v === undefined) continue;
+    // precio/stock numéricos → string para inputs number controlados
+    if (k === 'precio' || k === 'stock') {
+      out[k] = String(v);
+    } else {
+      out[k] = String(v);
+    }
+  }
+  // imagenUrl fallback (si tu backend guarda 'imagen' o similar)
+  if (!out.imagenUrl && iv?.imagenUrl) out.imagenUrl = String(iv.imagenUrl);
+  return out;
 }
