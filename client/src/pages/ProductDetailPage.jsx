@@ -4,7 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { getProductoById, deleteProducto } from '../api';
 import { Link } from 'react-router-dom';
 
-export default function ProductDetailPage({ onAdd }) {
+export default function ProductDetailPage({ onAdd, onDataMutated }) {
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -65,7 +65,6 @@ export default function ProductDetailPage({ onAdd }) {
     return String(v).trim() !== '';
   });
 
-
   useEffect(() => { 
     window.scrollTo({ top: 0, behavior: 'smooth' }); 
   }, []); 
@@ -103,6 +102,7 @@ export default function ProductDetailPage({ onAdd }) {
     try {
       setDeleting(true);
       await deleteProducto(product.id);
+      onDataMutated();
       navigate('/productos');
     } catch (e) {
       alert(e?.message ?? 'No se pudo eliminar el producto');

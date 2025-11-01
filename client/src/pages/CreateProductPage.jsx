@@ -1,11 +1,12 @@
 // src/pages/CreateProductPage.jsx
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createProducto } from '../api';
+
 import ProductForm from '../components/ProductForm';
 import Toast from '../components/Toast';
 
-export default function CreateProductPage() {
+export default function CreateProductPage({ onDataMutated}) {
   const navigate = useNavigate();
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
@@ -14,11 +15,17 @@ export default function CreateProductPage() {
   const showToast = (message) => setToast({ show: true, message });
   const hideToast = () => setToast((t) => ({ ...t, show: false }));
 
+  useEffect(() => { 
+    window.scrollTo({ top: 0, behavior: 'smooth' }); 
+  }, []); 
+
   const handleSubmit = async (formData) => {
     setError('');
     setSaving(true);
     try {
       const created = await createProducto(formData);
+
+      onDataMutated();
 
       // Toast de confirmación
       showToast('¡Producto creado con éxito!');

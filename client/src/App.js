@@ -1,9 +1,8 @@
 // src/App.js
-import { Link, Routes, Route, useLocation } from 'react-router-dom';
+import { Link, Routes, Route }  from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { getProductos } from './api';
 import { useCart } from 'react-use-cart';
-
 
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -22,7 +21,6 @@ export default function App() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const { addItem, totalItems } = useCart();
-  const location = useLocation();
 
   // Toast
   const [toast, setToast] = useState({ show: false, message: '' });
@@ -35,7 +33,6 @@ export default function App() {
       setLoading(true);
       setError('');
       const data = await getProductos(); // devuelve un array de productos
-      // normalizo id desde Mongo (_id)
       const productsWithId = (Array.isArray(data) ? data : []).map((p) => ({
         ...p,
         id: p._id,
@@ -52,12 +49,6 @@ export default function App() {
   useEffect(() => {
     loadProducts();
   }, []);
-
-  useEffect(() => {
-    if (location.pathname === '/productos') {
-      loadProducts();
-    }
-  }, [location.pathname]);
 
   // Agregar al carrito + toast
   const addToCart = (prod, qty = 1) => {
@@ -87,11 +78,11 @@ export default function App() {
         <Routes>
           <Route path="/" element={ <HomePage featuredProducts={featuredProducts} loading={loading}/>}/>
           <Route path="/productos" element={ <CatalogPage products={products} loading={loading} error={error} onRetry={handleRetry} onAdd={addToCart}/>}/>
-          <Route path="/productos/:id" element={<ProductDetailRoute onAdd={addToCart} />} />
+          <Route path="/productos/:id" element={<ProductDetailRoute onAdd={addToCart} onDataMutated={loadProducts} />} />
           <Route path="/contacto" element={<ContactPage />} />
-          <Route path="/carrito" element={<CartPage/>} />
-          <Route path="/admin/crear-producto" element={<CreateProductPage />} />
-          <Route path="/productos/editar/:id" element={<EditProductPage />} />
+          <Route path="/carrito" element={<CartPage />} />
+          <Route path="/admin/crear-producto" element={<CreateProductPage onDataMutated={loadProducts} />} />
+          <Route path="/productos/editar/:id" element={<EditProductPage onDataMutated={loadProducts} />} />
           <Route
             path="*"
             element={

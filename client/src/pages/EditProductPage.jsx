@@ -5,7 +5,7 @@ import { getProductoById, updateProducto } from '../api';
 import ProductForm from '../components/ProductForm';
 import Toast from '../components/Toast';
 
-export default function EditProductPage() {
+export default function EditProductPage( {onDataMutated} ) {
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -25,7 +25,6 @@ export default function EditProductPage() {
         setError('');
         setLoading(true);
         const p = await getProductoById(id);
-        // normalizo id (Mongo -> UI)
         setProduct({ ...p, id: p._id || p.id });
       } catch (e) {
         setError(e?.message ?? 'No se pudo cargar el producto');
@@ -41,6 +40,7 @@ export default function EditProductPage() {
     try {
       // IMPORTANTE: aseguramos enviar el id correcto (_id en backend)
       await updateProducto(product._id || product.id, formData);
+      onDataMutated();
       showToast('¡Cambios guardados!');
       // redirige al detalle
       setTimeout(() => {

@@ -1,28 +1,63 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react'; // NUEVO: importar useState
 import ProductCard from '../components/ProductCard';
 import { Link } from 'react-router-dom';
 
-export default function HomePage({ featuredProducts = [] }) {
-  // Accesibilidad: mantener aria-current en indicadores del carrusel (hero)
+// NUEVO: Definimos el contenido del carrusel como un array de objetos.
+// Esto nos permite generarlo dinámicamente y no repetir HTML.
+const heroSlides = [
+  {
+    img: "/img/fondohero.jpg",
+    alt: "Ambiente con mobiliario de madera de Hermanos Jota",
+    title: "NUEVA COLECCIÓN",
+    subtitle: "Diseño con historia, muebles con alma",
+    link: "/productos",
+    linkLabel: "Descubrir colección",
+    isReactLink: true
+  },
+  {
+    img: "/img/ImagenHero1.png",
+    alt: "Taller y materiales sustentables",
+    title: "ARTESANÍA SUSTENTABLE",
+    subtitle: "Materiales nobles, futuro responsable",
+    link: "#sustentabilidad",
+    linkLabel: "Nuestro compromiso",
+    isReactLink: false
+  },
+  {
+    img: "/img/ImagenHero2.png",
+    alt: "Showroom de Hermanos Jota en Buenos Aires",
+    title: "SHOWROOM BA",
+    subtitle: "Vení a ver y elegir tu próxima pieza favorita",
+    link: "#contacto",
+    linkLabel: "Visitanos",
+    isReactLink: false
+  }
+];
+
+export default function HomePage({ featuredProducts = [] }) { 
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  useEffect(() => { 
+    window.scrollTo({ top: 0, behavior: 'smooth' }); 
+  }, []); 
+
   useEffect(() => {
     const el = document.getElementById('heroCarousel');
     if (!el || !window.bootstrap) return;
+
     const onSlid = (e) => {
-      const indicators = el.querySelectorAll('.carousel-indicators button');
-      indicators.forEach((btn, idx) => {
-        if (idx === e.to) btn.setAttribute('aria-current', 'true');
-        else btn.removeAttribute('aria-current');
-      });
+      // Actualiza el estado de React con el índice del nuevo slide
+      setActiveIndex(e.to);
     };
+
     el.addEventListener('slid.bs.carousel', onSlid);
     return () => el.removeEventListener('slid.bs.carousel', onSlid);
-  }, []);
+  }, []); 
 
   const four = featuredProducts.slice(0, 4);
 
   return (
     <>
-      {/* HERO con carrusel a pantalla completa con overlay centrado */}
       <section className="hero-carousel-section" aria-label="Presentación principal">
         <div
           id="heroCarousel"
@@ -32,89 +67,62 @@ export default function HomePage({ featuredProducts = [] }) {
           role="region"
           aria-roledescription="carrusel"
         >
-          {/* Indicadores */}
+          {/*ndicadores generados dinámicamente */}
           <div className="carousel-indicators" aria-label="Seleccionar diapositiva">
-            <button
-              type="button"
-              data-bs-target="#heroCarousel"
-              data-bs-slide-to="0"
-              className="active"
-              aria-current="true"
-              aria-label="Diapositiva 1: Nueva Colección"
-            ></button>
-            <button
-              type="button"
-              data-bs-target="#heroCarousel"
-              data-bs-slide-to="1"
-              aria-label="Diapositiva 2: Artesanía Sustentable"
-            ></button>
-            <button
-              type="button"
-              data-bs-target="#heroCarousel"
-              data-bs-slide-to="2"
-              aria-label="Diapositiva 3: Showroom Buenos Aires"
-            ></button>
+            {heroSlides.map((slide, idx) => (
+              <button
+                key={idx}
+                type="button"
+                data-bs-target="#heroCarousel"
+                data-bs-slide-to={idx}
+                // La clase 'active' depende del estado 'activeIndex'
+                className={idx === activeIndex ? 'active' : ''}
+                // 'aria-current' también depende del estado
+                aria-current={idx === activeIndex ? 'true' : undefined}
+                aria-label={slide.title} // Usamos el título para el label
+              ></button>
+            ))}
           </div>
 
-          {/* Slides */}
+          {/* MODIFICADO: Slides generados dinámicamente */}
           <div className="carousel-inner">
-            <div className="carousel-item active" role="group" aria-roledescription="diapositiva" aria-label="1 de 3">
-              <div className="hero-slide">
-                <img
-                  src="/img/fondohero.jpg"
-                  className="hero-slide-image"
-                  alt="Ambiente con mobiliario de madera de Hermanos Jota"
-                />
-                <div className="hero-overlay">
-                  <div className="hero-content-center">
-                    <h2 className="hero-main-title">NUEVA COLECCIÓN</h2>
-                    <p className="hero-main-subtitle">Diseño con historia, muebles con alma</p>
-                    <Link to="/productos" className="btn-hero-primary" aria-label="Descubrir colección"> Descubrir colección </Link>
+            {heroSlides.map((slide, idx) => (
+              <div
+                key={idx}
+                // La clase 'active' depende del estado 'activeIndex'
+                className={`carousel-item ${idx === activeIndex ? 'active' : ''}`}
+                role="group"
+                aria-roledescription="diapositiva"
+                aria-label={`${idx + 1} de ${heroSlides.length}`}
+              >
+                <div className="hero-slide">
+                  <img
+                    src={slide.img}
+                    className="hero-slide-image"
+                    alt={slide.alt}
+                  />
+                  <div className="hero-overlay">
+                    <div className="hero-content-center">
+                      <h2 className="hero-main-title">{slide.title}</h2>
+                      <p className="hero-main-subtitle">{slide.subtitle}</p>
+                      {/* Renderizado condicional del botón */}
+                      {slide.isReactLink ? (
+                        <Link to={slide.link} className="btn-hero-primary" aria-label={slide.linkLabel}>
+                          {slide.linkLabel}
+                        </Link>
+                      ) : (
+                        <a href={slide.link} className="btn-hero-primary">
+                          {slide.linkLabel}
+                        </a>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-
-            <div className="carousel-item" role="group" aria-roledescription="diapositiva" aria-label="2 de 3">
-              <div className="hero-slide">
-                <img
-                  src="/img/ImagenHero1.png"
-                  className="hero-slide-image"
-                  alt="Taller y materiales sustentables"
-                />
-                <div className="hero-overlay">
-                  <div className="hero-content-center">
-                    <h2 className="hero-main-title">ARTESANÍA SUSTENTABLE</h2>
-                    <p className="hero-main-subtitle">Materiales nobles, futuro responsable</p>
-                    <a href="#sustentabilidad" className="btn-hero-primary">
-                      Nuestro compromiso
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="carousel-item" role="group" aria-roledescription="diapositiva" aria-label="3 de 3">
-              <div className="hero-slide">
-                <img
-                  src="/img/ImagenHero2.png"
-                  className="hero-slide-image"
-                  alt="Showroom de Hermanos Jota en Buenos Aires"
-                />
-                <div className="hero-overlay">
-                  <div className="hero-content-center">
-                    <h2 className="hero-main-title">SHOWROOM BA</h2>
-                    <p className="hero-main-subtitle">Vení a ver y elegir tu próxima pieza favorita</p>
-                    <a href="#contacto" className="btn-hero-primary">
-                      Visitanos
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
+            ))}
           </div>
 
-          {/* Controles */}
+          {/* Controles (estos se quedan igual) */}
           <button
             className="carousel-control-prev"
             type="button"
@@ -136,7 +144,7 @@ export default function HomePage({ featuredProducts = [] }) {
         </div>
       </section>
 
-      {/* SOBRE NOSOTROS (video + copy) */}
+      {/* SOBRE NOSOTROS*/}
       <section className="about-section py-5" id="about">
         <div className="container">
           <div className="row align-items-center g-5">
@@ -178,7 +186,7 @@ export default function HomePage({ featuredProducts = [] }) {
         </div>
       </section>
 
-      {/* SPLIT: Sustentabilidad */}
+      {/* SPLIT: Sustentabilidad*/}
       <section className="split-section" id="sustentabilidad">
         <div className="container-fluid">
           <div className="row g-0">
@@ -264,7 +272,6 @@ export default function HomePage({ featuredProducts = [] }) {
             )}
           </div>
 
-          {/* CTA debajo de destacados (siempre visible) */}
           <div className="text-center mt-4">
           <Link to="/productos" className="btn-secondary-custom mt-3 mb-5" aria-label="Ver todo el catálogo"> Ver todo el catálogo </Link>
           </div>

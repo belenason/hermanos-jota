@@ -1,10 +1,16 @@
 import { useCart } from "react-use-cart";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
 
 const formatARS = (n) => `$ ${Number(n || 0).toLocaleString("es-AR")}`;
 
+
 export default function CartPage() {
   const { items, totalItems, cartTotal, updateItemQuantity, removeItem, emptyCart } = useCart();
+
+  useEffect(() => { 
+    window.scrollTo({ top: 0, behavior: 'smooth' }); 
+  }, []); 
 
   if (!items.length) {
     return (

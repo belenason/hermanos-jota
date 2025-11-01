@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import ProductCardGrid from '../components/ProductCardGrid';
 
@@ -17,6 +17,10 @@ export default function CatalogPage({
     const words = (p.nombre || '').toLowerCase().split(' ');
     return words.some(word => word.startsWith(query));
   });
+
+  useEffect(() => { 
+    window.scrollTo({ top: 0, behavior: 'smooth' }); 
+  }, []); 
 
   // ---- Estado: cargando ----
   if (loading) {
