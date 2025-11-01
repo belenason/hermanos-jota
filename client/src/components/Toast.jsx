@@ -10,14 +10,8 @@ export default function Toast({ show, message, onClose, duration = 2000 }) {
   if (!show) return null;
 
   return (
-    <div
-      role="status"
-      aria-live="polite"
-      className="position-fixed bottom-0 end-0 p-3 toast-wrapper"
-    >
-      <div
-        className="shadow rounded-3 text-white px-3 py-2 d-flex align-items-center toast-content"
-      >
+    <div role="status" aria-live="polite" className="position-fixed bottom-0 end-0 p-3 toast-wrapper">
+      <div className="shadow rounded-3 text-white px-3 py-2 d-flex align-items-center toast-content">
         <span className="flex-grow-1">{message}</span>
       </div>
     </div>

@@ -1,5 +1,5 @@
 // src/components/ProductForm.jsx
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const SECTIONS = {
   materialesMedidas: { title: 'Materiales y Medidas', fields: ['medidas','materiales','acabado','peso'] },
@@ -23,10 +23,10 @@ const INITIAL_FORM = {
 };
 
 export default function ProductForm({
-  initialValues = null,           // ← NUEVO: valores iniciales para editar
+  initialValues = null,
   onSubmit,
   onCancel,
-  submitLabel = 'Crear Producto', // ← NUEVO: texto del botón
+  submitLabel = 'Crear Producto'
 }) {
   const [form, setForm] = useState(INITIAL_FORM);
   const [validated, setValidated] = useState(false);
@@ -59,15 +59,9 @@ export default function ProductForm({
     }));
   }, [initialValues]);
 
-  const requiredFields = useMemo(
-    () => ([
-      { name: 'nombre', label: 'Nombre del producto' },
-      { name: 'precio', label: 'Precio' },
-    ]),
-    []
-  );
-  const REQUIRED = useMemo(() => new Set(requiredFields.map(f => f.name)), [requiredFields]);
-  const isRequired = (name) => REQUIRED.has(name);
+
+  const REQUIRED = ['nombre', 'precio'];
+  const isRequired = (name) => REQUIRED.includes(name);
 
   // Helpers
   const handleChange = (e) => {
@@ -98,7 +92,7 @@ export default function ProductForm({
     return true;
   };
 
-  const fieldClass = (name, base = 'form-control') => {
+  const fieldClass = (name, base = 'form-control') => {// Funcion que sirve para ver que campos mostrar como validados y cuales no
     const value = form[name];
     const hasValue = String(value ?? '').trim() !== '';
 
@@ -135,21 +129,29 @@ export default function ProductForm({
     e.preventDefault();
     if (!validate()) return;
 
-    const payload = {
-      ...form,
-      precio: Number(form.precio || 0),
-      stock: Number(form.stock || 0),
-    };
+    const payload = Object.entries(form).reduce((acc, [key, value]) => {
+      // 1. Obtenemos el valor y lo limpiamos (quitamos espacios)
+      const trimmedValue = String(value ?? '').trim();
+      
+      // 2. Si el valor NO está vacío, lo procesamos
+      if (trimmedValue !== '') {
+        
+        // 3. Caso especial: precio y stock deben ser números
+        if (key === 'precio' || key === 'stock') {
+          acc[key] = Number(trimmedValue);
+        } else {
+          // 4. El resto se añade como string
+          acc[key] = trimmedValue;
+        }
+      }
+      
+      // 5. Devolvemos el objeto 'acumulador' para la siguiente iteración
+      return acc;
+    }, {});
 
     onSubmit(payload);
     setValidated(false);
   };
-
-  useEffect(() => {
-    if (validated && firstInvalidRef.current) {
-      firstInvalidRef.current.focus();
-    }
-  }, [validated]);
 
   return (
     <form id="product-form" ref={formRef} noValidate onSubmit={handleSubmit}>
@@ -319,6 +321,7 @@ function toLabel(key) {
     .replace(/_/g, ' ')
     .replace(/^./, (s) => s.toUpperCase());
 }
+
 function helperText(name) {
   switch (name) {
     case 'medidas': return 'Ej: 120×60×75 cm';
@@ -340,17 +343,16 @@ function helperText(name) {
 // Convierte initialValues a strings donde corresponda para inputs controlados
 function mapInitials(iv) {
   const out = { ...INITIAL_FORM };
+
   for (const k of Object.keys(out)) {
     const v = iv?.[k];
-    if (v === null || v === undefined) continue;
-    // precio/stock numéricos → string para inputs number controlados
-    if (k === 'precio' || k === 'stock') {
-      out[k] = String(v);
-    } else {
-      out[k] = String(v);
+
+    if (v === null || v === undefined) {
+      continue;
     }
+
+    out[k] = String(v);
   }
-  // imagenUrl fallback (si tu backend guarda 'imagen' o similar)
-  if (!out.imagenUrl && iv?.imagenUrl) out.imagenUrl = String(iv.imagenUrl);
+
   return out;
 }
