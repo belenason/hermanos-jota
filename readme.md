@@ -68,11 +68,6 @@ PORT=4000
 NODE_ENV=development
 ```
 
-Y otro en `/client` con:
-```env
-REACT_APP_API_URL = https://hermanos-jota.onrender.com
-```
-
 ---
 
 ## 🧰 Tecnologías Utilizadas
