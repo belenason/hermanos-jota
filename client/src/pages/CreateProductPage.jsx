@@ -35,7 +35,7 @@ export default function CreateProductPage({ onDataMutated}) {
         navigate(`/productos/${created.id}`, { replace: true });
       }, 2000);
     } catch (err) {
-      setError(err?.message ?? 'No se pudo crear el producto');
+      setError('No se pudo crear el producto');
     } finally {
       setSaving(false);
     }

@@ -73,7 +73,7 @@ export default function EditProductPage( {onDataMutated} ) {
       <section className="contact-container">
         <div className="contact-form-wrapper-general text-center">
           <h3 className="mb-3">Ocurrió un problema</h3>
-          <p className="text-muted mb-4">{error || 'Producto no encontrado'}</p>
+          <p className="text-muted mb-4">{'Error al cargar el producto.'}</p>
           <Link to="/productos" className="btn-secondary-custom">Volver al catálogo</Link>
         </div>
       </section>

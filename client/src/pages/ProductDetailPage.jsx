@@ -26,7 +26,7 @@ export default function ProductDetailPage({ onAdd, onDataMutated }) {
         const p = await getProductoById(id);
         setProduct({ ...p, id: p._id || p.id });
       } catch (e) {
-        setErr(e?.message ?? 'No se pudo cargar el producto');
+        setErr('No se pudo cargar el producto');
       } finally {
         setLoading(false);
       }
