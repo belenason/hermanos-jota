@@ -118,7 +118,10 @@ export default function ProductDetailPage({ onAdd, onDataMutated }) {
   if (loading) {
     return (
       <section className="container py-5">
-        <p>Cargando producto…</p>
+        <div className="loading-container">
+          <div className="loading-spinner"></div>
+          <p className="loading-text">Cargando producto…</p>
+        </div>
       </section>
     );
   }
@@ -240,7 +243,7 @@ export default function ProductDetailPage({ onAdd, onDataMutated }) {
                   <div className="d-flex gap-2">
                     <Link to="/productos" className="btn-outline-brand flex-fill">
                       <i className="bi bi-arrow-left me-2" aria-hidden="true"></i>
-                      Volver
+                      Catálogo
                     </Link>
                     <Link to={`/productos/editar/${product.id}`} className="btn-edit flex-fill">
                       <i className="bi bi-pencil me-2" aria-hidden="true"></i>
