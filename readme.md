@@ -42,6 +42,7 @@ Este proyecto implementa una arquitectura moderna con persistencia real de datos
   - `/productos/:id` → Detalle del producto
   - `/admin/crear-producto` → Crear nuevo producto
   - `/contacto` → Formulario de contacto
+  - `/productos/editar/:id` → Editar producto
 - Consumo de la API mediante fetch (archivo `api.js`).
 - Formularios controlados y validación HTML5.
 - Carrito funcional con `react-use-cart`.
