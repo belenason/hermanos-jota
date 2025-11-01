@@ -163,8 +163,7 @@ export default function ProductDetailPage({ onAdd }) {
                   <img
                     src={images[idx]}
                     alt={`${product?.nombre} ${idx + 1}`}
-                    className="d-block w-100"
-                    style={{ objectFit: 'contain', maxHeight: 450 }}
+                    className="d-block w-100 gallery-main-image"
                   />
 
                   <button className="carousel-control-next" aria-label="Imagen siguiente" onClick={() => go(idx + 1)} type="button">
@@ -202,7 +201,7 @@ export default function ProductDetailPage({ onAdd }) {
 
             {/* Compra */}
             <div className="col-lg-5 d-flex justify-content-center">
-              <aside className="purchase-card w-100" style={{ maxWidth: 460 }}>
+              <aside className="purchase-card w-100">
                 <div className="price">$ {price}</div>
 
                 <div className="label">Cantidad</div>
@@ -220,8 +219,7 @@ export default function ProductDetailPage({ onAdd }) {
                     type="number" 
                     min={1} 
                     max={99} 
-                    className="form-control text-center" 
-                    style={{ maxWidth: 100 }} 
+                    className="form-control text-center cant-prod" 
                     value={qty} 
                     onChange={(e) => setQty(clampQty(parseInt(e.target.value, 10)))} 
                   />

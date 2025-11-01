@@ -1244,6 +1244,10 @@ SECCIÓN 3: ESTILOS ESPECÍFICOS DE CONTACTO
   transition: border-color 0.2s ease;
 }
 
+.form-floating > textarea{
+  height: '120px';
+}
+
 .form-floating > .form-control:focus {
   border-color: #8B4513;
   box-shadow: 0 0 0 0.15rem rgba(139, 69, 19, 0.15);
@@ -1461,7 +1465,7 @@ SECCIÓN 4: ESTILOS ESPECÍFICOS DE PRODUCTO
   position: sticky;
   width: 100%;
   min-width: 320px;
-  max-width: 420px;           /* Ajusta el ancho máximo a tu gusto */
+  max-width: 460px;           /* Ajusta el ancho máximo a tu gusto */
   top: 68px;
 }
 
@@ -2631,3 +2635,36 @@ SECCIÓN 5: ESTILOS ESPECÍFICOS DE PRODUCTOS
   width: 100%;
 }
 
+.lnk-card-detalle-producto{
+  text-decoration: none !important;
+  all: unset;
+  cursor: pointer;
+  display: block;
+}
+
+.form-section-toggle
+{
+  background-color: transparent !important;
+  color: var(--siena-tostado) !important;
+  border: 1px solid var(--siena-tostado) !important;
+}
+
+.toast-wrapper {
+  z-index: 1080;
+}
+
+.toast-content {
+  background-color: #123a22ff;
+  min-width: 280px; 
+}
+
+/* Estilo para la imagen principal de la galería */
+.gallery-main-image {
+  object-fit: contain !important;
+  max-height: 450px !important;
+}
+
+/* Estilo para limitar el ancho del campo de cantidad */
+.cant-prod {
+  max-width: 100px !important;
+}

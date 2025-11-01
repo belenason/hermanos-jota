@@ -1,6 +1,5 @@
 import { useCart } from "react-use-cart";
 import { Link } from "react-router-dom";
-import "../styles/micss.css"; // ← importa el CSS
 
 const formatARS = (n) => `$ ${Number(n || 0).toLocaleString("es-AR")}`;
 

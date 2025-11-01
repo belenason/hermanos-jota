@@ -182,7 +182,6 @@ export default function ProductForm({
             id="descripcion"
             name="descripcion"
             placeholder="Descripción del producto"
-            style={{ height: '120px' }}
             className={fieldClass('descripcion')}
             value={form.descripcion}
             onChange={handleChange}
@@ -260,11 +259,10 @@ export default function ProductForm({
         <div className="mb-3" key={key}>
           <button
             type="button"
-            className="btn btn-secondary w-100 text-start"
+            className="btn btn-secondary w-100 text-start form-section-toggle"
             aria-expanded={openSections[key] ? 'true' : 'false'}
             aria-controls={`section-${key}`}
             onClick={() => toggleSection(key)}
-            style={{ backgroundColor: 'transparent', color: 'var(--siena-tostado)', border: '1px solid var(--siena-tostado)' }}
           >
             <i className={`bi me-2 ${openSections[key] ? 'bi-chevron-down' : 'bi-chevron-right'}`} aria-hidden="true"></i>
             {cfg.title}

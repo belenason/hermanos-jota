@@ -8,8 +8,7 @@ export default function ProductCardGrid({ product, onAdd }) {
     <article className="estiloProducto botonAgregarCarro">
       <Link
         to={`/productos/${product.id}`}
-        className="letra-producto text-decoration-none"
-        style={{ all: 'unset', cursor: 'pointer', display: 'block' }}
+        className="letra-producto text-decoration-none lnk-card-detalle-producto"
         aria-label={`Ver ${product.nombre}`}
       >
         <img src={img} alt={product.nombre} />

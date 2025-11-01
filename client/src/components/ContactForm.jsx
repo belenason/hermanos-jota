@@ -90,7 +90,6 @@ export default function ContactForm() {
             name="mensaje"
             autoComplete="off"
             aria-describedby="error-mensaje"
-            style={{ height: '120px' }}
             value={form.mensaje}
             onChange={handleChange}
           ></textarea>

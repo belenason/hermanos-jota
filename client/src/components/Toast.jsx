@@ -13,12 +13,10 @@ export default function Toast({ show, message, onClose, duration = 2000 }) {
     <div
       role="status"
       aria-live="polite"
-      className="position-fixed bottom-0 end-0 p-3"
-      style={{ zIndex: 1080 }}
+      className="position-fixed bottom-0 end-0 p-3 toast-wrapper"
     >
       <div
-        className="shadow rounded-3 text-white px-3 py-2 d-flex align-items-center"
-        style={{ backgroundColor: '#123a22ff', minWidth: 280 }}
+        className="shadow rounded-3 text-white px-3 py-2 d-flex align-items-center toast-content"
       >
         <span className="flex-grow-1">{message}</span>
       </div>
