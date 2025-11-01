@@ -15,7 +15,7 @@ const PORT = process.env.PORT || 4000;
 // 🔹 Agregá acá el dominio real de tu frontend en Vercel:
 const allowedOrigins = [
   "http://localhost:3000",
-  "https://hermanosjota.vercel.app", // 👈 reemplazá por tu dominio real
+  "https://hermanos-jota.vercel.app", // 👈 reemplazá por tu dominio real
 ];
 
 app.use(
