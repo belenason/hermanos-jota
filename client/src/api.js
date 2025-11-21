@@ -53,3 +53,4 @@ export async function deleteProducto(id) {
   if (!res.ok) throw new Error('Error eliminando el producto');
   return res.json();
 }
+
