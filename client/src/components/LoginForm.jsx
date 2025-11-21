@@ -1,7 +1,9 @@
 // src/components/LoginForm.jsx
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { loginUsuario } from '../apiUsuarios';
+
+import { AuthContext } from '../auth/AuthContext';
 
 export default function LoginForm() {
   const navigate = useNavigate();
@@ -43,6 +45,7 @@ export default function LoginForm() {
       });
 
       localStorage.setItem('usuario', JSON.stringify(data));
+
 
       setSuccessMsg('Inicio de sesión exitoso. Redirigiendo…');
 

@@ -1,5 +1,8 @@
 import { Router } from "express";
 import { Producto } from "../models/Producto.js";
+import authMiddleware from "../middlewares/authMiddleware.js";
+import verifyToken from "../middlewares/authMiddleware.js";
+
 
 export const productosRouter = Router();
 
@@ -44,7 +47,7 @@ productosRouter.get("/:id", async (req, res, next) => {
 // Ruta para CREAR un nuevo producto
 // Método HTTP: POST
 // URL: /api/productos
-productosRouter.post('/', async (req, res, next) => {
+productosRouter.post('/', authMiddleware, async (req, res, next) => {
   try {
     const datosNuevoProducto = req.body;
     console.log('Datos recibidos para crear producto:', datosNuevoProducto);
@@ -68,7 +71,7 @@ productosRouter.post('/', async (req, res, next) => {
 // Ruta para ACTUALIZAR un producto por su ID
 // Método HTTP: PUT
 // URL: /api/produtos/:id
-productosRouter.put('/:id', async (req, res, next) => {
+productosRouter.put('/:id', authMiddleware, async (req, res, next) => {
   try {
     const productoId = req.params.id;
     const datosActualizados = req.body;
@@ -101,7 +104,7 @@ productosRouter.put('/:id', async (req, res, next) => {
 // Método HTTP: DELETE
 // URL: /api/productos/:id
 // DELETE /api/productos/:id: Elimina un producto de la base de datos por su _id.
-productosRouter.delete('/:id', async (req, res, next) => {
+productosRouter.delete('/:id', authMiddleware, async (req, res, next) => {
   try {
     const productoId = req.params.id;
     console.log('Eliminando producto con ID:', productoId);
