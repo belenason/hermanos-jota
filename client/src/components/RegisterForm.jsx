@@ -23,6 +23,7 @@ export default function RegisterForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
     const formEl = e.currentTarget;
 
     if (!formEl.checkValidity()) {

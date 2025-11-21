@@ -7,7 +7,7 @@ import bcrypt from 'bcrypt';
 export const usuariosRouter = Router();
  
 // RUTA DE REGISTRO
-usuariosRouter.post('/register', async (req, res) => {
+usuariosRouter.post('/registro', async (req, res) => {
   // Recibimos los datos del formulario
   const { username, email, password } = req.body;
   try {

@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import { conectarDB } from "./config/db.js";
 import { logger } from "./middlewares/logger.js";
 import { productosRouter } from "./routes/productoRoutes.js";
+import { usuariosRouter } from "./routes/usuarioRoutes.js";
 
 dotenv.config();
 
@@ -19,6 +20,7 @@ app.use(logger);
 
 // === Rutas API ===
 app.use("/api/productos", productosRouter);
+app.use("/api/usuarios", usuariosRouter);
 
 // === 404 para rutas no encontradas ===
 app.use((req, res, next) => {
