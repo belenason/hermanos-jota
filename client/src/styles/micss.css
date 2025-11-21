@@ -2927,55 +2927,6 @@ SECCIÓN 5: ESTILOS ESPECÍFICOS DE PRODUCTOS
   color: var(--ink);
 }
 
-/* Stepper */
-.register-stepper {
-  margin-bottom: 2rem;
-}
-
-.step-line {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.75rem;
-}
-
-.step-node {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--muted);
-}
-
-.step-node-active {
-  color: var(--dark-wood);
-}
-
-.step-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 999px;
-  border: 2px solid rgba(0, 0, 0, 0.12);
-  background-color: rgba(255, 255, 255, 0.7);
-  margin-bottom: 0.25rem;
-}
-
-.step-node-active .step-dot {
-  border-color: var(--verde-salvia);
-  background-color: var(--verde-salvia);
-}
-
-.step-connector {
-  flex: 1;
-  height: 1px;
-  background: linear-gradient(
-    to right,
-    rgba(0, 0, 0, 0.08),
-    rgba(0, 0, 0, 0.02)
-  );
-}
 
 /* Header */
 .register-header {
@@ -3054,3 +3005,15 @@ SECCIÓN 5: ESTILOS ESPECÍFICOS DE PRODUCTOS
   }
 }
 
+
+.register-meta-text {
+  color: var(--muted);
+}
+
+/* En mobile, centrar el detalle para que no se vea raro */
+@media (max-width: 576px) {
+  .register-meta {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
