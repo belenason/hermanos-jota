@@ -2872,3 +2872,185 @@ SECCIÓN 5: ESTILOS ESPECÍFICOS DE PRODUCTOS
   }
 }
 
+/* Paleta para el registro (si ya tenés estas variables definidas, podés omitir este :root) */
+:root {
+  --siena-tostado: #A0522D;      /* acento principal */
+  --verde-salvia: #87A96B;       /* acento secundario (steps activos) */
+  --alabastro-calido: #F5E6D3;   /* fondo cálido */
+  --vara-de-oro: #D4A437;        /* detalle */
+  --rosa-polvoriento: #C47A6D;   /* variante */
+  --dark-wood: #4b2c26;          /* títulos */
+  --ink: #222222;                /* texto principal */
+  --muted: #6b6b6b;              /* texto secundario */
+  --surface: #ffffff;            /* superficies */
+}
+
+/* Layout general de la página de registro */
+.register-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  background: radial-gradient(circle at top left, var(--alabastro-calido), #ffffff);
+  position: relative;
+  padding-top: 4.5rem; /* para despegar del navbar fijo */
+}
+
+.register-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 10% 20%, rgba(189, 135, 126, 0.36), transparent 60%),
+              radial-gradient(circle at 80% 80%, var(--alabastro-calido), transparent 55%);
+  opacity: 0.9;
+  pointer-events: none;
+}
+
+.register-shell {
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Card central */
+.register-card {
+  max-width: 520px;
+  width: 100%;
+  padding: 2.75rem 3rem 2.5rem;
+  border-radius: 32px;
+  background: rgba(255, 255, 255, 0.68);
+  backdrop-filter: blur(30px);
+  box-shadow: 0 24px 80px rgba(218, 179, 172, 0.35);
+  color: var(--ink);
+}
+
+/* Stepper */
+.register-stepper {
+  margin-bottom: 2rem;
+}
+
+.step-line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.step-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+}
+
+.step-node-active {
+  color: var(--dark-wood);
+}
+
+.step-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  border: 2px solid rgba(0, 0, 0, 0.12);
+  background-color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 0.25rem;
+}
+
+.step-node-active .step-dot {
+  border-color: var(--verde-salvia);
+  background-color: var(--verde-salvia);
+}
+
+.step-connector {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0.08),
+    rgba(0, 0, 0, 0.02)
+  );
+}
+
+/* Header */
+.register-header {
+  margin-bottom: 2rem;
+}
+
+.register-title {
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: var(--siena-tostado);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-family: 'Playfair Display', Georgia, serif;
+}
+
+.register-subtitle {
+  margin-top: 0.5rem;
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+
+/* Inputs */
+.register-input {
+  border-radius: 999px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background-color: rgba(255, 255, 255, 0.9);
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+  color: var(--ink);
+}
+
+.register-input:focus {
+  border-color: rgba(135, 169, 107, 0.7);
+  box-shadow: 0 0 0 0.15rem rgba(135, 169, 107, 0.25);
+}
+
+/* Botón principal */
+.btn-register {
+  border-radius: 999px;
+  padding: 0.85rem 1.5rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: none;
+  background-color: var(--verde-salvia);
+  color: #ffffff;
+  font-size: 0.9rem;
+}
+
+.btn-register:hover,
+.btn-register:focus {
+  background-color: rgb(93, 116, 75);
+  color: #ffffff;
+}
+
+/* Texto de términos */
+.register-terms {
+  margin-top: 0.75rem;
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+/* Responsivo */
+@media (max-width: 576px) {
+  .register-card {
+    padding: 2.2rem 1.7rem 2.1rem;
+    border-radius: 24px;
+  }
+
+  .register-title {
+    font-size: 1.6rem;
+  }
+
+  .register-subtitle {
+    font-size: 0.9rem;
+  }
+}
+

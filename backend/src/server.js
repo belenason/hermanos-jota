@@ -4,7 +4,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import { conectarDB } from "./config/db.js";
 import { logger } from "./middlewares/logger.js";
-import { productosRouter } from "./routes/productos.routes.js";
+import { productosRouter } from "./routes/productoRoutes.js";
 
 dotenv.config();
 

@@ -1,7 +1,7 @@
 // src/App.js
 import { Link, Routes, Route }  from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { getProductos } from './api';
+import { getProductos } from './apiProductos';
 import { useCart } from 'react-use-cart';
 
 import Navbar from './components/Navbar';
@@ -15,6 +15,7 @@ import CartPage from './pages/CartPage';
 import ProductDetailRoute from './pages/ProductDetailPage';
 import CreateProductPage from './pages/CreateProductPage';
 import EditProductPage from './pages/EditProductPage';
+import RegisterPage from './pages/RegisterPage';
 
 export default function App() {
   const [products, setProducts] = useState([]);
@@ -83,6 +84,7 @@ export default function App() {
           <Route path="/carrito" element={<CartPage />} />
           <Route path="/admin/crear-producto" element={<CreateProductPage onDataMutated={loadProducts} />} />
           <Route path="/productos/editar/:id" element={<EditProductPage onDataMutated={loadProducts} />} />
+          <Route path="/registro" element={<RegisterPage />} />
           <Route
             path="*"
             element={

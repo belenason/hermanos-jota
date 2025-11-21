@@ -1,4 +1,4 @@
-// api.js
+// apiProductos.js
 const API_URL =
   process.env.NODE_ENV === 'development'
     ? ''

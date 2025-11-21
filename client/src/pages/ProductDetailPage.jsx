@@ -1,7 +1,7 @@
 // src/pages/ProductDetailPage.jsx
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { getProductoById, deleteProducto } from '../api';
+import { getProductoById, deleteProducto } from '../apiProductos';
 import { Link } from 'react-router-dom';
 
 export default function ProductDetailPage({ onAdd, onDataMutated }) {

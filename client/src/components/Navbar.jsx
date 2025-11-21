@@ -80,6 +80,9 @@ export default function Navbar({ cartCount, onNav }) {
                 <Link to="/contacto" className="nav-link btn btn-link fs-5 px-3 py-2 fw-semibold color-principal-texto text-decoration-none">Contacto</Link>
               </li>
               <li className="nav-item">
+                <Link to="/registro" className="nav-link btn btn-link fs-5 px-3 py-2 fw-semibold color-principal-texto text-decoration-none">Registro</Link>
+              </li>
+              <li className="nav-item">
                 <Link to="/carrito" className="nav-link btn btn-link fs-5 px-3 py-2 fw-semibold color-principal-texto text-decoration-none" aria-label="Carrito de compras">
                   <span className="position-relative d-inline-block">
                     <i className="bi bi-cart3 fs-4"></i>
