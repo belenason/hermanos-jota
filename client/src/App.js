@@ -16,6 +16,8 @@ import ProductDetailRoute from './pages/ProductDetailPage';
 import CreateProductPage from './pages/CreateProductPage';
 import EditProductPage from './pages/EditProductPage';
 import RegisterPage from './pages/RegisterPage';
+import LoginPage from './pages/LoginPage';
+
 
 export default function App() {
   const [products, setProducts] = useState([]);
@@ -85,6 +87,7 @@ export default function App() {
           <Route path="/admin/crear-producto" element={<CreateProductPage onDataMutated={loadProducts} />} />
           <Route path="/productos/editar/:id" element={<EditProductPage onDataMutated={loadProducts} />} />
           <Route path="/registro" element={<RegisterPage />} />
+          <Route path="/login" element={<LoginPage />} />
           <Route
             path="*"
             element={

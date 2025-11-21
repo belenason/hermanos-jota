@@ -1,31 +1,31 @@
-// src/components/RegisterForm.jsx
+// src/components/LoginForm.jsx
 import { useState } from 'react';
-import { registrarUsuario } from '../apiUsuarios';
 import { useNavigate } from 'react-router-dom';
+import { loginUsuario } from '../apiUsuarios';
 
-export default function RegisterForm() {
-  const [form, setForm] = useState({ username: '', email: '', password: ''});
+export default function LoginForm() {
+  const navigate = useNavigate();
+
+  const [form, setForm] = useState({
+    email: '',
+    password: '',
+  });
+
   const [validated, setValidated] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
 
-  const navigate = useNavigate();
-
-  function handleChange(e){
+  const handleChange = (e) => {
     const { name, value } = e.target;
-    setForm(prevState => ({
-      ...prevState,
-      [name]: value
-    }
-    ))
-  }
+    setForm((prev) => ({ ...prev, [name]: value }));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
     const formEl = e.currentTarget;
 
+    // Validación nativa del navegador + Bootstrap
     if (!formEl.checkValidity()) {
       e.stopPropagation();
       setValidated(true);
@@ -37,20 +37,20 @@ export default function RegisterForm() {
     setSuccessMsg('');
 
     try {
-      await registrarUsuario({
-        username: form.username.trim(),
+      const data = await loginUsuario({
         email: form.email.trim(),
         password: form.password,
       });
 
-      setSuccessMsg('Cuenta creada con éxito. Redirigiendo…');
-      setForm({ username: '', email: '', password: '' });
+      localStorage.setItem('usuario', JSON.stringify(data));
+
+      setSuccessMsg('Inicio de sesión exitoso. Redirigiendo…');
 
       setTimeout(() => {
-        navigate('/login');
-      }, 1500);
+        navigate('/');
+      }, 1200);
     } catch (err) {
-      setErrorMsg(err.message || 'No se pudo crear la cuenta.');
+      setErrorMsg(err.message || 'No se pudo iniciar sesión.');
     } finally {
       setLoading(false);
     }
@@ -74,23 +74,6 @@ export default function RegisterForm() {
           {successMsg}
         </div>
       )}
-
-      {/* Username */}
-      <div className="form-floating mb-3">
-        <input
-          type="text"
-          id="username"
-          name="username"
-          className="form-control register-input"
-          placeholder="Nombre de usuario"
-          required
-          autoComplete="username"
-          value={form.username}
-          onChange={handleChange}
-        />
-        <label htmlFor="username">Nombre de usuario</label>
-        <div className="invalid-feedback">Ingresá un nombre de usuario.</div>
-      </div>
 
       {/* Email */}
       <div className="form-floating mb-3">
@@ -118,24 +101,23 @@ export default function RegisterForm() {
           className="form-control register-input"
           placeholder="Contraseña"
           required
-          minLength={8}
-          autoComplete="new-password"
+          autoComplete="current-password"
           value={form.password}
           onChange={handleChange}
         />
         <label htmlFor="password">Contraseña</label>
-        <div className="invalid-feedback">Mínimo 8 caracteres.</div>
+        <div className="invalid-feedback">Ingresá tu contraseña.</div>
       </div>
 
       {/* Botón */}
       <div className="d-grid mb-2">
         <button type="submit" className="btn btn-register" disabled={loading}>
-          {loading ? 'Creando cuenta…' : 'Continuar'}
+          {loading ? 'Ingresando…' : 'Iniciar sesión'}
         </button>
       </div>
 
       <p className="register-terms text-center">
-        Al continuar, aceptás nuestros términos y condiciones.
+        ¿No tenés cuenta? Podés crearla en pocos segundos.
       </p>
     </form>
   );
