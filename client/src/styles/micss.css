@@ -235,6 +235,25 @@ body {
   
 }
 
+/* Quitar completamente la línea inferior del botón de usuario */
+.nav-link-user::after {
+  display: none !important;
+  content: none !important;
+}
+
+/* Evitar que aparezca en hover */
+.nav-link-user:hover::after {
+  display: none !important;
+  content: none !important;
+}
+
+/* Evitar que aparezca cuando está activo */
+.nav-link-user.active::after {
+  display: none !important;
+  content: none !important;
+}
+
+
 
 .nav-link-user .user-label {
   max-width: 120px;
