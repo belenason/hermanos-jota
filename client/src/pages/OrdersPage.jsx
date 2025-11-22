@@ -54,7 +54,10 @@ export default function OrdersPage() {
       <section className="py-4">
         <div className="container">
           {loading && (
-            <p className="text-muted">Cargando tus pedidos...</p>
+            <div className="loading-state mt-0">
+              <div className="loading-spinner"></div>
+              <p>Cargando pedidos...</p>
+            </div>
           )}
 
           {!loading && errorMsg && (

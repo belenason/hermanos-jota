@@ -82,7 +82,7 @@ export default function App() {
       <Navbar cartCount={totalItems} />
       <main id="contenido-principal" tabIndex={-1}>
         <Routes>
-          <Route path="/" element={<HomePage featuredProducts={featuredProducts} loading={loading} />} />
+          <Route path="/" element={<HomePage featuredProducts={featuredProducts} onAdd={addToCart} loading={loading} />} />
           <Route
             path="/productos"
             element={
