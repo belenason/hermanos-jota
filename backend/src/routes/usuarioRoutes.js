@@ -6,6 +6,9 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
 export const usuariosRouter = Router();
+
+
+
  
 // RUTA DE REGISTRO
 usuariosRouter.post('/registro', async (req, res) => {
@@ -71,7 +74,7 @@ usuariosRouter.post('/login', async (req, res) => {
     const token = jwt.sign(
       { id: user._id, username: user.username }, // Payload: datos que queremos en el token
       process.env.JWT_SECRET,                   // La clave secreta desde .env
-      { expiresIn: '24h' }                        // Opciones (ej: expira en 1 hora)
+      { expiresIn: '7d' }                        // Opciones (ej: expira en 1 hora)
     );
  
     // Respondemos con el token y datos del usuario (sin el password)
@@ -85,6 +88,28 @@ usuariosRouter.post('/login', async (req, res) => {
     });
  
   } catch (error) {
+    res.status(500).json({ message: 'Error interno del servidor' });
+  }
+});
+
+/** PERFIL (RUTA PROTEGIDA) **/
+usuariosRouter.get('/perfil', auth, async (req, res) => {
+  try {
+    const usuario = await Usuario.findById(req.user.id);
+
+    if (!usuario) {
+      return res.status(404).json({ message: 'Usuario no encontrado.' });
+    }
+
+    res.status(200).json({
+      _id: usuario._id,
+      username: usuario.username,
+      email: usuario.email,
+      createdAt: usuario.createdAt,
+      updatedAt: usuario.updatedAt,
+    });
+  } catch (error) {
+    console.error('Error al obtener perfil:', error);
     res.status(500).json({ message: 'Error interno del servidor' });
   }
 });

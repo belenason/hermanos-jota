@@ -18,6 +18,7 @@ import EditProductPage from './pages/EditProductPage';
 import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
 
+import ProtectedRoute from './auth/ProtectedRoute';
 
 export default function App() {
   const [products, setProducts] = useState([]);
@@ -79,13 +80,49 @@ export default function App() {
       <Navbar cartCount={totalItems} />
       <main id="contenido-principal" tabIndex={-1}>
         <Routes>
-          <Route path="/" element={ <HomePage featuredProducts={featuredProducts} loading={loading}/>}/>
-          <Route path="/productos" element={ <CatalogPage products={products} loading={loading} error={error} onRetry={handleRetry} onAdd={addToCart}/>}/>
-          <Route path="/productos/:id" element={<ProductDetailRoute onAdd={addToCart} onDataMutated={loadProducts} />} />
+          <Route path="/" element={<HomePage featuredProducts={featuredProducts} loading={loading} />} />
+          <Route
+            path="/productos"
+            element={
+              <CatalogPage
+                products={products}
+                loading={loading}
+                error={error}
+                onRetry={handleRetry}
+                onAdd={addToCart}
+              />
+            }
+          />
+          <Route
+            path="/productos/:id"
+            element={
+              <ProductDetailRoute
+                onAdd={addToCart}
+                onDataMutated={loadProducts}
+              />
+            }
+          />
           <Route path="/contacto" element={<ContactPage />} />
           <Route path="/carrito" element={<CartPage />} />
-          <Route path="/admin/crear-producto" element={<CreateProductPage onDataMutated={loadProducts} />} />
-          <Route path="/productos/editar/:id" element={<EditProductPage onDataMutated={loadProducts} />} />
+
+          {/* RUTAS PROTEGIDAS */}
+          <Route
+            path="/admin/crear-producto"
+            element={
+              <ProtectedRoute>
+                <CreateProductPage onDataMutated={loadProducts} />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/productos/editar/:id"
+            element={
+              <ProtectedRoute>
+                <EditProductPage onDataMutated={loadProducts} />
+              </ProtectedRoute>
+            }
+          />
+
           <Route path="/registro" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route

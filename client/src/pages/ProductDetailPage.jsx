@@ -1,12 +1,14 @@
 // src/pages/ProductDetailPage.jsx
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getProductoById, deleteProducto } from '../apiProductos';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../auth/AuthContext';
 
 export default function ProductDetailPage({ onAdd, onDataMutated }) {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { isAuthenticated } = useContext(AuthContext);
 
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -245,14 +247,24 @@ export default function ProductDetailPage({ onAdd, onDataMutated }) {
                       <i className="bi bi-arrow-left me-2" aria-hidden="true"></i>
                       Catálogo
                     </Link>
-                    <Link to={`/productos/editar/${product.id}`} className="btn-edit flex-fill">
-                      <i className="bi bi-pencil me-2" aria-hidden="true"></i>
-                      Editar
-                    </Link>
-                    <button className="btn-delete flex-fill" onClick={handleDeleteClick}>
-                      <i className="bi bi-trash me-2" aria-hidden="true"></i>
-                      Eliminar
-                    </button>
+                    {isAuthenticated && (
+                      <>
+                        <Link
+                          to={`/productos/editar/${product.id}`}
+                          className="btn-edit flex-fill"
+                        >
+                          <i className="bi bi-pencil me-2" aria-hidden="true"></i>
+                          Editar
+                        </Link>
+                        <button
+                          className="btn-delete flex-fill"
+                          onClick={handleDeleteClick}
+                        >
+                          <i className="bi bi-trash me-2" aria-hidden="true"></i>
+                          Eliminar
+                        </button>
+                      </>
+                    )}
                   </div>
                 </div>
               </aside>

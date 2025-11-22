@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import ProductCardGrid from '../components/ProductCardGrid';
+import { AuthContext } from '../auth/AuthContext';
 
 export default function CatalogPage({
   products = [],
@@ -10,6 +11,7 @@ export default function CatalogPage({
   onAdd
 }) {
   const [buscado, setQuery] = useState('');
+  const { isAuthenticated } = useContext(AuthContext);
 
   const filteredProducts = products.filter(p => {
     const query = buscado.toLowerCase().trim();
@@ -92,7 +94,16 @@ export default function CatalogPage({
           ))
         )}
       </section>
-      <Link to="/admin/crear-producto" className="boton-flotante" aria-label="Agregar nuevo producto" title="Crear nuevo producto"> <i className="bi bi-plus-lg"></i> </Link>
+            {isAuthenticated && (
+        <Link
+          to="/admin/crear-producto"
+          className="boton-flotante"
+          aria-label="Agregar nuevo producto"
+          title="Crear nuevo producto"
+        >
+          <i className="bi bi-plus-lg"></i>
+        </Link>
+      )}
 
     </>
   );

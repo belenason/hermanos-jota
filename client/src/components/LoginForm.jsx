@@ -6,6 +6,7 @@ import { loginUsuario } from '../apiUsuarios';
 import { AuthContext } from '../auth/AuthContext';
 
 export default function LoginForm() {
+  const { login } = useContext( AuthContext );
   const navigate = useNavigate();
 
   const [form, setForm] = useState({
@@ -44,8 +45,7 @@ export default function LoginForm() {
         password: form.password,
       });
 
-      localStorage.setItem('usuario', JSON.stringify(data));
-
+      login(data);
 
       setSuccessMsg('Inicio de sesión exitoso. Redirigiendo…');
 

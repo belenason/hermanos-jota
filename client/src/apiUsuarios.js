@@ -3,6 +3,7 @@ const API_URL =
     ? ''
     : (process.env.REACT_APP_API_URL || '');
 
+
 export async function registrarUsuario(userData){
     const response = await fetch(`${API_URL}/api/usuarios/registro`, { // Apunta a tu endpoint de backend
       method: 'POST',
@@ -30,6 +31,24 @@ export async function loginUsuario(credentials) {
 
   if (!response.ok) {
     throw new Error(data.message || 'Error al iniciar sesión.');
+  }
+
+  return data;
+}
+
+export async function perfilUsuario(token) {
+  const response = await fetch(`${API_URL}/api/usuarios/perfil`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message || 'No se pudo obtener el perfil.');
   }
 
   return data;
