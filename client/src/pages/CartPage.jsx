@@ -74,7 +74,9 @@ export default function CartPage() {
     return (
       <section className="cart-page-empty">
         <div className="empty-state">
-          <div className="empty-icon">🛒</div>
+          <div className="empty-icon">
+            <i className="bi bi-cart3"></i>
+          </div>
           <h2 className="empty-title">Tu carrito está vacío</h2>
           <p className="empty-text">Descubre nuestros productos artesanales</p>
           <Link to="/productos" className="btn-cart-primary">

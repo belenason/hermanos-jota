@@ -85,7 +85,7 @@ export default function ProfilePage() {
             {/* Contenido principal */}
             <main className="profile-main">
               <div className="content-header">
-                <h2 className="section-title">Información personal</h2>
+                <h2 className="section-title-profile">Información personal</h2>
               </div>
 
               <div className="info-cards">

@@ -2628,6 +2628,12 @@ SECCIÓN 5: ESTILOS ESPECÍFICOS DE PRODUCTOS
   background-color: var(--alabastro-calido);
 }
 
+.empty-icon{
+  font-size: '4rem';
+  color: '#949393ff';
+  margin-bottom: '1rem';
+}
+
 .empty-state {
   padding-top: 6rem;
   padding-bottom: 6rem;
@@ -2921,7 +2927,7 @@ SECCIÓN 5: ESTILOS ESPECÍFICOS DE PRODUCTOS
 
 .btn-cart-primary:hover,
 .btn-cart-checkout:hover {
-  background-color: #8b4513;
+  background-color: #643310;
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(160, 82, 45, 0.3);
 }
@@ -2946,7 +2952,7 @@ SECCIÓN 5: ESTILOS ESPECÍFICOS DE PRODUCTOS
 .btn-cart-continue:hover {
   background-color: var(--verde-salvia);
   color: white;
-  border: var(--verde-salvia);
+  border: 1.5px solid var(--verde-salvia);
 }
 
 .btn-cart-clear-summary {
@@ -3177,6 +3183,7 @@ SECCIÓN 5: ESTILOS ESPECÍFICOS DE PRODUCTOS
    ======================================== */
 
 .profile-layout {
+  padding-top: 3cqb;
   min-height: 100vh;
   background: var(--alabastro-calido);
   position: relative;
@@ -3256,13 +3263,22 @@ SECCIÓN 5: ESTILOS ESPECÍFICOS DE PRODUCTOS
 /* Sidebar */
 .profile-sidebar {
   padding: 4rem 2.5rem;
-  border-right: 1px solid rgba(160, 82, 45, 0.1);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  position: relative;
 }
 
+.profile-sidebar::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 6rem;
+  bottom: 6rem;
+  width: 1px;
+  background: rgba(160, 82, 45, 0.1);
+}
 .avatar-section {
   text-align: center;
   width: 100%;
@@ -3314,12 +3330,14 @@ SECCIÓN 5: ESTILOS ESPECÍFICOS DE PRODUCTOS
   margin-bottom: 3rem;
 }
 
-.section-title {
+.section-title-profile {
   font-size: 2rem;
   font-weight: 600;
   color: var(--dark-wood);
   letter-spacing: -0.03em;
-  margin: 0;
+  font-family: 'Playfair Display', Georgia, serif;
+  line-height: 1.2;
+  text-transform: uppercase; 
 }
 
 .info-cards {
@@ -3327,6 +3345,31 @@ SECCIÓN 5: ESTILOS ESPECÍFICOS DE PRODUCTOS
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 1.5rem;
   margin-bottom: 3rem;
+}
+
+@media (max-width: 768px) {
+  .info-cards {
+    grid-template-columns: 1fr;
+  }
+  
+  .data-card {
+    min-width: 0; /* Esto es importante */
+  }
+}
+
+@media (max-width: 360px) {
+  .profile-main {
+    padding: 2rem 1rem;
+  }
+  
+  .data-card {
+    padding: 1.5rem 1rem;
+  }
+  
+  .card-value {
+    font-size: 1rem;
+    word-break: break-word; /* Rompe palabras largas */
+  }
 }
 
 .data-card {
