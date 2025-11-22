@@ -1347,6 +1347,7 @@ SECCIÓN 3: ESTILOS ESPECÍFICOS DE CONTACTO
 
 /* Sección hero de página de contacto */
 .contact-hero {
+  padding-top: 6rem;
   background: linear-gradient(180deg, var(--alabastro-calido) 0%, #FFFFFF 100%);
   padding: 100px 0 40px;
 }
@@ -2512,6 +2513,7 @@ SECCIÓN 5: ESTILOS ESPECÍFICOS DE PRODUCTOS
 
 
 .contact-container{
+  padding-top: 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;       /* centra horizontalmente el contenido interno */
@@ -3170,3 +3172,425 @@ SECCIÓN 5: ESTILOS ESPECÍFICOS DE PRODUCTOS
 }
 
 
+/* ========================================
+   PROFILE PAGE STYLES
+   ======================================== */
+
+.profile-layout {
+  min-height: 100vh;
+  background: var(--alabastro-calido);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Animación de fondo minimalista */
+.bg-animation {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.float-circle {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.08;
+}
+
+.circle-1 {
+  width: 200px;
+  height: 200px;
+  background: var(--siena-tostado);
+  top: -100px;
+  right: -100px;
+  animation: float1 25s ease-in-out infinite;
+}
+
+.circle-2 {
+  width: 300px;
+  height: 300px;
+  background: var(--verde-salvia);
+  bottom: -80px;
+  left: 10%;
+  animation: float2 30s ease-in-out infinite;
+}
+
+.circle-3 {
+  width: 200px;
+  height: 200px;
+  background: var(--vara-de-oro);
+  top: 40%;
+  left: -50px;
+  animation: float3 20s ease-in-out infinite;
+}
+
+@keyframes float1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-30px, 40px) scale(1.1); }
+}
+
+@keyframes float2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(40px, -30px) scale(0.9); }
+}
+
+@keyframes float3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(20px, 30px) scale(1.15); }
+}
+
+.profile-grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  min-height: 100vh;
+  max-width: 1400px;
+  margin: 0 auto;
+  gap: 0;
+}
+
+/* Sidebar */
+.profile-sidebar {
+  padding: 4rem 2.5rem;
+  border-right: 1px solid rgba(160, 82, 45, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar-section {
+  text-align: center;
+  width: 100%;
+}
+
+.avatar-large {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: var(--rosa-polvoriento);
+  color: var(--surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3.5rem;
+  font-weight: 600;
+  margin: 0 auto 2rem;
+  box-shadow: 0 8px 24px rgba(75, 44, 38, 0.15);
+}
+
+.user-name {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: var(--dark-wood);
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.02em;
+}
+
+.member-badge {
+  display: inline-block;
+  padding: 0.4rem 1rem;
+  background: rgba(135, 169, 107, 0.15);
+  color: var(--verde-salvia);
+  border-radius: 20px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+/* Contenido principal */
+.profile-main {
+  padding: 4rem 3.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.content-header {
+  margin-bottom: 3rem;
+}
+
+.section-title {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--dark-wood);
+  letter-spacing: -0.03em;
+  margin: 0;
+}
+
+.info-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.data-card {
+  background: var(--surface);
+  padding: 2rem;
+  border-radius: 4px;
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+  border: 1px solid rgba(160, 82, 45, 0.1);
+  transition: all 0.3s ease;
+}
+
+
+.card-icon {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  background: linear-gradient(135deg, rgba(160, 82, 45, 0.08) 0%, rgba(135, 169, 107, 0.08) 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-icon svg {
+  width: 24px;
+  height: 24px;
+  stroke: var(--siena-tostado);
+  stroke-width: 2;
+}
+
+.card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.card-label {
+  font-size: 0.8125rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.card-value {
+  font-size: 1.125rem;
+  color: var(--ink);
+  font-weight: 400;
+}
+
+.actions-bar {
+  display: flex;
+  gap: 1rem;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 2rem;
+  background: var(--siena-tostado);
+  color: var(--surface);
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  letter-spacing: 0.01em;
+}
+
+.btn-primary:hover {
+  background: var(--dark-wood);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(75, 44, 38, 0.25);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-primary svg {
+  width: 22px;
+  height: 22px;
+  stroke-width: 2;
+}
+
+/* Estados de carga y error */
+.loading-state {
+  margin-top: 10rem;
+  grid-column: 1 / -1;
+  padding: 6rem 2rem;
+  text-align: center;
+}
+
+.loading-spinner {
+  width: 48px;
+  height: 48px;
+  border: 3px solid rgba(160, 82, 45, 0.1);
+  border-top-color: var(--siena-tostado);
+  border-radius: 50%;
+  margin: 0 auto 1.5rem;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loading-state p {
+  color: var(--muted);
+  margin: 0;
+}
+
+.error-card {
+  grid-column: 1 / -1;
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.error-icon {
+  width: 64px;
+  height: 64px;
+  color: var(--rosa-polvoriento);
+  margin: 0 auto 1.5rem;
+  display: block;
+}
+
+.error-card p {
+  color: var(--ink);
+  margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .profile-grid {
+    grid-template-columns: 280px 1fr;
+  }
+
+  .profile-main {
+    padding: 3rem 2rem;
+  }
+
+  .avatar-large {
+    width: 110px;
+    height: 110px;
+    font-size: 2.75rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .profile-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-sidebar {
+    padding: 6rem 2rem;
+    border-right: none;
+    border-bottom: 1px solid rgba(160, 82, 45, 0.1);
+  }
+
+  .profile-main {
+    padding: 2.5rem 1.5rem;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+  }
+
+  .info-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .circle-1,
+  .circle-2,
+  .circle-3 {
+    opacity: 0.04;
+  }
+}
+
+/* OrderCard.css */
+
+.order-card {
+  background: var(--surface, #fff);
+  /* Borde sutil y elegante */
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+  padding: 24px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+  /* Aseguramos que el box-sizing sea correcto */
+  box-sizing: border-box;
+}
+
+/* Efecto Hover */
+.order-card:hover {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+  transform: translateY(-2px);
+  border-color: transparent;
+}
+
+/* Header */
+.order-card .card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--alabastro-calido, #f0f0f0);
+}
+
+.order-card .order-id {
+  font-family: monospace; /* Fuente monoespaciada para el ID */
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--dark-wood, #333);
+  letter-spacing: -0.5px;
+}
+
+.order-card .order-date {
+  font-size: 12px;
+  color: var(--muted, #999);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Body (Lista de items) */
+.order-card .card-body {
+  flex: 1;
+  margin-bottom: 20px;
+}
+
+.order-card .item-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  margin-bottom: 8px;
+  color: var(--ink, #444);
+}
+
+.order-card .item-name {
+  font-weight: 400;
+}
+
+.order-card .item-quantity {
+  color: var(--muted, #999);
+  font-size: 12px;
+  margin-left: 12px;
+}
+
+/* Footer */
+.order-card .card-footer {
+  text-align: right;
+  padding-top: 12px;
+  border-top: 1px dashed var(--alabastro-calido, #eee);
+}
+
+.order-card .total-amount {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--dark-wood, #000);
+  letter-spacing: -0.5px;
+}

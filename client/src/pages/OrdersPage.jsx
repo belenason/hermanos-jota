@@ -1,4 +1,5 @@
 // src/pages/OrdersPage.jsx
+import OrderCard from '../components/OrderCard';
 import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../auth/AuthContext';
@@ -79,58 +80,11 @@ export default function OrdersPage() {
 
           {!loading && !errorMsg && pedidos.length > 0 && (
             <div className="row g-3">
-              {pedidos.map((pedido) => {
-                const fecha = pedido.createdAt
-                  ? new Date(pedido.createdAt)
-                  : null;
-                const total = pedido.total ?? 0;
-                const items = pedido.items ?? [];
-
-                return (
-                  <div
-                    key={pedido._id}
-                    className="col-12 col-md-6 col-lg-4"
-                  >
-                    <div className="card shadow-sm border-0 rounded-4 h-100">
-                      <div className="card-body d-flex flex-column">
-                        <h5 className="card-title mb-2">
-                          Pedido #{pedido._id?.slice(-6) || '—'}
-                        </h5>
-
-                        {fecha && (
-                          <p className="mb-1 text-muted small">
-                            Fecha:{' '}
-                            {fecha.toLocaleString('es-AR')}
-                          </p>
-                        )}
-
-                        <p className="mb-1 text-muted small">
-                          Ítems: {items.length}
-                        </p>
-
-                        <p className="mb-3 fw-semibold">
-                          Total: ${total.toLocaleString('es-AR')}
-                        </p>
-
-                        {items.length > 0 && (
-                          <div className="mt-auto">
-                            <p className="mb-1 text-muted small">
-                              Detalle:
-                            </p>
-                            <ul className="list-unstyled mb-0 small">
-                              {items.map((item, idx) => (
-                                <li key={idx}>
-                                  {item.nombre || 'Producto'} × {item.cantidad || 1}
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
+              {pedidos.map((pedido) => (
+                <div key={pedido._id} className="col-12 col-md-6 col-lg-4">
+                  <OrderCard pedido={pedido} />
+                </div>
+              ))}
             </div>
           )}
         </div>
