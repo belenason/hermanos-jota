@@ -130,7 +130,7 @@ body {
   position: absolute;
   top: 0;
   right: 0;
-  transform: translate(20%, -110%); /* lo acomoda justo en la esquina */
+  transform: translate(90%, -50%); /* lo acomoda justo en la esquina */
   background-color: var(--siena-tostado);
   color: white;
   font-size: 0.6rem !important;
@@ -145,18 +145,21 @@ body {
 .custom-navbar {
   background-color: var(--alabastro-calido) !important;
   color: var(--siena-tostado);
-  transition: background-color 0.3s ease-in-out;
+  transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out, padding 0.3s ease-in-out;
+
 }
 
 /* Estado transparente de la barra de navegación */
 .navbar.custom-navbar.transparent {
   background-color: transparent !important;
+  backdrop-filter: none;
 }
 
 /* Estado de barra de navegación con sombra al hacer scroll */
 .navbar.custom-navbar.scrolled {
   background-color: var(--alabastro-calido) !important;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 2px 16px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(10px);
 }
 
 /* Título animado que aparece al pasar el cursor */
@@ -172,34 +175,118 @@ body {
   transform: translateX(0);
 }
 
-.navbar-nav .nav-link {
+/* Links modernos de navegación */
+.nav-link-modern {
   position: relative;
-  transition: color 0.3s ease;
-  padding: 0.7rem 1.2rem;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+  font-size: 0.95rem !important;
+  font-weight: 400 !important;
+  text-transform: uppercase;
+  color: var(--siena-tostado) !important;
+  padding: 0.875rem 1.25rem !important;
+  transition: all 0.25s ease !important;
+  border-radius: 8px;
+  text-decoration: none !important;
+  background: none !important;
+  border: none !important;
 }
 
-.navbar-nav .nav-link::after {
+/* Línea inferior para link activo */
+.nav-link-modern::after {
   content: "";
   position: absolute;
-  left: 50%;
-  bottom: 6px;
-  width: 0;
+  left: 1.25rem;
+  right: 1.25rem;
+  bottom: 0.5rem;
   height: 2px;
   background-color: var(--siena-tostado);
-  transition: all 0.3s ease;
-  transform: translateX(-50%);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
   border-radius: 2px;
 }
 
-.navbar-nav .nav-link:hover {
+/* Estado activo - muestra la línea */
+.nav-link-modern.active::after {
+  transform: scaleX(1);
+}
+
+/* Hover effect */
+.nav-link-modern:hover {
+  color: var(--siena-tostado) !important;
+  background-color: rgba(160, 82, 45, 0.06) !important;
+}
+
+.nav-link-modern:hover::after { transform: scaleX(1); }
+
+/* Separador vertical entre links y usuario */
+.nav-separator {
+  width: 1px;
+  height: 32px;
+  background-color: rgba(75, 44, 38, 0.15);
+  margin: 0 0.5rem;
+  align-self: center;
+}
+
+/* Link de usuario con dropdown */
+.nav-link-user {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.5rem;
+  
+}
+
+
+.nav-link-user .user-label {
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-transform: lowercase;
+}
+
+/* Estilos del dropdown mejorado */
+.dropdown-menu-modern {
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+  min-width: 200px;
+}
+
+.dropdown-menu-modern .dropdown-item {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 400;
+  padding: 0.65rem 1rem;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+}
+
+.dropdown-menu-modern .dropdown-item:hover {
+  background-color: rgba(160, 82, 45, 0.08);
   color: var(--siena-tostado);
 }
 
-.navbar-nav .nav-link:hover::after {
-  width: 60%;
+.dropdown-menu-modern .dropdown-item.text-danger:hover {
+  background-color: rgba(220, 53, 69, 0.08);
+  color: #dc3545;
+}
+
+.dropdown-menu-modern .dropdown-divider {
+  margin: 0.5rem 0;
+  opacity: 0.15;
 }
 
 /* Enlace del carrito con efecto sutil */
+.nav-link-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .cart-link {
   position: relative;
   font-size: 1.2rem;
@@ -209,11 +296,18 @@ body {
 .cart-link:hover {
   transform: scale(1.1);
 }
-
 /* Transparencia de navbar solo en escritorio */
 @media (min-width: 768px) {
   .custom-navbar.transparent {
     background-color: transparent !important;
+  }
+
+}
+
+@media (min-width: 1000px) {
+    .navbar{
+    padding-right: 2rem;
+    padding-left: 2rem;
   }
 }
 
@@ -240,8 +334,46 @@ body {
     width: 100%;
     padding: 0.9rem 1rem;
     border-bottom: 1px solid rgba(0,0,0,0.06);
+    justify-content: center !important
   }
 }
+
+/* Ajustes específicos para tablet (768px – 991.98px) */
+@media (min-width: 768px) and (max-width: 991.98px) {
+  /* Amontonar más los links */
+  .navbar-nav {
+    gap: 0.25rem; /* menos espacio entre items */
+  }
+
+  .nav-link-modern {
+    padding: 0.5rem 0.6rem !important; /* menos padding horizontal y vertical */
+    font-size: 0.8rem !important;      /* un poco más chico el texto */
+  }
+
+  .nav-separator {
+    margin: 0 0.25rem;
+    height: 24px;
+  }
+
+  /* Evitar que el dropdown del usuario se rebalse hacia la derecha */
+  .dropdown-menu-modern {
+    right: 0;
+    left: auto;
+    transform: none;
+    min-width: 180px;
+    max-width: calc(100vw - 1.5rem); /* por si el viewport es justo */
+  }
+}
+
+/* En pantallas muy angostas también ayuda a que el dropdown no se salga */
+@media (max-width: 767.98px) {
+  .dropdown-menu-modern {
+    right: 0;
+    left: auto;
+    max-width: calc(100vw - 1.5rem);
+  }
+}
+
 
 /* =================== */
 /* 1.5 SECCIÓN HERO */
@@ -3017,3 +3149,5 @@ SECCIÓN 5: ESTILOS ESPECÍFICOS DE PRODUCTOS
     align-items: flex-start;
   }
 }
+
+

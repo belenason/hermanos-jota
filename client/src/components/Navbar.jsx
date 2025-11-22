@@ -1,11 +1,12 @@
 // src/components/Navbar.jsx
 import { useEffect, useContext } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { AuthContext } from '../auth/AuthContext';
 
 export default function Navbar({ cartCount, onNav }) {
   const { isAuthenticated, currentUser, logout } = useContext(AuthContext);
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const navbar = document.querySelector('.custom-navbar');
@@ -62,13 +63,21 @@ export default function Navbar({ cartCount, onNav }) {
   const userLabel =
     currentUser?.username || currentUser?.email || 'Mi cuenta';
 
+  // Función para verificar si la ruta está activa
+  const isActive = (path) => {
+    if (path === '/') {
+      return location.pathname === '/';
+    }
+    return location.pathname.startsWith(path);
+  };
+
   return (
     <header>
-      <nav className="navbar navbar-expand-sm navbar-light custom-navbar mb-3 fixed-top">
-        <div className="container-fluid">
+      <nav className="navbar navbar-expand-sm navbar-light custom-navbar fixed-top">
+        <div className="container-fluid px-4">
           <Link
             to="/"
-            className="navbar-brand d-flex align-items-center me-auto ms-4 btn btn-link p-0 text-decoration-none"
+            className="navbar-brand d-flex align-items-center me-auto btn btn-link p-0 text-decoration-none"
           >
             <img
               className="rounded-circle me-3"
@@ -96,15 +105,15 @@ export default function Navbar({ cartCount, onNav }) {
           </button>
 
           <div
-            className="collapse navbar-collapse d-sm-inline-flex justify-content-end me-2"
+            className="collapse navbar-collapse d-sm-inline-flex justify-content-end"
             id="mainNav"
           >
-            <ul className="navbar-nav align-items-sm-center ms-auto">
+            <ul className="navbar-nav align-items-sm-center ms-auto gap-1">
 
               <li className="nav-item">
                 <Link
                   to="/"
-                  className="nav-link btn btn-link fs-5 px-3 py-2 fw-semibold color-principal-texto text-decoration-none"
+                  className={`nav-link nav-link-modern ${isActive('/') ? 'active' : ''}`}
                 >
                   Inicio
                 </Link>
@@ -114,7 +123,7 @@ export default function Navbar({ cartCount, onNav }) {
               <li className="nav-item">
                 <Link
                   to="/productos"
-                  className="nav-link btn btn-link fs-5 px-3 py-2 fw-semibold color-principal-texto text-decoration-none"
+                  className={`nav-link nav-link-modern ${isActive('/productos') ? 'active' : ''}`}
                 >
                   Catálogo
                 </Link>
@@ -124,7 +133,7 @@ export default function Navbar({ cartCount, onNav }) {
               <li className="nav-item">
                 <Link
                   to="/contacto"
-                  className="nav-link btn btn-link fs-5 px-3 py-2 fw-semibold color-principal-texto text-decoration-none"
+                  className={`nav-link nav-link-modern ${isActive('/contacto') ? 'active' : ''}`}
                 >
                   Contacto
                 </Link>
@@ -134,56 +143,70 @@ export default function Navbar({ cartCount, onNav }) {
               <li className="nav-item">
                 <Link
                   to="/carrito"
-                  className="nav-link btn btn-link fs-5 px-3 py-2 fw-semibold color-principal-texto text-decoration-none"
+                  className={`nav-link nav-link-modern nav-link-icon ${isActive('/carrito') ? 'active' : ''}`}
                   aria-label="Carrito de compras"
                 >
                   <span className="position-relative d-inline-block">
-                    <i className="bi bi-cart3 fs-4"></i>
-                    <span className="badge rounded-pill elbadge">
-                      {cartCount}
-                    </span>
+                    <i className="bi bi-cart3 fs-5"></i>
+                    {cartCount > 0 && (
+                      <span className="badge rounded-pill elbadge">
+                        {cartCount}
+                      </span>
+                    )}
                   </span>
                 </Link>
               </li>
 
+              {/* Separador vertical */}
+              <li className="nav-separator d-none d-sm-block"></li>
+
               {/* Menú de usuario */}
               <li className="nav-item dropdown">
-                <button
-                  className="nav-link btn btn-link fs-5 px-3 py-2 fw-semibold color-principal-texto text-decoration-none d-flex align-items-center gap-2"
-                  id="userMenu"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                  type="button"
-                >
-                  <i className="bi bi-person-circle fs-4"></i>
-                  {/* En mobile solo icono; en desktop también texto */}
-                  <span className="d-none d-md-inline">
-                    {isAuthenticated ? userLabel : 'Cuenta'}
-                  </span>
-                </button>
+  <button
+    className={`nav-link nav-link-modern nav-link-user dropdown-toggle ${
+      isActive('/perfil') || isActive('/mis-pedidos') || isActive('/login') || isActive('/registro') 
+        ? 'active' 
+        : ''
+    }`}
+    id="userMenu"
+    data-bs-toggle="dropdown"
+    aria-expanded="false"
+    type="button"
+  >
+    <i className="bi bi-person-circle fs-5 me-2"></i>
+    {/* Antes: d-none d-md-inline -> eso mostraba en tablet.
+        Ahora: solo en escritorio (≥ lg / 992px) */}
+    <span className="d-none d-lg-inline user-label">
+      {isAuthenticated ? userLabel : 'Cuenta'}
+    </span>
+  </button>
 
                 <ul
-                  className="dropdown-menu dropdown-menu-end"
+                  className="dropdown-menu dropdown-menu-end dropdown-menu-modern"
                   aria-labelledby="userMenu"
                 >
                   {isAuthenticated ? (
                     <>
                       <li>
                         <Link to="/perfil" className="dropdown-item">
+                          <i className="bi bi-person me-2"></i>
                           Mi perfil
                         </Link>
                       </li>
                       <li>
                         <Link to="/mis-pedidos" className="dropdown-item">
+                          <i className="bi bi-bag-check me-2"></i>
                           Mis pedidos
                         </Link>
                       </li>
+                      <li><hr className="dropdown-divider" /></li>
                       <li>
                         <button
                           type="button"
-                          className="dropdown-item"
+                          className="dropdown-item text-danger"
                           onClick={handleLogout}
                         >
+                          <i className="bi bi-box-arrow-right me-2"></i>
                           Cerrar sesión
                         </button>
                       </li>
@@ -192,11 +215,13 @@ export default function Navbar({ cartCount, onNav }) {
                     <>
                       <li>
                         <Link to="/login" className="dropdown-item">
+                          <i className="bi bi-box-arrow-in-right me-2"></i>
                           Iniciar sesión
                         </Link>
                       </li>
                       <li>
                         <Link to="/registro" className="dropdown-item">
+                          <i className="bi bi-person-plus me-2"></i>
                           Registrarse
                         </Link>
                       </li>

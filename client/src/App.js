@@ -17,6 +17,7 @@ import CreateProductPage from './pages/CreateProductPage';
 import EditProductPage from './pages/EditProductPage';
 import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
+import OrdersPage from'./pages/OrdersPage'; 
 
 import ProtectedRoute from './auth/ProtectedRoute';
 import ProfilePage from './pages/ProfilePage';
@@ -131,7 +132,14 @@ export default function App() {
               </ProtectedRoute>
             }
           />
-
+          <Route
+            path="/mis-pedidos"
+            element={
+              <ProtectedRoute>
+                <OrdersPage />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/registro" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route
