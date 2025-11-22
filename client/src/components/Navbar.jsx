@@ -162,24 +162,22 @@ export default function Navbar({ cartCount, onNav }) {
 
               {/* Menú de usuario */}
               <li className="nav-item dropdown">
-  <button
-    className={`nav-link nav-link-modern nav-link-user dropdown-toggle  ${
-      isActive('/perfil') || isActive('/mis-pedidos') || isActive('/login') || isActive('/registro') 
-        ? 'active' 
-        : ''
-    }`}
-    id="userMenu"
-    data-bs-toggle="dropdown"
-    aria-expanded="false"
-    type="button"
-  >
-    <i className="bi bi-person-circle personita fs-5"></i>
-    {/* Antes: d-none d-md-inline -> eso mostraba en tablet.
-        Ahora: solo en escritorio (≥ lg / 992px) */}
-    <span className="d-none d-lg-inline user-label">
-      {isAuthenticated ? userLabel : 'Cuenta'}
-    </span>
-  </button>
+              <button
+                className={`nav-link nav-link-modern nav-link-user dropdown-toggle  ${
+                  isActive('/perfil') || isActive('/mis-pedidos') || isActive('/login') || isActive('/registro') 
+                    ? 'active' 
+                    : ''
+                }`}
+                id="userMenu"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                type="button"
+              >
+                <i className="bi bi-person-circle personita fs-5"></i>
+                <span className="d-none d-lg-inline user-label">
+                  {isAuthenticated ? userLabel : ''}
+                </span>
+              </button>
 
                 <ul
                   className="dropdown-menu dropdown-menu-end dropdown-menu-modern"

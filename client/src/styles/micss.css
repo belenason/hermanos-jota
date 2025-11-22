@@ -2689,6 +2689,7 @@ SECCIÓN 5: ESTILOS ESPECÍFICOS DE PRODUCTOS
 }
 
 .cart-page-title {
+  font-family: 'Playfair Display', Georgia, serif;
   color: var(--dark-wood);
   font-size: 2rem;
   font-weight: 600;
@@ -2995,11 +2996,6 @@ SECCIÓN 5: ESTILOS ESPECÍFICOS DE PRODUCTOS
   .cart-header {
     flex-direction: column;
     align-items: flex-start;
-  }
-
-  .cart-page-title {
-    font-size: 2rem;
-    color: var(--dark-wood);
   }
 
   .cart-item-card {
