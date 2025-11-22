@@ -1,7 +1,7 @@
 // src/pages/ProfilePage.jsx
 import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../AuthContext';
+import { AuthContext } from '../auth/AuthContext';
 import { perfilUsuario } from '../apiUsuarios';
 
 export default function ProfilePage() {

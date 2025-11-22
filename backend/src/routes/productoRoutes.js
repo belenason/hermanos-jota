@@ -1,7 +1,6 @@
 import { Router } from "express";
 import { Producto } from "../models/Producto.js";
 import authMiddleware from "../middlewares/authMiddleware.js";
-import verifyToken from "../middlewares/authMiddleware.js";
 
 
 export const productosRouter = Router();

@@ -4,6 +4,7 @@ import { Router } from "express";
 import { Usuario } from '../models/Usuario.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import authMiddleware from "../middlewares/authMiddleware.js";
 
 export const usuariosRouter = Router();
 
@@ -93,7 +94,7 @@ usuariosRouter.post('/login', async (req, res) => {
 });
 
 /** PERFIL (RUTA PROTEGIDA) **/
-usuariosRouter.get('/perfil', auth, async (req, res) => {
+usuariosRouter.get('/perfil', authMiddleware, async (req, res) => {
   try {
     const usuario = await Usuario.findById(req.user.id);
 

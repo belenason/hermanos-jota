@@ -19,6 +19,7 @@ import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
 
 import ProtectedRoute from './auth/ProtectedRoute';
+import ProfilePage from './pages/ProfilePage';
 
 export default function App() {
   const [products, setProducts] = useState([]);
@@ -119,6 +120,14 @@ export default function App() {
             element={
               <ProtectedRoute>
                 <EditProductPage onDataMutated={loadProducts} />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/perfil"
+            element={
+              <ProtectedRoute>
+                <ProfilePage />
               </ProtectedRoute>
             }
           />
