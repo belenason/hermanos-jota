@@ -4,7 +4,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { AuthContext } from '../auth/AuthContext';
 
 export default function Navbar({ cartCount, onNav }) {
-  const { isAuthenticated, currentUser, logout } = useContext(AuthContext);
+  const { isAuthenticated, currentUser, logout, isAdmin } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -164,7 +164,7 @@ export default function Navbar({ cartCount, onNav }) {
               <li className="nav-item dropdown">
               <button
                 className={`nav-link nav-link-modern nav-link-user dropdown-toggle  ${
-                  isActive('/perfil') || isActive('/mis-pedidos') || isActive('/login') || isActive('/registro') 
+                  isActive('/perfil') || isActive('/mis-pedidos') || isActive('/admin') || isActive('/login') || isActive('/registro') 
                     ? 'active' 
                     : ''
                 }`}
@@ -197,6 +197,17 @@ export default function Navbar({ cartCount, onNav }) {
                           Mis pedidos
                         </Link>
                       </li>
+                      {isAdmin && (
+                        <>
+                          <li><hr className="dropdown-divider" /></li>
+                          <li>
+                            <Link to="/admin" className="dropdown-item text-primary">
+                              <i className="bi bi-shield-lock me-2"></i>
+                              Panel Admin
+                            </Link>
+                          </li>
+                        </>
+                      )}
                       <li><hr className="dropdown-divider" /></li>
                       <li>
                         <button

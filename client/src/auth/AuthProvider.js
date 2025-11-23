@@ -24,6 +24,8 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
+  const isAdmin = Boolean(currentUser?.rol) && currentUser.rol.includes('admin');
+
   const isAuthenticated = Boolean(currentUser);
 
   const login = (data) => {
@@ -50,6 +52,7 @@ export const AuthProvider = ({ children }) => {
     currentUser, 
     token,
     isAuthenticated, 
+    isAdmin,
     login, 
     logout, 
   };

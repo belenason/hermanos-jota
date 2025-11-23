@@ -39,6 +39,7 @@ const register = async (req, res) => {
       _id: usuarioGuardado._id,
       username: usuarioGuardado.username,
       email: usuarioGuardado.email,
+      rol: usuarioGuardado.roles,
     });
  
   } catch (error) {
@@ -66,9 +67,9 @@ const login = async (req, res) => {
  
     // Si las credenciales son correctas, generamos el JWT
     const token = jwt.sign(
-      { id: user._id, username: user.username }, // Payload: datos que queremos en el token
-      process.env.JWT_SECRET,                   // La clave secreta desde .env
-      { expiresIn: '7d' }                        // Opciones (ej: expira en 1 hora)
+      { id: user._id, username: user.username, rol: user.roles }, // Payload: datos que queremos en el token
+      process.env.JWT_SECRET,
+      { expiresIn: '7d' }
     );
  
     // Respondemos con el token y datos del usuario (sin el password)
@@ -78,6 +79,7 @@ const login = async (req, res) => {
         id: user._id,
         username: user.username,
         email: user.email,
+        rol: user.roles,
       },
     });
  

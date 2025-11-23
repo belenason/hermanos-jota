@@ -12,7 +12,7 @@ export default function CatalogPage({
   onAdd
 }) {
   const [buscado, setQuery] = useState('');
-  const { isAuthenticated } = useContext(AuthContext);
+  const { isAuthenticated, isAdmin } = useContext(AuthContext);
 
   const filteredProducts = products.filter((p) => {
     const query = buscado.toLowerCase().trim();
@@ -104,7 +104,7 @@ export default function CatalogPage({
         )}
       </section>
 
-      {isAuthenticated && (
+      {isAuthenticated && isAdmin && (
         <Link
           to="/admin/crear-producto"
           className="boton-flotante"

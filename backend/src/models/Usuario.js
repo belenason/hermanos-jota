@@ -17,6 +17,11 @@ const usuarioSchema = new mongoose.Schema({
     required: true,
 		select: false
   },
+  roles: {
+    type: [String],
+    enum: ['cliente', 'admin'],
+    default: ['cliente']
+  },
 }, {
 	timestamps: true 
 });

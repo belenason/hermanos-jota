@@ -1,6 +1,6 @@
 // src/components/LoginForm.jsx
 import { useState, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,  Link } from 'react-router-dom';
 import { loginUsuario } from '../apiUsuarios';
 
 import { AuthContext } from '../auth/AuthContext';
@@ -120,7 +120,7 @@ export default function LoginForm() {
       </div>
 
       <p className="register-terms text-center">
-        ¿No tenés cuenta? Podés crearla en pocos segundos.
+        ¿No tenés cuenta? Podés crearla en pocos segundos. <Link to="/registro">Registrate</Link>
       </p>
     </form>
   );

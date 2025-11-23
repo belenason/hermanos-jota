@@ -1,7 +1,7 @@
 // src/components/RegisterForm.jsx
 import { useState } from 'react';
 import { registrarUsuario } from '../apiUsuarios';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function RegisterForm() {
   const [form, setForm] = useState({ username: '', email: '', password: ''});
@@ -136,6 +136,9 @@ export default function RegisterForm() {
 
       <p className="register-terms text-center">
         Al continuar, aceptás nuestros términos y condiciones.
+      </p>
+      <p className="register-terms text-center">
+        ¿Ya tenes cuenta? <Link to="/login">Ingresa</Link>
       </p>
     </form>
   );

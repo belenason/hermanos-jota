@@ -8,7 +8,7 @@ import { AuthContext } from '../auth/AuthContext';
 export default function ProductDetailPage({ onAdd, onDataMutated }) {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { isAuthenticated } = useContext(AuthContext);
+  const { isAuthenticated, isAdmin } = useContext(AuthContext);
 
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -247,7 +247,7 @@ export default function ProductDetailPage({ onAdd, onDataMutated }) {
                       <i className="bi bi-arrow-left me-2" aria-hidden="true"></i>
                       Catálogo
                     </Link>
-                    {isAuthenticated && (
+                    {isAuthenticated && isAdmin && (
                       <>
                         <Link
                           to={`/productos/editar/${product.id}`}
@@ -274,7 +274,7 @@ export default function ProductDetailPage({ onAdd, onDataMutated }) {
       </div>
 
       {/* Modal de confirmación */}
-      {showDeleteModal && (
+      {showDeleteModal && isAuthenticated && isAdmin && (
         <div className="delete-modal-overlay" onClick={handleCancelDelete}>
           <div className="delete-modal" onClick={(e) => e.stopPropagation()}>
             <div className="delete-modal-header">
