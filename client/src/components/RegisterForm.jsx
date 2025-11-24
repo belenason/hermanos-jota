@@ -64,15 +64,11 @@ export default function RegisterForm() {
     >
       {/* Mensajes */}
       {errorMsg && (
-        <div className="alert alert-danger py-2 px-3 mb-3" role="alert">
-          {errorMsg}
-        </div>
+         <p className="login-msg login-error mb-3">{errorMsg}</p>
       )}
 
       {successMsg && (
-        <div className="alert alert-success py-2 px-3 mb-3" role="alert">
-          {successMsg}
-        </div>
+        <p className="login-msg login-success mb-3">{successMsg}</p>
       )}
 
       {/* Username */}

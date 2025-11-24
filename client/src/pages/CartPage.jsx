@@ -102,8 +102,8 @@ export default function CartPage() {
                 <Link to={`/productos/${it.id}`} className="cart-item-link">
                   <img
                     src={
+                      (Array.isArray(it.imagenes) && it.imagenes[0]) ||
                       it.imagen ||
-                      it.imagenes?.[0] ||
                       "/img/producto-ejemplo.png"
                     }
                     alt={it.nombre}

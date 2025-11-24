@@ -22,8 +22,9 @@ const productoSchema = new mongoose.Schema({
     default: 0,
     min: 0
   },
-  imagenUrl: {
-    type: String,
+  imagenes: {
+    type: [String],
+    default: []
   },
 
   medidas: { type: String, trim: true },

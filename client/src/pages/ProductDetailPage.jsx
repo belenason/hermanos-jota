@@ -71,8 +71,23 @@ export default function ProductDetailPage({ onAdd, onDataMutated }) {
     window.scrollTo({ top: 0, behavior: 'smooth' }); 
   }, []); 
 
-  // Calcular imágenes
-  const images = product?.imagenUrl ? [product.imagenUrl] : ['/img/producto-ejemplo.png'];
+  // Calcular imágenes (prioriza arreglo `imagenes`, mantiene compatibilidad con `imagenUrl`)
+  const images = (() => {
+    const arr = Array.isArray(product?.imagenes)
+      ? product.imagenes.filter(Boolean)
+      : [];
+
+    if (arr.length) return arr;
+
+    if (product?.imagenUrl) return [product.imagenUrl];
+
+    return ['/img/producto-ejemplo.png'];
+  })();
+
+  // Resetear índice cuando cambie de producto
+  useEffect(() => {
+    setIdx(0);
+  }, [product?.id]);
 
   // Calcular precio formateado
   const price = Number(product?.precio || 0).toLocaleString('es-AR');

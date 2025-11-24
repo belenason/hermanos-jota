@@ -64,9 +64,13 @@ export default function App() {
       id: p._id || p.id,
       price: Number(p.precio || 0),
       nombre: p.nombre,
-      imagen: p.imagenUrl || '/img/producto-ejemplo.png',
+      // Usamos la primera imagen del array, con fallback
+      imagen: Array.isArray(p.imagenes) && p.imagenes.length
+        ? p.imagenes[0]
+        : p.imagenUrl || '/img/producto-ejemplo.png',
       ...p,
     });
+
     const cantidad = Number(qty) || 1;
     addItem(normalize(prod), cantidad);
     showToast('Producto agregado al carrito 🛒');

@@ -7,54 +7,83 @@ import { AuthContext } from '../auth/AuthContext';
 export default function LoginForm() {
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
-  const location = useLocation(); // 👈 NUEVO
+  const location = useLocation();
 
-  // Si venís desde una ruta protegida, acá queda guardada
-  const from = location.state?.from?.pathname || '/';  // 👈 NUEVO
+  const from = location.state?.from?.pathname || '/';
 
   const [form, setForm] = useState({
     email: '',
     password: '',
   });
 
-  const [validated, setValidated] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [errorMsg, setErrorMsg] = useState('');
+  const [errorMsg, setErrorMsg] = useState('');      // Error general (API, credenciales, etc.)
   const [successMsg, setSuccessMsg] = useState('');
+  const [emailError, setEmailError] = useState('');  // Error específico de email
+  const [passwordError, setPasswordError] = useState(''); // Error específico de password
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+
     setForm((prev) => ({ ...prev, [name]: value }));
+
+    // Limpio errores del campo a medida que escribe
+    if (name === 'email' && emailError) setEmailError('');
+    if (name === 'password' && passwordError) setPasswordError('');
+    if (errorMsg) setErrorMsg('');
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const formEl = e.currentTarget;
 
-    if (!formEl.checkValidity()) {
-      e.stopPropagation();
-      setValidated(true);
-      return;
-    }
-
-    setLoading(true);
+    // Reseteo errores
+    setEmailError('');
+    setPasswordError('');
     setErrorMsg('');
     setSuccessMsg('');
 
+    const trimmedEmail = form.email.trim();
+    const trimmedPassword = form.password.trim();
+    let hasError = false;
+
+    // Validación de email
+    if (!trimmedEmail) {
+      setEmailError('Ingresá tu correo electrónico.');
+      hasError = true;
+    } else {
+      // Validar formato básico de email
+      const emailRegex = /^\S+@\S+\.\S+$/;
+      if (!emailRegex.test(trimmedEmail)) {
+        setEmailError('Ingresá un correo con formato válido.');
+        hasError = true;
+      }
+    }
+
+    // Validación de password
+    if (!trimmedPassword) {
+      setPasswordError('Ingresá tu contraseña.');
+      hasError = true;
+    }
+
+    if (hasError) return; // No llamamos a la API si ya sabemos que hay errores de formulario
+
+    setLoading(true);
+
     try {
       const data = await loginUsuario({
-        email: form.email.trim(),
-        password: form.password,
+        email: trimmedEmail,
+        password: trimmedPassword,
       });
 
       login(data);
 
-      setSuccessMsg('Inicio de sesión exitoso. Redirigiendo…');
+      setSuccessMsg('Inicio de sesión exitoso.');
 
       setTimeout(() => {
-        navigate(from, { replace: true });   // 👈 REDIRIGE A DONDE ESTABAS
+        navigate(from, { replace: true });
       }, 800);
     } catch (err) {
+      // Error del backend (credenciales inválidas, etc.)
       setErrorMsg(err.message || 'No se pudo iniciar sesión.');
     } finally {
       setLoading(false);
@@ -62,57 +91,51 @@ export default function LoginForm() {
   };
 
   return (
-    <form
-      className={`needs-validation register-form ${validated ? 'was-validated' : ''}`}
-      noValidate
-      onSubmit={handleSubmit}
-    >
-      {/* Mensajes */}
+    <form className="register-form" noValidate onSubmit={handleSubmit}>
+      {/* Mensaje general (API / credenciales) */}
       {errorMsg && (
-        <div className="alert alert-danger py-2 px-3 mb-3" role="alert">
-          {errorMsg}
-        </div>
+        <p className="login-msg login-error mb-3">{errorMsg}</p>
       )}
 
       {successMsg && (
-        <div className="alert alert-success py-2 px-3 mb-3" role="alert">
-          {successMsg}
-        </div>
+        <p className="login-msg login-success mb-3">{successMsg}</p>
       )}
 
       {/* Email */}
-      <div className="form-floating mb-3">
+      <div className="form-floating mb-2">
         <input
           type="email"
           id="email"
           name="email"
           className="form-control register-input"
           placeholder="email@mail.com"
-          required
           autoComplete="email"
           value={form.email}
           onChange={handleChange}
         />
         <label htmlFor="email">Correo electrónico</label>
-        <div className="invalid-feedback">Ingresá un correo válido.</div>
       </div>
+      {emailError && (
+        <p className="login-error mb-3">{emailError}</p>
+      )}
 
       {/* Password */}
-      <div className="form-floating mb-4">
+      <div className="form-floating mb-2">
         <input
           type="password"
           id="password"
           name="password"
           className="form-control register-input"
           placeholder="Contraseña"
-          required
           autoComplete="current-password"
           value={form.password}
           onChange={handleChange}
         />
         <label htmlFor="password">Contraseña</label>
-        <div className="invalid-feedback">Ingresá tu contraseña.</div>
       </div>
+      {passwordError && (
+        <p className="login-error mb-3">{passwordError}</p>
+      )}
 
       {/* Botón */}
       <div className="d-grid mb-2">

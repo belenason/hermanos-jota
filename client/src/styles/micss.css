@@ -5478,3 +5478,14 @@ SECCIÓN 5: ESTILOS ESPECÍFICOS DE PRODUCTOS
     width: 100%;
   }
 }
+
+.login-error {
+  color: #b84242;
+  font-weight: 500;
+}
+
+.login-success {
+  color: #245a26;
+  font-weight: 500;
+}
+
