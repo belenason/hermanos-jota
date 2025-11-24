@@ -8,7 +8,8 @@ const getProductos = async (req, res, next) => {
     res.status(200).json(productos);
   } catch (error) {
     console.error('Error al obtener los productos:', error.message);
-    next(error); // Pasa el error al middleware de errores
+    error.status = 500; // Error del servidor
+    next(error); 
   }
 }
 
@@ -16,10 +17,10 @@ const getProductos = async (req, res, next) => {
 // @route   GET /api/productos/:id
 const getProducto = async (req, res, next) => {
   try {
-    const productoId = req.params.id;
-    console.log('Buscando producto con ID:', productoId);
+    const { id } = req.params; // Desestructuración más limpia
+    console.log('Buscando producto con ID:', id);
 
-    const producto = await Producto.findById(productoId);
+    const producto = await Producto.findById(id);
 
     if (!producto) {
       const error = new Error('Producto no encontrado');
@@ -30,7 +31,8 @@ const getProducto = async (req, res, next) => {
     res.status(200).json(producto);
   } catch (error) {
     console.error('Error al buscar producto por ID:', error.message);
-    error.status = 400; // Generalmente, un ID malformado es un Bad Request (400)
+    // Si es error de "CastError" (ID con formato inválido), es un 400. Si no, asumimos 500.
+    error.status = error.name === 'CastError' ? 400 : 500; 
     next(error);
   }
 }
@@ -43,17 +45,17 @@ const createProducto = async (req, res, next) => {
     console.log('Datos recibidos para crear producto:', datosNuevoProducto);
 
     const nuevoProducto = new Producto(datosNuevoProducto);
-
     const productoGuardado = await nuevoProducto.save();
 
     res.status(201).json({
       mensaje: 'Producto creado con éxito',
-      producto: productoGuardado // Enviamos el documento completo con el _id generado por MongoDB
+      producto: productoGuardado
     });
 
   } catch (error) {
     console.error('Error al crear el producto:', error.message);
-    error.status = 400; // Generalmente, un error de validación es un Bad Request (400)
+    // Mongoose lanza ValidationError si faltan datos requeridos
+    error.status = error.name === 'ValidationError' ? 400 : 500; 
     next(error);
   }
 }
@@ -62,12 +64,12 @@ const createProducto = async (req, res, next) => {
 // @route   PUT /api/productos/:id
 const updateProducto = async (req, res, next) => {
   try {
-    const productoId = req.params.id;
+    const { id } = req.params;
     const datosActualizados = req.body;
-    console.log(`Actualizando producto con ID ${productoId} con datos:`, datosActualizados);
+    console.log(`Actualizando producto con ID ${id} con datos:`, datosActualizados);
 
     const productoActualizado = await Producto.findByIdAndUpdate(
-      productoId,
+      id,
       datosActualizados,
       { new: true, runValidators: true }
     );
@@ -84,7 +86,8 @@ const updateProducto = async (req, res, next) => {
     });
   } catch (error) {
     console.error('Error al actualizar producto:', error.message);
-    error.status = 400;
+    const isInputError = error.name === 'CastError' || error.name === 'ValidationError';
+    error.status = isInputError ? 400 : 500;
     next(error);
   }
 }
@@ -93,10 +96,10 @@ const updateProducto = async (req, res, next) => {
 // @route   DELETE /api/productos/:id
 const deleteProducto = async (req, res, next) => {
   try {
-    const productoId = req.params.id;
-    console.log('Eliminando producto con ID:', productoId);
+    const { id } = req.params;
+    console.log('Eliminando producto con ID:', id);
  
-    const productoEliminado = await Producto.findByIdAndDelete(productoId);
+    const productoEliminado = await Producto.findByIdAndDelete(id);
  
     if (!productoEliminado) {
       const error = new Error('Producto no encontrado para eliminar');
@@ -111,7 +114,7 @@ const deleteProducto = async (req, res, next) => {
  
   } catch (error) {
     console.error('Error al eliminar producto:', error.message);
-    error.status = 400; // Puede ser por un ID malformado
+    error.status = error.name === 'CastError' ? 400 : 500;
     next(error);
   }
 }

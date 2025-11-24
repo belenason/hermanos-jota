@@ -4,12 +4,29 @@ const API_URL =
     ? ''
     : (process.env.REACT_APP_API_URL || '');
 
-// Pequeño helper
-function getAuthHeaders(extra = {}) {
-  const token = localStorage.getItem('authToken');
-  if (!token) {
-    throw new Error('No estás autenticado. Iniciá sesión para continuar.');
+// Helper para sacar el token de localStorage de forma robusta
+function getAuthToken() {
+  // Intentamos con userInfo (respuesta del login)
+  const userInfoRaw = localStorage.getItem('userInfo');
+  if (userInfoRaw) {
+    try {
+      const parsed = JSON.parse(userInfoRaw);
+      if (parsed.token) return parsed.token;
+      if (parsed.user && parsed.user.token) return parsed.user.token;
+    } catch (e) {
+      console.warn('No se pudo parsear userInfo', e);
+    }
   }
+
+  // Fallback a una posible clave "authToken"
+  const fallback = localStorage.getItem('authToken');
+  if (fallback) return fallback;
+
+  throw new Error('No estás autenticado. Iniciá sesión para continuar.');
+}
+
+function getAuthHeaders(extra = {}) {
+  const token = getAuthToken();
   return {
     ...extra,
     Authorization: `Bearer ${token}`,
@@ -39,10 +56,11 @@ export async function createProducto(productData) {
     }),
     body: JSON.stringify(productData),
   });
-  if (!res.ok) {
-    throw new Error('Error creando el producto');
-  }
   const data = await res.json();
+  if (!res.ok) {
+    throw new Error(data.message || 'Error creando el producto');
+  }
+  // Normalizamos un poco
   return { ...data.producto, id: data.producto._id };
 }
 
@@ -55,8 +73,9 @@ export async function updateProducto(id, productData) {
     }),
     body: JSON.stringify(productData),
   });
-  if (!res.ok) throw new Error('Error actualizando el producto');
-  return res.json();
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message || 'Error actualizando el producto');
+  return data;
 }
 
 // DELETE eliminar un producto (PROTEGIDO)
@@ -65,6 +84,7 @@ export async function deleteProducto(id) {
     method: 'DELETE',
     headers: getAuthHeaders(),
   });
-  if (!res.ok) throw new Error('Error eliminando el producto');
-  return res.json();
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message || 'Error eliminando el producto');
+  return data;
 }

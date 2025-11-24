@@ -17,10 +17,12 @@ import CreateProductPage from './pages/CreateProductPage';
 import EditProductPage from './pages/EditProductPage';
 import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
-import OrdersPage from'./pages/OrdersPage'; 
+import OrdersPage from'./pages/OrdersPage';
+import AdminPanelPage from './pages/AdminPanelPage';
+import ProfilePage from './pages/ProfilePage';
 
 import ProtectedRoute from './auth/ProtectedRoute';
-import ProfilePage from './pages/ProfilePage';
+import AdminRoute from './auth/AdminRoute';
 
 export default function App() {
   const [products, setProducts] = useState([]);
@@ -138,6 +140,18 @@ export default function App() {
               <ProtectedRoute>
                 <OrdersPage />
               </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin"
+            element={
+              <AdminRoute>
+                <AdminPanelPage
+                  products={products}
+                  loading={loading}
+                  onDataMutated={loadProducts}
+                />
+              </AdminRoute>
             }
           />
           <Route path="/registro" element={<RegisterPage />} />

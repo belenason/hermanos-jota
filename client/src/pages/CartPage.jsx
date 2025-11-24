@@ -42,23 +42,19 @@ export default function CartPage() {
       return;
     }
 
-    const token = localStorage.getItem("authToken");
-    if (!token) {
-      navigate("/login", { state: { from: "/carrito" } });
-      return;
-    }
-
+    // ✅ NO usamos token acá, lo maneja apiPedidos/getAuthToken
     // Mapeamos los ítems del carrito al formato que espera el backend
     const payloadItems = items.map((it) => ({
-      productoId: it.id || it._id, // ajustá si tu id es distinto
+      // react-use-cart usa `id` como identificador principal
+      productoId: it.id || it._id,
       cantidad: it.quantity || 1,
     }));
 
     setCreating(true);
     try {
-      await crearPedido(token, payloadItems);
+      // ✅ apiPedidos.crearPedido ya hace { items: payloadItems } y agrega el token
+      await crearPedido(payloadItems);
 
-      // Si todo salió bien:
       emptyCart();
       setSuccessMsg("¡Pedido creado con éxito! Podés verlo en Mis pedidos.");
       navigate("/mis-pedidos");
@@ -105,7 +101,11 @@ export default function CartPage() {
               <div key={it.id} className="cart-item-card">
                 <Link to={`/productos/${it.id}`} className="cart-item-link">
                   <img
-                    src={it.imagen || it.imagenes?.[0] || "/img/producto-ejemplo.png"}
+                    src={
+                      it.imagen ||
+                      it.imagenes?.[0] ||
+                      "/img/producto-ejemplo.png"
+                    }
                     alt={it.nombre}
                     className="cart-item-image"
                   />
@@ -120,7 +120,9 @@ export default function CartPage() {
                   <div className="quantity-control">
                     <button
                       className="quantity-btn"
-                      onClick={() => updateItemQuantity(it.id, it.quantity - 1)}
+                      onClick={() =>
+                        updateItemQuantity(it.id, it.quantity - 1)
+                      }
                       disabled={it.quantity <= 1}
                     >
                       −
@@ -128,7 +130,9 @@ export default function CartPage() {
                     <span className="quantity-display">{it.quantity}</span>
                     <button
                       className="quantity-btn"
-                      onClick={() => updateItemQuantity(it.id, it.quantity + 1)}
+                      onClick={() =>
+                        updateItemQuantity(it.id, it.quantity + 1)
+                      }
                     >
                       +
                     </button>
@@ -163,10 +167,11 @@ export default function CartPage() {
 
             <div className="summary-row summary-total">
               <span className="summary-label-total">Total</span>
-              <span className="summary-value-total">{formatARS(cartTotal)}</span>
+              <span className="summary-value-total">
+                {formatARS(cartTotal)}
+              </span>
             </div>
 
-            {/* Mensajes de error / éxito */}
             {errorMsg && (
               <div className="alert alert-danger mt-3" role="alert">
                 {errorMsg}
