@@ -1,13 +1,16 @@
 // src/components/LoginForm.jsx
 import { useState, useContext } from 'react';
-import { useNavigate,  Link } from 'react-router-dom';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { loginUsuario } from '../apiUsuarios';
-
 import { AuthContext } from '../auth/AuthContext';
 
 export default function LoginForm() {
-  const { login } = useContext( AuthContext );
+  const { login } = useContext(AuthContext);
   const navigate = useNavigate();
+  const location = useLocation(); // 👈 NUEVO
+
+  // Si venís desde una ruta protegida, acá queda guardada
+  const from = location.state?.from?.pathname || '/';  // 👈 NUEVO
 
   const [form, setForm] = useState({
     email: '',
@@ -28,7 +31,6 @@ export default function LoginForm() {
     e.preventDefault();
     const formEl = e.currentTarget;
 
-    // Validación nativa del navegador + Bootstrap
     if (!formEl.checkValidity()) {
       e.stopPropagation();
       setValidated(true);
@@ -50,8 +52,8 @@ export default function LoginForm() {
       setSuccessMsg('Inicio de sesión exitoso. Redirigiendo…');
 
       setTimeout(() => {
-        navigate('/');
-      }, 1200);
+        navigate(from, { replace: true });   // 👈 REDIRIGE A DONDE ESTABAS
+      }, 800);
     } catch (err) {
       setErrorMsg(err.message || 'No se pudo iniciar sesión.');
     } finally {
