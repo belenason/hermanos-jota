@@ -121,7 +121,7 @@ const OrderListScreen = () => {
           const usuario = pedido.usuario;
           const nombreUsuario = usuario
             ? (usuario.name || usuario.username || usuario.email || 'Usuario sin datos')
-            : 'Sin datos de usuario';
+            : 'Usuario eliminado';
           const isOpen = openPedidoId === pedido._id;
 
           return (

@@ -81,7 +81,7 @@ export default function LoginForm() {
 
       setTimeout(() => {
         navigate(from, { replace: true });
-      }, 800);
+      }, 200);
     } catch (err) {
       // Error del backend (credenciales inválidas, etc.)
       setErrorMsg(err.message || 'No se pudo iniciar sesión.');

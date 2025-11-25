@@ -117,17 +117,17 @@ export default function App() {
           <Route
             path="/admin/crear-producto"
             element={
-              <ProtectedRoute>
+              <AdminRoute>
                 <CreateProductPage onDataMutated={loadProducts} />
-              </ProtectedRoute>
+              </AdminRoute>
             }
           />
           <Route
             path="/productos/editar/:id"
             element={
-              <ProtectedRoute>
+              <AdminRoute>
                 <EditProductPage onDataMutated={loadProducts} />
-              </ProtectedRoute>
+              </AdminRoute>
             }
           />
           <Route

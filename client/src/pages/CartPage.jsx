@@ -42,7 +42,6 @@ export default function CartPage() {
       return;
     }
 
-    // ✅ NO usamos token acá, lo maneja apiPedidos/getAuthToken
     // Mapeamos los ítems del carrito al formato que espera el backend
     const payloadItems = items.map((it) => ({
       // react-use-cart usa `id` como identificador principal
@@ -52,7 +51,7 @@ export default function CartPage() {
 
     setCreating(true);
     try {
-      // ✅ apiPedidos.crearPedido ya hace { items: payloadItems } y agrega el token
+      // apiPedidos.crearPedido ya hace { items: payloadItems } y agrega el token
       await crearPedido(payloadItems);
 
       emptyCart();
