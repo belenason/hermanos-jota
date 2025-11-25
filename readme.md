@@ -16,19 +16,6 @@
 - Mora Arrossi  
 - Tomás Vallejos  
 - Valentín Baigorria
----
-<p align="center" style="margin: 15px 0;">
-  <a href="#🚀-demo-y-despliegue">Demo y Despliegue</a> •
-  <a href="#📝-descripción-del-proyecto">Descripción del Proyecto</a> •
-  <a href="#⚙️-arquitectura-general">Arquitectura General</a> •
-  <a href="#🔹-backend-backend">Backend</a> •
-  <a href="#🔹-frontend-src">Frontend</a> •
-  <a href="#🛠-panel-de-administración">Panel de Administración</a> •
-  <a href="#🧩-variables-de-entorno">Variables de Entorno</a> •
-  <a href="#🛠️-tecnologías-utilizadas">Tecnologías Utilizadas</a> •
-  <a href="#▶️-ejecución-local">Ejecución Local</a>
-</p>
-
 
 ---
 
@@ -65,7 +52,7 @@
 
 ---
 
-## 📝 Descripción del Proyecto
+## Descripción del Proyecto
 
 **Hermanos Jota** digitaliza el proceso de venta de una mueblería tradicional. Desarrollado con el stack **MERN**, el sistema permite la gestión integral del negocio. 
 
