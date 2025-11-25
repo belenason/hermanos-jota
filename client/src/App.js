@@ -2,7 +2,8 @@
 import { Link, Routes, Route }  from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { getProductos } from './apiProductos';
-import { useCart } from 'react-use-cart';
+import { useCart } from './context/CartContext'; 
+
 
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -84,6 +85,7 @@ export default function App() {
   const featuredProducts = products.slice(0, 4);
 
   return (
+    
     <>
       <Navbar cartCount={totalItems} />
       <main id="contenido-principal" tabIndex={-1}>
@@ -176,6 +178,7 @@ export default function App() {
       </main>
       <Toast show={toast.show} message={toast.message} onClose={hideToast} duration={2000} />
       <Footer />
-    </>
+  </>
+    
   );
 }
