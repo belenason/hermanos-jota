@@ -1,5 +1,5 @@
 // src/components/Navbar.jsx
-import { useEffect, useContext } from 'react';
+import { useEffect, useContext, useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { AuthContext } from '../auth/AuthContext';
 
@@ -7,6 +7,8 @@ export default function Navbar({ cartCount, onNav }) {
   const { isAuthenticated, currentUser, logout, isAdmin } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
+
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
     const navbar = document.querySelector('.custom-navbar');
@@ -55,9 +57,40 @@ export default function Navbar({ cartCount, onNav }) {
     };
   }, []);
 
+  // Cerrar menú al cambiar de ruta (igual idea que el ejemplo que pasaste)
+  useEffect(() => {
+    setIsMenuOpen(false);
+  }, [location.pathname]);
+
+  // Cerrar menú al hacer click fuera de la navbar
+  useEffect(() => {
+    if (!isMenuOpen) return;
+
+    const handleDocumentClick = (event) => {
+      const navbar = document.querySelector('.custom-navbar');
+      if (!navbar) return;
+
+      // Si el click NO fue dentro de la navbar, cerramos
+      if (!navbar.contains(event.target)) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('click', handleDocumentClick);
+
+    return () => {
+      document.removeEventListener('click', handleDocumentClick);
+    };
+  }, [isMenuOpen]);
+
   const handleLogout = () => {
     logout();
+    setIsMenuOpen(false);
     navigate('/');
+  };
+
+  const handleNavLinkClick = () => {
+    setIsMenuOpen(false);
   };
 
   const userLabel =
@@ -78,6 +111,7 @@ export default function Navbar({ cartCount, onNav }) {
           <Link
             to="/"
             className="navbar-brand d-flex align-items-center me-auto btn btn-link p-0 text-decoration-none"
+            onClick={handleNavLinkClick}
           >
             <img
               className="rounded-circle me-3"
@@ -95,17 +129,16 @@ export default function Navbar({ cartCount, onNav }) {
           <button
             className="navbar-toggler"
             type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#mainNav"
             aria-controls="mainNav"
-            aria-expanded="false"
+            aria-expanded={isMenuOpen}
             aria-label="Toggle navigation"
+            onClick={() => setIsMenuOpen((prev) => !prev)}
           >
             <span className="navbar-toggler-icon"></span>
           </button>
 
           <div
-            className="collapse navbar-collapse d-sm-inline-flex justify-content-end"
+            className={`collapse navbar-collapse d-sm-inline-flex justify-content-end ${isMenuOpen ? "show" : ""}`}
             id="mainNav"
           >
             <ul className="navbar-nav align-items-sm-center ms-auto gap-1">
@@ -114,6 +147,7 @@ export default function Navbar({ cartCount, onNav }) {
                 <Link
                   to="/"
                   className={`nav-link nav-link-modern ${isActive('/') ? 'active' : ''}`}
+                  onClick={handleNavLinkClick}
                 >
                   Inicio
                 </Link>
@@ -124,6 +158,7 @@ export default function Navbar({ cartCount, onNav }) {
                 <Link
                   to="/productos"
                   className={`nav-link nav-link-modern ${isActive('/productos') ? 'active' : ''}`}
+                  onClick={handleNavLinkClick}
                 >
                   Catálogo
                 </Link>
@@ -134,6 +169,7 @@ export default function Navbar({ cartCount, onNav }) {
                 <Link
                   to="/contacto"
                   className={`nav-link nav-link-modern ${isActive('/contacto') ? 'active' : ''}`}
+                  onClick={handleNavLinkClick}
                 >
                   Contacto
                 </Link>
@@ -145,6 +181,7 @@ export default function Navbar({ cartCount, onNav }) {
                   to="/carrito"
                   className={`nav-link nav-link-modern nav-link-icon ${isActive('/carrito') ? 'active' : ''}`}
                   aria-label="Carrito de compras"
+                  onClick={handleNavLinkClick}
                 >
                   <span className="position-relative d-inline-block">
                     <i className="bi bi-cart3 fs-5"></i>
@@ -162,22 +199,26 @@ export default function Navbar({ cartCount, onNav }) {
 
               {/* Menú de usuario */}
               <li className="nav-item dropdown">
-              <button
-                className={`nav-link nav-link-modern nav-link-user dropdown-toggle  ${
-                  isActive('/perfil') || isActive('/mis-pedidos') || isActive('/admin') || isActive('/login') || isActive('/registro') 
-                    ? 'active' 
-                    : ''
-                }`}
-                id="userMenu"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-                type="button"
-              >
-                <i className="bi bi-person-circle personita fs-5"></i>
-                <span className="d-none d-lg-inline user-label">
-                  {isAuthenticated ? userLabel : ''}
-                </span>
-              </button>
+                <button
+                  className={`nav-link nav-link-modern nav-link-user dropdown-toggle  ${
+                    isActive('/perfil') ||
+                    isActive('/mis-pedidos') ||
+                    isActive('/admin') ||
+                    isActive('/login') ||
+                    isActive('/registro')
+                      ? 'active'
+                      : ''
+                  }`}
+                  id="userMenu"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                  type="button"
+                >
+                  <i className="bi bi-person-circle personita fs-5"></i>
+                  <span className="d-none d-lg-inline user-label">
+                    {isAuthenticated ? userLabel : ''}
+                  </span>
+                </button>
 
                 <ul
                   className="dropdown-menu dropdown-menu-end dropdown-menu-modern"
@@ -186,13 +227,13 @@ export default function Navbar({ cartCount, onNav }) {
                   {isAuthenticated ? (
                     <>
                       <li>
-                        <Link to="/perfil" className="dropdown-item">
+                        <Link to="/perfil" className="dropdown-item" onClick={handleNavLinkClick}>
                           <i className="bi bi-person me-2"></i>
                           Mi perfil
                         </Link>
                       </li>
                       <li>
-                        <Link to="/mis-pedidos" className="dropdown-item">
+                        <Link to="/mis-pedidos" className="dropdown-item" onClick={handleNavLinkClick}>
                           <i className="bi bi-bag-check me-2"></i>
                           Mis pedidos
                         </Link>
@@ -201,7 +242,7 @@ export default function Navbar({ cartCount, onNav }) {
                         <>
                           <li><hr className="dropdown-divider" /></li>
                           <li>
-                            <Link to="/admin" className="dropdown-item text-primary">
+                            <Link to="/admin" className="dropdown-item text-primary" onClick={handleNavLinkClick}>
                               <i className="bi bi-shield-lock me-2"></i>
                               Panel Admin
                             </Link>
@@ -223,13 +264,13 @@ export default function Navbar({ cartCount, onNav }) {
                   ) : (
                     <>
                       <li>
-                        <Link to="/login" className="dropdown-item">
+                        <Link to="/login" className="dropdown-item" onClick={handleNavLinkClick}>
                           <i className="bi bi-box-arrow-in-right me-2"></i>
                           Iniciar sesión
                         </Link>
                       </li>
                       <li>
-                        <Link to="/registro" className="dropdown-item">
+                        <Link to="/registro" className="dropdown-item" onClick={handleNavLinkClick}>
                           <i className="bi bi-person-plus me-2"></i>
                           Registrarse
                         </Link>

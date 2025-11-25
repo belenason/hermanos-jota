@@ -133,7 +133,7 @@ const UserListScreen = () => {
               <div className="user-info">
                 <div className="user-name-row">
                   <h3 className="user-name">{user.username}</h3>
-                  {isCurrentUser && <span className="self-badge">Tú</span>}
+                  {isCurrentUser && <span className="self-badge">Vos</span>}
                 </div>
                 <a href={`mailto:${user.email}`} className="user-email">
                   {user.email}

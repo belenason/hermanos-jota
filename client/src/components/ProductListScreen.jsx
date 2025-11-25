@@ -89,6 +89,7 @@ const ProductListScreen = ({ products = [], loading, onDataMutated }) => {
           <thead>
             <tr>
               <th>Producto</th>
+              <th>Categoría</th>
               <th>Precio</th>
               <th>Stock</th>
               <th>Acciones</th>
@@ -102,6 +103,9 @@ const ProductListScreen = ({ products = [], loading, onDataMutated }) => {
                     <span className="product-name">{producto.nombre}</span>
                     <span className="product-id">ID: {producto._id?.substring(producto._id.length - 6)}</span>
                   </div>
+                </td>
+                <td>
+                  <span className="category-badge">{producto.categoria}</span>
                 </td>
                 <td>
                   <span className="product-price">${Number(producto.precio).toLocaleString('es-AR')}</span>
