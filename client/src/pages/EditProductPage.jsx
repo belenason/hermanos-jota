@@ -18,6 +18,10 @@ export default function EditProductPage( {onDataMutated} ) {
   const showToast = (message) => setToast({ show: true, message });
   const hideToast = () => setToast((t) => ({ ...t, show: false }));
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
+
   // Cargar el producto existente
   useEffect(() => {
     (async () => {

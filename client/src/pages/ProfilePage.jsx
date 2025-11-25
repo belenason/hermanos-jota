@@ -12,6 +12,10 @@ export default function ProfilePage() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
+
+  useEffect(() => {
     // Si no está logueado, mandarlo al login
     if (!isAuthenticated) {
       navigate('/login', { replace: true });

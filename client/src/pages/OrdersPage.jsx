@@ -14,6 +14,10 @@ export default function OrdersPage() {
   const [errorMsg, setErrorMsg] = useState('');
 
   useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
+
+  useEffect(() => {
     if (!isAuthenticated) {
       navigate('/login', { replace: true });
       return;

@@ -1,5 +1,5 @@
 // src/pages/AdminPanelPage.jsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ProductListScreen from '../components/ProductListScreen';
 import UserListScreen from '../components/UserListScreen';
 import OrderListScreen from '../components/OrderListScreen';
@@ -12,6 +12,10 @@ const AdminPanelPage = ({ products, loading, onDataMutated }) => {
     { id: 'usuarios', label: 'Usuarios', icon: 'bi-people' },
     { id: 'pedidos', label: 'Pedidos', icon: 'bi-receipt' }
   ];
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
 
   return (
     <div className="admin-panel-layout">
