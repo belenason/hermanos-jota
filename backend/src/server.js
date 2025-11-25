@@ -8,15 +8,17 @@ import { productosRouter } from "./routes/productoRoutes.js";
 import { usuariosRouter } from "./routes/usuarioRoutes.js";
 import { pedidosRouter } from './routes/pedidoRoutes.js';
 
-
-
-
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 4000;
 
-app.use(cors());
+const corsOptions = {
+  origin:"https://hermanos-jota.vercel.app",
+  credentials: true,
+}
+
+app.use(cors(corsOptions));
 
 // === Middlewares ===
 app.use(express.json());
