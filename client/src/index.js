@@ -8,14 +8,17 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import './styles/micss.css';
 import { CartProvider } from "react-use-cart";
 import { BrowserRouter } from 'react-router-dom';
+import { AuthProvider } from './auth/AuthProvider';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
  <React.StrictMode>
   < BrowserRouter >
-      <CartProvider>
-        <App />
-      </CartProvider>
+      <AuthProvider>
+        <CartProvider>
+          <App />
+        </CartProvider>
+      </AuthProvider>
     </ BrowserRouter >
   </React.StrictMode>
 );

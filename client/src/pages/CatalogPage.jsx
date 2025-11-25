@@ -1,6 +1,8 @@
-import { useState, useEffect } from 'react';
+// src/pages/CatalogPage.jsx
+import { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import ProductCardGrid from '../components/ProductCardGrid';
+import { AuthContext } from '../auth/AuthContext';
 
 export default function CatalogPage({
   products = [],
@@ -10,19 +12,19 @@ export default function CatalogPage({
   onAdd
 }) {
   const [buscado, setQuery] = useState('');
+  const { isAuthenticated, isAdmin } = useContext(AuthContext);
 
-  const filteredProducts = products.filter(p => {
+  const filteredProducts = products.filter((p) => {
     const query = buscado.toLowerCase().trim();
     if (!query) return true;
     const words = (p.nombre || '').toLowerCase().split(' ');
-    return words.some(word => word.startsWith(query));
+    return words.some((word) => word.startsWith(query));
   });
 
-  useEffect(() => { 
-    window.scrollTo({ top: 0, behavior: 'smooth' }); 
-  }, []); 
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
 
-  // ---- Estado: cargando ----
   if (loading) {
     return (
       <div className="catalog-loading text-center">
@@ -32,14 +34,19 @@ export default function CatalogPage({
     );
   }
 
-  // ---- Estado: error ----
   if (error) {
     return (
       <div className="catalog-error text-center">
         <div className="error-card">
           <h5 className="error-title">Ocurrió un error</h5>
-          <p className="error-message">Lamentamos los problemas. Estamos trabajando para mejorar tu experiencia.</p>
-          <button className="btn-secondary-custom" onClick={onRetry} disabled={loading}>
+          <p className="error-message">
+            Lamentamos los problemas. Estamos trabajando para mejorar tu experiencia.
+          </p>
+          <button
+            className="btn-secondary-custom"
+            onClick={onRetry}
+            disabled={loading}
+          >
             {loading ? 'Reintentando…' : 'Reintentar'}
           </button>
         </div>
@@ -47,7 +54,6 @@ export default function CatalogPage({
     );
   }
 
-  // ---- Sin productos ----
   if (!products.length) {
     return (
       <div className="catalog-empty">
@@ -62,23 +68,28 @@ export default function CatalogPage({
     );
   }
 
-  // ---- Vista normal ----
   return (
     <>
+      {/* HERO MINIMAL TIPO “SHOP” */}
       <section className="contact-hero">
         <div className="contact-container">
-          <h2 className="hero-title">Nuestros Productos</h2>
-          <p className="hero-subtitle">
-            Descubrí nuestra selección de muebles, diseñados para transformar tu espacio.
-          </p>
-
-          <input type="text" className="form-control my-3" placeholder="Buscar producto..." value={buscado} onChange={e => setQuery(e.target.value)}/>
+          <h2 className="hero-title">Catálogo</h2>
+          <div className="catalog-search-wrapper">
+            <input
+              type="text"
+              className="catalog-search-input"
+              placeholder="Buscar producto…"
+              value={buscado}
+              onChange={(e) => setQuery(e.target.value)}
+            />
+          </div>
         </div>
       </section>
 
-      <section className="grilla mb-4" id="catalog-grid">
+      {/* GRILLA MINIMAL */}
+      <section className="grilla grilla-minimal" id="catalog-grid">
         {filteredProducts.length === 0 ? (
-          <div className="text-center py-5">
+          <div className="full-width-message">
             <h3 className="text-muted">No se encontraron productos</h3>
             <p>Probá con otros términos de búsqueda.</p>
           </div>
@@ -92,8 +103,17 @@ export default function CatalogPage({
           ))
         )}
       </section>
-      <Link to="/admin/crear-producto" className="boton-flotante" aria-label="Agregar nuevo producto" title="Crear nuevo producto"> <i className="bi bi-plus-lg"></i> </Link>
 
+      {isAuthenticated && isAdmin && (
+        <Link
+          to="/admin/crear-producto"
+          className="boton-flotante"
+          aria-label="Agregar nuevo producto"
+          title="Crear nuevo producto"
+        >
+          <i className="bi bi-plus-lg"></i>
+        </Link>
+      )}
     </>
   );
 }

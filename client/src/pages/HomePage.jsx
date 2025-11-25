@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'; // NUEVO: importar useState
-import ProductCard from '../components/ProductCard';
+import ProductCardGrid from '../components/ProductCardGrid';
 import { Link } from 'react-router-dom';
 
 // NUEVO: Definimos el contenido del carrusel como un array de objetos.
@@ -34,7 +34,7 @@ const heroSlides = [
   }
 ];
 
-export default function HomePage({ featuredProducts = [] }) { 
+export default function HomePage({ featuredProducts = [], onAdd }) { 
   const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => { 
@@ -234,7 +234,7 @@ export default function HomePage({ featuredProducts = [] }) {
               <div className="row g-4">
                 {four.map(p => (
                   <div className="col-md-3" key={p.id}>
-                    <ProductCard product={p} />
+                    <ProductCardGrid product={p} onAdd={onAdd} />
                   </div>
                 ))}
               </div>
@@ -253,7 +253,7 @@ export default function HomePage({ featuredProducts = [] }) {
                   {four.map((p, idx) => (
                     <div className={"carousel-item" + (idx === 0 ? " active" : "")} key={p.id}>
                       <div className="px-4">
-                        <ProductCard product={p} />
+                        <ProductCardGrid product={p} onAdd={onAdd}/>
                       </div>
                     </div>
                   ))}

@@ -1,7 +1,7 @@
 // src/pages/CreateProductPage.jsx
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { createProducto } from '../api';
+import { createProducto } from '../apiProductos';
 
 import ProductForm from '../components/ProductForm';
 import Toast from '../components/Toast';

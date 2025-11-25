@@ -1,7 +1,7 @@
 // src/App.js
 import { Link, Routes, Route }  from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { getProductos } from './api';
+import { getProductos } from './apiProductos';
 import { useCart } from 'react-use-cart';
 
 import Navbar from './components/Navbar';
@@ -15,6 +15,14 @@ import CartPage from './pages/CartPage';
 import ProductDetailRoute from './pages/ProductDetailPage';
 import CreateProductPage from './pages/CreateProductPage';
 import EditProductPage from './pages/EditProductPage';
+import RegisterPage from './pages/RegisterPage';
+import LoginPage from './pages/LoginPage';
+import OrdersPage from'./pages/OrdersPage';
+import AdminPanelPage from './pages/AdminPanelPage';
+import ProfilePage from './pages/ProfilePage';
+
+import ProtectedRoute from './auth/ProtectedRoute';
+import AdminRoute from './auth/AdminRoute';
 
 export default function App() {
   const [products, setProducts] = useState([]);
@@ -56,9 +64,13 @@ export default function App() {
       id: p._id || p.id,
       price: Number(p.precio || 0),
       nombre: p.nombre,
-      imagen: p.imagenUrl || '/img/producto-ejemplo.png',
+      // Usamos la primera imagen del array, con fallback
+      imagen: Array.isArray(p.imagenes) && p.imagenes.length
+        ? p.imagenes[0]
+        : p.imagenUrl || '/img/producto-ejemplo.png',
       ...p,
     });
+
     const cantidad = Number(qty) || 1;
     addItem(normalize(prod), cantidad);
     showToast('Producto agregado al carrito 🛒');
@@ -76,13 +88,78 @@ export default function App() {
       <Navbar cartCount={totalItems} />
       <main id="contenido-principal" tabIndex={-1}>
         <Routes>
-          <Route path="/" element={ <HomePage featuredProducts={featuredProducts} loading={loading}/>}/>
-          <Route path="/productos" element={ <CatalogPage products={products} loading={loading} error={error} onRetry={handleRetry} onAdd={addToCart}/>}/>
-          <Route path="/productos/:id" element={<ProductDetailRoute onAdd={addToCart} onDataMutated={loadProducts} />} />
+          <Route path="/" element={<HomePage featuredProducts={featuredProducts} onAdd={addToCart} loading={loading} />} />
+          <Route
+            path="/productos"
+            element={
+              <CatalogPage
+                products={products}
+                loading={loading}
+                error={error}
+                onRetry={handleRetry}
+                onAdd={addToCart}
+              />
+            }
+          />
+          <Route
+            path="/productos/:id"
+            element={
+              <ProductDetailRoute
+                onAdd={addToCart}
+                onDataMutated={loadProducts}
+              />
+            }
+          />
           <Route path="/contacto" element={<ContactPage />} />
           <Route path="/carrito" element={<CartPage />} />
-          <Route path="/admin/crear-producto" element={<CreateProductPage onDataMutated={loadProducts} />} />
-          <Route path="/productos/editar/:id" element={<EditProductPage onDataMutated={loadProducts} />} />
+
+          {/* RUTAS PROTEGIDAS */}
+          <Route
+            path="/admin/crear-producto"
+            element={
+              <AdminRoute>
+                <CreateProductPage onDataMutated={loadProducts} />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/productos/editar/:id"
+            element={
+              <AdminRoute>
+                <EditProductPage onDataMutated={loadProducts} />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/perfil"
+            element={
+              <ProtectedRoute>
+                <ProfilePage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/mis-pedidos"
+            element={
+              <ProtectedRoute>
+                <OrdersPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin"
+            element={
+              <AdminRoute>
+                <AdminPanelPage
+                  products={products}
+                  loading={loading}
+                  onDataMutated={loadProducts}
+                />
+              </AdminRoute>
+            }
+          />
+          <Route path="/registro" element={<RegisterPage />} />
+          <Route path="/login" element={<LoginPage />} />
           <Route
             path="*"
             element={

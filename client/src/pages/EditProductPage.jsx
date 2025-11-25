@@ -1,7 +1,7 @@
 // src/pages/EditProductPage.jsx
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { getProductoById, updateProducto } from '../api';
+import { getProductoById, updateProducto } from '../apiProductos';
 import ProductForm from '../components/ProductForm';
 import Toast from '../components/Toast';
 

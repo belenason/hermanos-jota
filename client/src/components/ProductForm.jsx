@@ -12,7 +12,7 @@ const SECTIONS = {
 
 const INITIAL_FORM = {
   // Básicos
-  nombre: '', descripcion: '', precio: '', stock: '', imagenUrl: '',
+  nombre: '', descripcion: '', precio: '', stock: '', imagenes: '',
   // Opcionales
   medidas: '', materiales: '', acabado: '', peso: '',
   capacidad: '', modulares: '', tapizado: '', confort: '',
@@ -22,12 +22,7 @@ const INITIAL_FORM = {
   cables: '', regulacion: '', certificacion: ''
 };
 
-export default function ProductForm({
-  initialValues = null,
-  onSubmit,
-  onCancel,
-  submitLabel = 'Crear Producto'
-}) {
+export default function ProductForm({ initialValues = null, onSubmit, onCancel, submitLabel = 'Crear Producto'}) {
   const [form, setForm] = useState(INITIAL_FORM);
   const [validated, setValidated] = useState(false);
   const [touched, setTouched] = useState({});
@@ -130,24 +125,36 @@ export default function ProductForm({
     if (!validate()) return;
 
     const payload = Object.entries(form).reduce((acc, [key, value]) => {
-      // 1. Obtenemos el valor y lo limpiamos (quitamos espacios)
       const trimmedValue = String(value ?? '').trim();
-      
-      // 2. Si el valor NO está vacío, lo procesamos
+
+      // No procesamos imagenes acá, lo hacemos aparte
+      if (key === 'imagenes') {
+        return acc;
+      }
+
       if (trimmedValue !== '') {
-        
-        // 3. Caso especial: precio y stock deben ser números
         if (key === 'precio' || key === 'stock') {
           acc[key] = Number(trimmedValue);
         } else {
-          // 4. El resto se añade como string
           acc[key] = trimmedValue;
         }
       }
-      
-      // 5. Devolvemos el objeto 'acumulador' para la siguiente iteración
+
       return acc;
     }, {});
+
+    // Convertimos el textarea en un arreglo de strings
+    if (String(form.imagenes ?? '').trim() !== '') {
+      const imagenesArray = String(form.imagenes)
+        .split(/\r?\n|,/)
+        .map((u) => u.trim())
+        .filter(Boolean);
+
+      if (imagenesArray.length) {
+        payload.imagenes = imagenesArray;
+      }
+    }
+
 
     onSubmit(payload);
     setValidated(false);
@@ -238,22 +245,25 @@ export default function ProductForm({
           </div>
         </div>
 
-        {/* IMAGEN URL */}
+        {/* IMÁGENES (ARREGLO DE URLs) */}
         <div className="form-floating mb-2">
-          <input
-            type="url"
-            id="imagenUrl"
-            name="imagenUrl"
-            placeholder="https://ejemplo.com/imagen.jpg"
-            className={fieldClass('imagenUrl')}
+          <textarea
+            id="imagenes"
+            name="imagenes"
+            placeholder="Una URL por línea"
+            className={fieldClass('imagenes')}
             aria-describedby="imagen-help"
-            value={form.imagenUrl}
+            value={form.imagenes}
             onChange={handleChange}
             onBlur={handleBlur}
+            rows={3}
           />
-          <label htmlFor="imagenUrl">URL de la imagen</label>
-          <div className="form-text" id="imagen-help">Ingresá el enlace de la imagen.</div>
+          <label htmlFor="imagenes">URLs de las imágenes</label>
+          <div className="form-text" id="imagen-help">
+            Pegá una URL por línea.
+          </div>
         </div>
+
       </div>
 
       {/* SECCIONES COLAPSABLES */}
@@ -351,8 +361,15 @@ function mapInitials(iv) {
       continue;
     }
 
+    // Caso especial: si es 'imagenes' y es un array, lo pasamos a texto con saltos de línea
+    if (k === 'imagenes' && Array.isArray(v)) {
+      out[k] = v.join('\n');
+      continue;
+    }
+
     out[k] = String(v);
   }
 
   return out;
 }
+

@@ -1,12 +1,14 @@
 // src/pages/ProductDetailPage.jsx
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { getProductoById, deleteProducto } from '../api';
+import { getProductoById, deleteProducto } from '../apiProductos';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../auth/AuthContext';
 
 export default function ProductDetailPage({ onAdd, onDataMutated }) {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { isAuthenticated, isAdmin } = useContext(AuthContext);
 
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -69,8 +71,23 @@ export default function ProductDetailPage({ onAdd, onDataMutated }) {
     window.scrollTo({ top: 0, behavior: 'smooth' }); 
   }, []); 
 
-  // Calcular imágenes
-  const images = product?.imagenUrl ? [product.imagenUrl] : ['/img/producto-ejemplo.png'];
+  // Calcular imágenes (prioriza arreglo `imagenes`, mantiene compatibilidad con `imagenUrl`)
+  const images = (() => {
+    const arr = Array.isArray(product?.imagenes)
+      ? product.imagenes.filter(Boolean)
+      : [];
+
+    if (arr.length) return arr;
+
+    if (product?.imagenUrl) return [product.imagenUrl];
+
+    return ['/img/producto-ejemplo.png'];
+  })();
+
+  // Resetear índice cuando cambie de producto
+  useEffect(() => {
+    setIdx(0);
+  }, [product?.id]);
 
   // Calcular precio formateado
   const price = Number(product?.precio || 0).toLocaleString('es-AR');
@@ -245,14 +262,24 @@ export default function ProductDetailPage({ onAdd, onDataMutated }) {
                       <i className="bi bi-arrow-left me-2" aria-hidden="true"></i>
                       Catálogo
                     </Link>
-                    <Link to={`/productos/editar/${product.id}`} className="btn-edit flex-fill">
-                      <i className="bi bi-pencil me-2" aria-hidden="true"></i>
-                      Editar
-                    </Link>
-                    <button className="btn-delete flex-fill" onClick={handleDeleteClick}>
-                      <i className="bi bi-trash me-2" aria-hidden="true"></i>
-                      Eliminar
-                    </button>
+                    {isAuthenticated && isAdmin && (
+                      <>
+                        <Link
+                          to={`/productos/editar/${product.id}`}
+                          className="btn-edit flex-fill"
+                        >
+                          <i className="bi bi-pencil me-2" aria-hidden="true"></i>
+                          Editar
+                        </Link>
+                        <button
+                          className="btn-delete flex-fill"
+                          onClick={handleDeleteClick}
+                        >
+                          <i className="bi bi-trash me-2" aria-hidden="true"></i>
+                          Eliminar
+                        </button>
+                      </>
+                    )}
                   </div>
                 </div>
               </aside>
@@ -262,7 +289,7 @@ export default function ProductDetailPage({ onAdd, onDataMutated }) {
       </div>
 
       {/* Modal de confirmación */}
-      {showDeleteModal && (
+      {showDeleteModal && isAuthenticated && isAdmin && (
         <div className="delete-modal-overlay" onClick={handleCancelDelete}>
           <div className="delete-modal" onClick={(e) => e.stopPropagation()}>
             <div className="delete-modal-header">
