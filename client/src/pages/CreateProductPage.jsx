@@ -2,18 +2,14 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createProducto } from '../apiProductos';
+import { toast } from 'react-hot-toast'
 
 import ProductForm from '../components/ProductForm';
-import Toast from '../components/Toast';
 
 export default function CreateProductPage({ onDataMutated}) {
   const navigate = useNavigate();
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
-  const [toast, setToast] = useState({ show: false, message: '' });
-
-  const showToast = (message) => setToast({ show: true, message });
-  const hideToast = () => setToast((t) => ({ ...t, show: false }));
 
   useEffect(() => { 
     window.scrollTo({ top: 0, behavior: 'smooth' }); 
@@ -28,12 +24,9 @@ export default function CreateProductPage({ onDataMutated}) {
       onDataMutated();
 
       // Toast de confirmación
-      showToast('¡Producto creado con éxito!');
+      toast.success('¡Producto creado con éxito!');
 
-      // Redirigir luego de un breve delay (deja ver el toast)
-      setTimeout(() => {
-        navigate(`/productos/${created.id}`, { replace: true });
-      }, 2000);
+      navigate(`/productos/${created.id}`, { replace: true });
     } catch (err) {
       setError('No se pudo crear el producto');
     } finally {
@@ -81,8 +74,6 @@ export default function CreateProductPage({ onDataMutated}) {
         </div>
       </section>
 
-      {/* Toast local a esta página */}
-      <Toast show={toast.show} message={toast.message} onClose={hideToast} duration={1600} />
     </>
   );
 }

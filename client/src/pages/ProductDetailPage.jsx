@@ -4,11 +4,13 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { getProductoById, deleteProducto } from '../apiProductos';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../auth/AuthContext';
+import { CartContext } from '../Cart/CartContext';
 
-export default function ProductDetailPage({ onAdd, onDataMutated }) {
+export default function ProductDetailPage({ onDataMutated }) {
   const { id } = useParams();
   const navigate = useNavigate();
   const { isAuthenticated, isAdmin } = useContext(AuthContext);
+  const { addToCart } = useContext(CartContext);
 
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -67,20 +69,18 @@ export default function ProductDetailPage({ onAdd, onDataMutated }) {
     return String(v).trim() !== '';
   });
 
-  useEffect(() => { 
-    window.scrollTo({ top: 0, behavior: 'smooth' }); 
-  }, []); 
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
 
-  // Calcular imágenes (prioriza arreglo `imagenes`, mantiene compatibilidad con `imagenUrl`)
+  // Calcular imágenes
   const images = (() => {
     const arr = Array.isArray(product?.imagenes)
       ? product.imagenes.filter(Boolean)
       : [];
 
     if (arr.length) return arr;
-
     if (product?.imagenUrl) return [product.imagenUrl];
-
     return ['/img/producto-ejemplo.png'];
   })();
 
@@ -96,7 +96,7 @@ export default function ProductDetailPage({ onAdd, onDataMutated }) {
     const total = images.length;
     const n = (nextIdx + total) % total;
     setIdx(n);
-    
+
     const bar = document.querySelector('.product-thumbs');
     const thumb = bar?.querySelector(`[data-idx="${n}"]`);
     if (thumb && bar) {
@@ -161,9 +161,16 @@ export default function ProductDetailPage({ onAdd, onDataMutated }) {
         <nav aria-label="breadcrumb" className="mb-3 mt-4">
           <ol className="breadcrumb">
             <li className="breadcrumb-item">
-              <Link to="/productos" className=" bread-personalizado btn btn-link p-0 ">Catálogo</Link>
+              <Link
+                to="/productos"
+                className=" bread-personalizado btn btn-link p-0 "
+              >
+                Catálogo
+              </Link>
             </li>
-            <li className="breadcrumb-item active" aria-current="page">{product?.nombre}</li>
+            <li className="breadcrumb-item active" aria-current="page">
+              {product?.nombre}
+            </li>
           </ol>
         </nav>
 
@@ -173,10 +180,21 @@ export default function ProductDetailPage({ onAdd, onDataMutated }) {
           <div className="row g-4 align-items-start">
             {/* Galería */}
             <div className="col-lg-7">
-              <section className="product-gallery mb-3" aria-label={`Galería de imágenes de ${product?.nombre}`}>
+              <section
+                className="product-gallery mb-3"
+                aria-label={`Galería de imágenes de ${product?.nombre}`}
+              >
                 <div className="position-relative">
-                  <button className="carousel-control-prev" aria-label="Imagen anterior" onClick={() => go(idx - 1)} type="button">
-                    <span className="carousel-control-prev-icon" aria-hidden="true" />
+                  <button
+                    className="carousel-control-prev"
+                    aria-label="Imagen anterior"
+                    onClick={() => go(idx - 1)}
+                    type="button"
+                  >
+                    <span
+                      className="carousel-control-prev-icon"
+                      aria-hidden="true"
+                    />
                     <span className="visually-hidden">Anterior</span>
                   </button>
 
@@ -186,27 +204,37 @@ export default function ProductDetailPage({ onAdd, onDataMutated }) {
                     className="d-block w-100 gallery-main-image"
                   />
 
-                  <button className="carousel-control-next" aria-label="Imagen siguiente" onClick={() => go(idx + 1)} type="button">
-                    <span className="carousel-control-next-icon" aria-hidden="true" />
+                  <button
+                    className="carousel-control-next"
+                    aria-label="Imagen siguiente"
+                    onClick={() => go(idx + 1)}
+                    type="button"
+                  >
+                    <span
+                      className="carousel-control-next-icon"
+                      aria-hidden="true"
+                    />
                     <span className="visually-hidden">Siguiente</span>
                   </button>
                 </div>
 
                 <div className="product-thumbs mt-2" aria-label="Miniaturas">
                   {images.map((src, i) => (
-                    <img 
-                      key={src + i} 
-                      src={src} 
-                      data-idx={i} 
-                      alt={`Vista ${i + 1}`} 
-                      className={i === idx ? 'active' : ''} 
-                      onClick={() => go(i)} 
+                    <img
+                      key={src + i}
+                      src={src}
+                      data-idx={i}
+                      alt={`Vista ${i + 1}`}
+                      className={i === idx ? 'active' : ''}
+                      onClick={() => go(i)}
                     />
                   ))}
                 </div>
               </section>
 
-              {product?.descripcion && <p className="product-desc mt-3">{product.descripcion}</p>}
+              {product?.descripcion && (
+                <p className="product-desc mt-3">{product.descripcion}</p>
+              )}
               {nonEmptySpecs.length > 0 && (
                 <ul className="product-specs">
                   {nonEmptySpecs.map(([key, label]) => (
@@ -216,7 +244,6 @@ export default function ProductDetailPage({ onAdd, onDataMutated }) {
                   ))}
                 </ul>
               )}
-
             </div>
 
             {/* Compra */}
@@ -226,40 +253,54 @@ export default function ProductDetailPage({ onAdd, onDataMutated }) {
 
                 <div className="label">Cantidad</div>
                 <div className="qty-input mb-3">
-                  <button 
-                    type="button" 
-                    className="btn btn-outline-secondary" 
-                    onClick={() => setQty(q => clampQty(q - 1))} 
+                  <button
+                    type="button"
+                    className="btn btn-outline-secondary"
+                    onClick={() => setQty((q) => clampQty(q - 1))}
                     aria-label="Disminuir cantidad"
                   >
                     −
                   </button>
-                  <input 
-                    id="qty" 
-                    type="number" 
-                    min={1} 
-                    max={99} 
-                    className="form-control text-center cant-prod" 
-                    value={qty} 
-                    onChange={(e) => setQty(clampQty(parseInt(e.target.value, 10)))} 
+                  <input
+                    id="qty"
+                    type="number"
+                    min={1}
+                    max={99}
+                    className="form-control text-center cant-prod"
+                    value={qty}
+                    onChange={(e) =>
+                      setQty(clampQty(parseInt(e.target.value, 10)))
+                    }
                   />
-                  <button 
-                    type="button" 
-                    className="btn btn-outline-secondary" 
-                    onClick={() => setQty(q => clampQty(q + 1))} 
+                  <button
+                    type="button"
+                    className="btn btn-outline-secondary"
+                    onClick={() => setQty((q) => clampQty(q + 1))}
                     aria-label="Aumentar cantidad"
                   >
                     +
                   </button>
                 </div>
                 <div className="d-flex flex-column gap-2">
-                  <button className="btn-brand w-100" onClick={() => onAdd(product, clampQty(qty))}>
-                    <i className="bi bi-cart-plus me-2" aria-hidden="true"></i>
+                  <button
+                    className="btn-brand w-100"
+                    onClick={() => addToCart(product, clampQty(qty))}
+                  >
+                    <i
+                      className="bi bi-cart-plus me-2"
+                      aria-hidden="true"
+                    ></i>
                     Añadir al carrito
                   </button>
                   <div className="d-flex gap-2">
-                    <Link to="/productos" className="btn-outline-brand flex-fill">
-                      <i className="bi bi-arrow-left me-2" aria-hidden="true"></i>
+                    <Link
+                      to="/productos"
+                      className="btn-outline-brand flex-fill"
+                    >
+                      <i
+                        className="bi bi-arrow-left me-2"
+                        aria-hidden="true"
+                      ></i>
                       Catálogo
                     </Link>
                     {isAuthenticated && isAdmin && (
@@ -268,14 +309,20 @@ export default function ProductDetailPage({ onAdd, onDataMutated }) {
                           to={`/productos/editar/${product.id}`}
                           className="btn-edit flex-fill"
                         >
-                          <i className="bi bi-pencil me-2" aria-hidden="true"></i>
+                          <i
+                            className="bi bi-pencil me-2"
+                            aria-hidden="true"
+                          ></i>
                           Editar
                         </Link>
                         <button
                           className="btn-delete flex-fill"
                           onClick={handleDeleteClick}
                         >
-                          <i className="bi bi-trash me-2" aria-hidden="true"></i>
+                          <i
+                            className="bi bi-trash me-2"
+                            aria-hidden="true"
+                          ></i>
                           Eliminar
                         </button>
                       </>
@@ -290,25 +337,35 @@ export default function ProductDetailPage({ onAdd, onDataMutated }) {
 
       {/* Modal de confirmación */}
       {showDeleteModal && isAuthenticated && isAdmin && (
-        <div className="delete-modal-overlay" onClick={handleCancelDelete}>
-          <div className="delete-modal" onClick={(e) => e.stopPropagation()}>
+        <div
+          className="delete-modal-overlay"
+          onClick={handleCancelDelete}
+        >
+          <div
+            className="delete-modal"
+            onClick={(e) => e.stopPropagation()}
+          >
             <div className="delete-modal-header">
               <h3>Confirmar eliminación</h3>
             </div>
             <div className="delete-modal-body">
-              <p>¿Estás seguro de que deseas eliminar este producto?</p>
-              <p className="delete-modal-warning">Esta acción no se puede deshacer.</p>
+              <p>
+                ¿Estás seguro de que deseas eliminar este producto?
+              </p>
+              <p className="delete-modal-warning">
+                Esta acción no se puede deshacer.
+              </p>
             </div>
             <div className="delete-modal-footer">
-              <button 
-                className="btn-modal-cancel" 
+              <button
+                className="btn-modal-cancel"
                 onClick={handleCancelDelete}
                 disabled={deleting}
               >
                 Cancelar
               </button>
-              <button 
-                className="btn-modal-delete" 
+              <button
+                className="btn-modal-delete"
                 onClick={handleConfirmDelete}
                 disabled={deleting}
               >

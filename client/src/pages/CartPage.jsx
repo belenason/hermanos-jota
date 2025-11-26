@@ -1,8 +1,10 @@
-import { useCart } from "../context/CartContext";
+// src/pages/CartPage.jsx
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useContext, useState } from "react";
 import { AuthContext } from "../auth/AuthContext";
-import { crearPedido } from "../apiPedidos"; // ajustá el path si es necesario
+import { crearPedido } from "../apiPedidos";
+import { getProductos } from "../apiProductos";
+import { CartContext } from "../Cart/CartContext";
 
 const formatARS = (n) => `$ ${Number(n || 0).toLocaleString("es-AR")}`;
 
@@ -15,7 +17,7 @@ export default function CartPage() {
     updateItemQuantity,
     removeItem,
     emptyCart,
-  } = useCart();
+  } = useContext(CartContext);
 
   const navigate = useNavigate();
 
@@ -23,9 +25,47 @@ export default function CartPage() {
   const [errorMsg, setErrorMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
 
+  // Scroll al entrar
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
+
+  // 👇 LIMPIEZA DE PRODUCTOS ELIMINADOS DEL CATALOGO
+  useEffect(() => {
+    async function cleanupDeletedProducts() {
+      try {
+        const productos = await getProductos();
+        const aliveIds = new Set(
+          productos.map((p) => String(p._id || p.id))
+        );
+
+        let removedSomething = false;
+
+        items.forEach((it) => {
+          const itemId = String(it.id || it._id);
+          if (!aliveIds.has(itemId)) {
+            // si el producto ya no existe en el catálogo, lo sacamos del carrito
+            removeItem(it.id || it._id);
+            removedSomething = true;
+          }
+        });
+
+        if (removedSomething) {
+          setErrorMsg(
+            "Algunos productos ya no están disponibles y fueron eliminados del carrito."
+          );
+        }
+      } catch (err) {
+        console.error("Error verificando productos del carrito", err);
+        // No frenamos la página, solo logueamos. Podés mostrar un mensaje si querés.
+      }
+    }
+
+    // Solo cuando entrás al carrito
+    if (items.length) {
+      cleanupDeletedProducts();
+    }
+  }, [items.length, removeItem]); // usamos length para no re-ejecutar por cambios de cantidad
 
   async function handleFinalizarCompra() {
     setErrorMsg("");
@@ -36,22 +76,18 @@ export default function CartPage() {
       return;
     }
 
-    // Si no está autenticado, lo mandamos a login
     if (!isAuthenticated) {
       navigate("/login", { state: { from: "/carrito" } });
       return;
     }
 
-    // Mapeamos los ítems del carrito al formato que espera el backend
     const payloadItems = items.map((it) => ({
-      // react-use-cart usa `id` como identificador principal
       productoId: it.id || it._id,
       cantidad: it.quantity || 1,
     }));
 
     setCreating(true);
     try {
-      // apiPedidos.crearPedido ya hace { items: payloadItems } y agrega el token
       await crearPedido(payloadItems);
 
       emptyCart();
@@ -96,57 +132,67 @@ export default function CartPage() {
 
         <div className="cart-content-grid">
           <div className="cart-items-section">
-            {items.map((it) => (
-              <div key={it.id} className="cart-item-card">
-                <Link to={`/productos/${it.id}`} className="cart-item-link">
-                  <img
-                    src={
-                      (Array.isArray(it.imagenes) && it.imagenes[0]) ||
-                      it.imagen ||
-                      "/img/producto-ejemplo.png"
-                    }
-                    alt={it.nombre}
-                    className="cart-item-image"
-                  />
-
-                  <div className="cart-item-details">
-                    <h3 className="cart-item-name">{it.nombre}</h3>
-                    <p className="cart-item-price">{formatARS(it.price)}</p>
-                  </div>
-                </Link>
-
-                <div className="cart-item-actions">
-                  <div className="quantity-control">
-                    <button
-                      className="quantity-btn"
-                      onClick={() =>
-                        updateItemQuantity(it.id, it.quantity - 1)
-                      }
-                      disabled={it.quantity <= 1}
-                    >
-                      −
-                    </button>
-                    <span className="quantity-display">{it.quantity}</span>
-                    <button
-                      className="quantity-btn"
-                      onClick={() =>
-                        updateItemQuantity(it.id, it.quantity + 1)
-                      }
-                    >
-                      +
-                    </button>
-                  </div>
-
-                  <button
-                    className="btn-remove"
-                    onClick={() => removeItem(it.id)}
-                    title="Eliminar producto"
+            {items.map((it) => {
+              const itemId = it.id || it._id; // por las dudas
+              return (
+                <div key={itemId} className="cart-item-card">
+                  <Link
+                    to={`/productos/${itemId}`}
+                    className="cart-item-link"
                   >
-                    ✕
-                  </button>
+                    <img
+                      src={
+                        (Array.isArray(it.imagenes) && it.imagenes[0]) ||
+                        it.imagen ||
+                        "/img/producto-ejemplo.png"
+                      }
+                      alt={it.nombre}
+                      className="cart-item-image"
+                    />
+
+                    <div className="cart-item-details">
+                      <h3 className="cart-item-name">{it.nombre}</h3>
+                      <p className="cart-item-price">
+                        {formatARS(it.price)}
+                      </p>
+                    </div>
+                  </Link>
+
+                  <div className="cart-item-actions">
+                    <div className="quantity-control">
+                      <button
+                        className="quantity-btn"
+                        onClick={() =>
+                          updateItemQuantity(itemId, it.quantity - 1)
+                        }
+                        disabled={it.quantity <= 1}
+                      >
+                        −
+                      </button>
+                      <span className="quantity-display">
+                        {it.quantity}
+                      </span>
+                      <button
+                        className="quantity-btn"
+                        onClick={() =>
+                          updateItemQuantity(itemId, it.quantity + 1)
+                        }
+                      >
+                        +
+                      </button>
+                    </div>
+
+                    <button
+                      className="btn-remove"
+                      onClick={() => removeItem(itemId)}
+                      title="Eliminar producto"
+                    >
+                      ✕
+                    </button>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           <div className="cart-summary">
@@ -154,7 +200,9 @@ export default function CartPage() {
 
             <div className="summary-row">
               <span className="summary-label">Subtotal</span>
-              <span className="summary-value">{formatARS(cartTotal)}</span>
+              <span className="summary-value">
+                {formatARS(cartTotal)}
+              </span>
             </div>
 
             <div className="summary-row">

@@ -18,7 +18,7 @@ export default function LoginPage() {
           <header className="register-header text-center">
             <h1 className="register-title">Iniciar sesión</h1>
             <p className="register-subtitle">
-              Ingresá tus datos para ver el catálogo y tu carrito guardado.
+              Ingresá tus datos para realizar pedidos y ver tu historial.
             </p>
           </header>
 

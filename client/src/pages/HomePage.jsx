@@ -2,8 +2,7 @@ import { useEffect, useState } from 'react'; // NUEVO: importar useState
 import ProductCardGrid from '../components/ProductCardGrid';
 import { Link } from 'react-router-dom';
 
-// NUEVO: Definimos el contenido del carrusel como un array de objetos.
-// Esto nos permite generarlo dinámicamente y no repetir HTML.
+
 const heroSlides = [
   {
     img: "/img/fondohero.jpg",
@@ -34,7 +33,7 @@ const heroSlides = [
   }
 ];
 
-export default function HomePage({ featuredProducts = [], onAdd }) { 
+export default function HomePage({ featuredProducts = []}) { 
   const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => { 
@@ -234,7 +233,7 @@ export default function HomePage({ featuredProducts = [], onAdd }) {
               <div className="row g-4">
                 {four.map(p => (
                   <div className="col-md-3" key={p.id}>
-                    <ProductCardGrid product={p} onAdd={onAdd} />
+                    <ProductCardGrid product={p} />
                   </div>
                 ))}
               </div>
@@ -253,7 +252,7 @@ export default function HomePage({ featuredProducts = [], onAdd }) {
                   {four.map((p, idx) => (
                     <div className={"carousel-item" + (idx === 0 ? " active" : "")} key={p.id}>
                       <div className="px-4">
-                        <ProductCardGrid product={p} onAdd={onAdd}/>
+                        <ProductCardGrid product={p}/>
                       </div>
                     </div>
                   ))}

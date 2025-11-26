@@ -48,7 +48,7 @@ export default function RegisterForm() {
 
       setTimeout(() => {
         navigate('/login');
-      }, 1500);
+      }, 500);
     } catch (err) {
       setErrorMsg(err.message || 'No se pudo crear la cuenta.');
     } finally {

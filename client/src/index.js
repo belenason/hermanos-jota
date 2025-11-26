@@ -7,7 +7,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import './styles/micss.css';
 
-import { CartProvider } from "./context/CartContext";
+import { CartProvider } from "./Cart/CartProvider";
 
 import { BrowserRouter } from 'react-router-dom';
 import { AuthProvider } from './auth/AuthProvider';

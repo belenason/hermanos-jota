@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { getProductoById, updateProducto } from '../apiProductos';
 import ProductForm from '../components/ProductForm';
-import Toast from '../components/Toast';
+import toast from 'react-hot-toast';
 
 export default function EditProductPage( {onDataMutated} ) {
   const { id } = useParams();
@@ -13,10 +13,6 @@ export default function EditProductPage( {onDataMutated} ) {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
   const [product, setProduct] = useState(null);
-
-  const [toast, setToast] = useState({ show: false, message: '' });
-  const showToast = (message) => setToast({ show: true, message });
-  const hideToast = () => setToast((t) => ({ ...t, show: false }));
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -45,11 +41,9 @@ export default function EditProductPage( {onDataMutated} ) {
       // IMPORTANTE: aseguramos enviar el id correcto (_id en backend)
       await updateProducto(product._id || product.id, formData);
       onDataMutated();
-      showToast('¡Cambios guardados!');
+      toast.success('¡Cambios guardados!');
       // redirige al detalle
-      setTimeout(() => {
-        navigate(`/productos/${product._id || product.id}`, { replace: true });
-      }, 2000);
+      navigate(`/productos/${product._id || product.id}`, { replace: true });
     } catch (e) {
       setError(e?.message ?? 'No se pudieron guardar los cambios');
     } finally {
@@ -112,8 +106,6 @@ export default function EditProductPage( {onDataMutated} ) {
           )}
         </div>
       </section>
-
-      <Toast show={toast.show} message={toast.message} onClose={hideToast} duration={1200} />
     </>
   );
 }

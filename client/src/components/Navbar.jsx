@@ -2,11 +2,13 @@
 import { useEffect, useContext, useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { AuthContext } from '../auth/AuthContext';
+import { CartContext } from '../Cart/CartContext';
 
-export default function Navbar({ cartCount, onNav }) {
+export default function Navbar() {
   const { isAuthenticated, currentUser, logout, isAdmin } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
+  const { totalItems } = useContext(CartContext);
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -185,9 +187,9 @@ export default function Navbar({ cartCount, onNav }) {
                 >
                   <span className="position-relative d-inline-block">
                     <i className="bi bi-cart3 fs-5"></i>
-                    {cartCount > 0 && (
+                    {totalItems > 0 && (
                       <span className="badge rounded-pill elbadge">
-                        {cartCount}
+                        {totalItems}
                       </span>
                     )}
                   </span>

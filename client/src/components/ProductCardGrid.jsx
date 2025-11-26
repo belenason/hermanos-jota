@@ -1,9 +1,14 @@
 // src/components/ProductCardGrid.jsx
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { CartContext } from '../Cart/CartContext';
 
-export default function ProductCardGrid({ product, onAdd }) {
+export default function ProductCardGrid({ product }) {
+  const { addToCart } = useContext(CartContext);
   const [isHovered, setIsHovered] = useState(false);
+
+  // 👇 ID normalizado para evitar "undefined"
+  const productId = product.id || product._id;
 
   // Normalizamos el arreglo de imágenes
   const imagenes = Array.isArray(product.imagenes)
@@ -12,18 +17,14 @@ export default function ProductCardGrid({ product, onAdd }) {
 
   const fallback = '/img/producto-ejemplo.png';
 
-  // Primera y segunda imagen
   const firstImage =
     imagenes[0] ||
-    product.imagenUrl || // por si tenés productos viejos aún con este campo
+    product.imagenUrl ||
     fallback;
 
-  const secondImage =
-    imagenes[1] || firstImage; // si no hay segunda, usamos la misma
+  const secondImage = imagenes[1] || firstImage;
 
-  // 👉 Lo que pediste: sin hover = segunda, con hover = primera
   const currentImg = isHovered ? firstImage : secondImage;
-
   const precio = Number(product.precio || 0).toLocaleString('es-AR');
 
   return (
@@ -33,7 +34,7 @@ export default function ProductCardGrid({ product, onAdd }) {
       onMouseLeave={() => setIsHovered(false)}
     >
       <Link
-        to={`/productos/${product.id}`}
+        to={`/productos/${productId}`}
         className="lnk-card-detalle-producto product-card-link"
         aria-label={`Ver ${product.nombre}`}
       >
@@ -53,7 +54,7 @@ export default function ProductCardGrid({ product, onAdd }) {
 
       <button
         className="btn-product-add"
-        onClick={() => onAdd(product, 1)}
+        onClick={() => addToCart(product, 1)}
         aria-label={`Agregar ${product.nombre} al carrito`}
         type="button"
       >
