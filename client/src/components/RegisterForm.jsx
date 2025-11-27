@@ -9,6 +9,7 @@ export default function RegisterForm() {
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
   const navigate = useNavigate();
 
@@ -106,22 +107,42 @@ export default function RegisterForm() {
       </div>
 
       {/* Password */}
-      <div className="form-floating mb-4">
-        <input
-          type="password"
-          id="password"
-          name="password"
-          className="form-control register-input"
-          placeholder="Contraseña"
-          required
-          minLength={8}
-          autoComplete="new-password"
-          value={form.password}
-          onChange={handleChange}
-        />
-        <label htmlFor="password">Contraseña</label>
-        <div className="invalid-feedback">Mínimo 8 caracteres.</div>
-      </div>
+    
+     <div className="form-floating mb-4 password-wrapper">
+  <input
+    type={showPassword ? "text" : "password"}
+    id="password"
+    name="password"
+    className="form-control register-input"
+    placeholder="Contraseña"
+    required
+    minLength={8}
+    autoComplete="new-password"
+    value={form.password}
+    onChange={handleChange}
+  />
+  <label htmlFor="password">Contraseña</label>
+
+  {/* Botón ojito dentro del input */}
+  <button
+    type="button"
+    className="toggle-password"
+    onClick={() => setShowPassword(prev => !prev)}
+    tabIndex={-1}
+  >
+     {showPassword ? (
+      <i className="bi bi-eye-slash"></i>
+    ) : (
+      <i className="bi bi-eye"></i>
+    )}
+ 
+
+  </button>
+
+  <div className="invalid-feedback">Mínimo 8 caracteres.</div>
+</div>
+
+        
 
       {/* Botón */}
       <div className="d-grid mb-2">

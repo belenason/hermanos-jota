@@ -21,6 +21,7 @@ export default function LoginForm() {
   const [successMsg, setSuccessMsg] = useState('');
   const [emailError, setEmailError] = useState('');  // Error específico de email
   const [passwordError, setPasswordError] = useState(''); // Error específico de password
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -120,19 +121,35 @@ export default function LoginForm() {
       )}
 
       {/* Password */}
-      <div className="form-floating mb-2">
-        <input
-          type="password"
-          id="password"
-          name="password"
-          className="form-control register-input"
-          placeholder="Contraseña"
-          autoComplete="current-password"
-          value={form.password}
-          onChange={handleChange}
-        />
-        <label htmlFor="password">Contraseña</label>
-      </div>
+<div className="form-floating mb-2 password-wrapper">
+  <input
+    type={showPassword ? "text" : "password"}
+    id="password"
+    name="password"
+    className="form-control register-input"
+    placeholder="Contraseña"
+    autoComplete="current-password"
+    value={form.password}
+    onChange={handleChange}
+  />
+  <label htmlFor="password">Contraseña</label>
+
+  {/* OJITO ADENTRO */}
+  <button
+    type="button"
+    className="toggle-password"
+    onClick={() => setShowPassword(prev => !prev)}
+    tabIndex={-1}
+  >
+    {showPassword ? (
+      <i className="bi bi-eye-slash"></i>
+    ) : (
+      <i className="bi bi-eye"></i>
+    )}
+  </button>
+</div>
+
+
       {passwordError && (
         <p className="login-error mb-3">{passwordError}</p>
       )}
