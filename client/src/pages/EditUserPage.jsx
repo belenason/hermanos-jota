@@ -79,7 +79,7 @@ export default function EditUserPage() {
         payload.password = formData.newPassword; // <-- CAMBIO: usar "password" en lugar de "newPassword"
       }
 
-      const updated = await updatePerfil(token, payload);
+      const updated = await updatePerfil(payload);
 
       setFormData({ username: updated.username, email: updated.email, currentPassword: '', newPassword: '', confirmPassword: '' });
       setSuccessMsg('Perfil actualizado correctamente');
