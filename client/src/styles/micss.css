@@ -3439,7 +3439,9 @@ SECCIÓN 5: ESTILOS ESPECÍFICOS DE PRODUCTOS
 
 .actions-bar {
   display: flex;
-  gap: 1rem;
+  gap: 12px; /* espacio entre botones */
+  flex-wrap: wrap; /* para que no se solapen en pantallas pequeñas */
+  margin-top: 20px;
 }
 
 .btn-primary {
@@ -5762,4 +5764,162 @@ SECCIÓN 5: ESTILOS ESPECÍFICOS DE PRODUCTOS
   font-size: 0.9rem;
   border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.18);
+}
+/* ========================================
+   MODIFICAR CUENTA PAGE STYLES
+   ======================================== */
+
+.modificar-cuenta-layout {
+  padding-top: calc(4.5rem + 2rem); /* navbar + separación */
+  min-height: calc(100vh - 4.5rem);
+  background: var(--alabastro-calido);
+  display: flex;
+  justify-content: center; /* centro horizontal */
+  align-items: flex-start;  /* inicio vertical */
+  position: relative;
+  flex-direction: column;
+  width: 100%;
+}
+
+.modificar-cuenta-card {
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto; /* esto centra la card */
+  background: rgba(255, 255, 255, 0.68);
+  backdrop-filter: blur(30px);
+  padding: 2.75rem 3rem 2.5rem;
+  border-radius: 32px;
+  box-shadow: 0 24px 80px rgba(218, 179, 172, 0.35);
+  color: var(--ink);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 3rem; /* espacio para footer */
+}
+
+.password-error-msg {
+  color: var(--error); /* rojo */
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+/* Título */
+.modificar-cuenta-card h1 {
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: var(--siena-tostado);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-family: 'Playfair Display', Georgia, serif;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+/* Formulario */
+.modificar-cuenta-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.modificar-cuenta-card .data-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.modificar-cuenta-card label {
+  font-weight: 600;
+  color: var(--dark-wood);
+}
+
+.modificar-cuenta-card input {
+  border-radius: 999px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 0.75rem 1.25rem;
+  font-size: 1rem;
+  color: var(--ink);
+  transition: all 0.3s ease;
+}
+
+.modificar-cuenta-card input:focus {
+  border-color: rgba(135, 169, 107, 0.7);
+  box-shadow: 0 0 0 0.15rem rgba(135, 169, 107, 0.25);
+  outline: none;
+}
+
+/* Botón principal */
+.modificar-cuenta-card .btn-primary {
+  border-radius: 999px;
+  padding: 0.85rem 1.5rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: none;
+  background-color: var(--verde-salvia);
+  color: #ffffff;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.modificar-cuenta-card .btn-primary:hover,
+.modificar-cuenta-card .btn-primary:focus {
+  background-color: rgb(93, 116, 75);
+  color: #ffffff;
+}
+
+/* Mensajes de error y éxito */
+.error-msg {
+  color: rgb(242, 85, 85);           /* texto rojo */
+  font-weight: bold;    /* opcional: negrita */
+  margin-top: 5px;  
+  text-align: center;
+}
+
+.success-msg {
+  color: var(--verde-salvia);
+  font-size: 0.875rem;
+  text-align: center;
+}
+
+/* Wrapper para campos de contraseña */
+.password-wrapper {
+  position: relative;
+}
+
+.password-wrapper .toggle-password {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+  opacity: 0.6;
+  padding: 0;
+}
+
+.password-wrapper .toggle-password:hover {
+  opacity: 1;
+}
+
+.password-wrapper input {
+  padding-right: 45px !important; /* espacio para el toggle */
+}
+
+/* Responsivo */
+@media (max-width: 576px) {
+  .modificar-cuenta-layout {
+    padding: 2rem 1rem;
+    min-height: auto; /* se ajusta al contenido */
+  }
+
+  .modificar-cuenta-card {
+    padding: 2rem 1.5rem;
+    border-radius: 24px;
+    margin-bottom: 2rem;
+  }
 }

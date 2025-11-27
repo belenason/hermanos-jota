@@ -2,7 +2,7 @@
 import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../auth/AuthContext';
-import { perfilUsuario } from '../apiUsuarios';
+import { perfilUsuario} from '../apiUsuarios';
 
 export default function ProfilePage() {
   const { currentUser, isAuthenticated } = useContext(AuthContext);
@@ -10,6 +10,7 @@ export default function ProfilePage() {
   const [loading, setLoading] = useState(true);
   const [errorMsg, setErrorMsg] = useState('');
   const navigate = useNavigate();
+ 
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -21,6 +22,8 @@ export default function ProfilePage() {
       navigate('/login', { replace: true });
       return;
     }
+ 
+
 
     const token = localStorage.getItem('authToken');
     if (!token) {
@@ -42,6 +45,8 @@ export default function ProfilePage() {
 
     cargarPerfil();
   }, [isAuthenticated, navigate]);
+
+
 
   const datos = perfil || currentUser;
 
@@ -142,6 +147,18 @@ export default function ProfilePage() {
                   </svg>
                   Ver mis pedidos
                 </button>
+                <button 
+    className="btn-primary"
+    onClick={() => navigate('/modificar-cuenta')}
+  >
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+      <path d="M12 20h9" strokeWidth="2"/>
+        <line x1="3" y1="6" x2="21" y2="6" strokeWidth="2"/>
+      <path d="M16.5 3.5a2.121 2.121 0 1 1 3 3L7 19l-4 1 1-4 12.5-12.5z" strokeWidth="2"/>
+    </svg>
+    Modificar cuenta
+  </button>
+                
               </div>
             </main>
           </>

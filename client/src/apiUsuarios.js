@@ -22,6 +22,27 @@ export async function perfilUsuario() {
   });
 }
 
+// src/apiUsuarios.js
+export const updatePerfil = async (token, payload) => {
+  const res = await fetch('/api/usuarios/perfil', {
+    method: 'PUT',
+    headers: { 
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}` 
+    },
+    body: JSON.stringify(payload),
+  });
+
+  const data = await res.json();
+
+  if (!res.ok) {
+    // Esto lanza un error y lo agarra tu catch en ModificarCuenta.jsx
+    throw new Error(data.message || 'Error al actualizar perfil');
+  }
+
+  return data.user; // ahora devolvemos solo el usuario actualizado
+};
+
 /* ========== FUNCIONES ADMIN ========== */
 
 // GET todos los usuarios (admin)

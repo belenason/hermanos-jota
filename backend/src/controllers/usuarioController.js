@@ -144,4 +144,58 @@ const changeUserRole = asyncHandler(async (req, res) => {
   });
 });
 
-export { register, login, getProfile, getUsers, changeUserRole };
+const updateProfile = async (req, res) => {
+  const userId = req.user.id; // viene del token
+  const { username, email, password, currentPassword } = req.body;
+
+ const user = await Usuario.findById(userId).select('+password');
+
+  if (!user) {
+    return res.status(404).json({ message: 'Usuario no encontrado.' });
+  }
+
+  const updates = {};
+
+  if (username) updates.username = username.trim();
+  if (email) updates.email = email.trim();
+
+  if (password) {
+    // Validar que se envió la contraseña actual
+    if (!currentPassword) {
+      return res.status(400).json({ message: 'Debes ingresar la contraseña actual para cambiarla.' });
+    }
+
+    // Verificar que currentPassword coincida
+    const validPassword = await bcrypt.compare(currentPassword, user.password);
+    if (!validPassword) {
+      return res.status(400).json({ message: 'Contraseña actual incorrecta.' });
+    }
+
+    if (password.length < 8) {
+      return res.status(400).json({ message: 'La contraseña debe tener mínimo 8 caracteres.' });
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    updates.password = await bcrypt.hash(password, salt);
+  }
+
+  const usuarioActualizado = await Usuario.findByIdAndUpdate(
+    userId,
+    { $set: updates },
+    { new: true, runValidators: true }
+  ).select('-password'); // oculto pass
+
+  res.status(200).json({
+    message: 'Usuario actualizado exitosamente',
+    user: {
+      id: usuarioActualizado._id,
+      username: usuarioActualizado.username,
+      email: usuarioActualizado.email,
+      roles: usuarioActualizado.roles,
+    }
+  });
+};
+
+
+
+export { register, login, getProfile, getUsers, changeUserRole, updateProfile };
