@@ -5,7 +5,9 @@ import { getPedidosAdmin, actualizarEstadoPedido } from '../apiPedidos';
 const ESTADOS_PREDEFINIDOS = ['pendiente', 'procesando', 'enviado', 'completado', 'cancelado'];
 
 const OrderListScreen = () => {
+
   const [pedidos, setPedidos] = useState([]);
+  const [estado, setEstado] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [openPedidoId, setOpenPedidoId] = useState(null);
@@ -15,6 +17,10 @@ const OrderListScreen = () => {
   const [pedidoSeleccionado, setPedidoSeleccionado] = useState(null);
   const [nuevoEstado, setNuevoEstado] = useState('');
   const [actualizandoEstado, setActualizandoEstado] = useState(false);
+
+  const pedidosFiltrados = estado
+  ? pedidos.filter((p) => p.estado === estado)
+  : pedidos;
 
   useEffect(() => {
     const fetchPedidos = async () => {
@@ -111,13 +117,30 @@ const OrderListScreen = () => {
 
   return (
     <div className="order-list-container">
-      <div className="order-list-header">
-        <h2 className="order-list-title">Pedidos</h2>
-        <span className="order-count">{pedidos.length} pedidos</span>
-      </div>
+  <div className="order-list-header">
+    <div className="header-info">
+      <h2 className="order-list-title">Pedidos</h2>
+      <span className="order-count">{pedidos.length} pedidos</span>
+    </div>
+
+  <select
+  className="order-status-filter"
+  value={estado}
+  onChange={(e) => setEstado(e.target.value)}
+>
+  <option value="">Todos los estados</option>
+  <option value="pendiente">Pendiente</option>
+  <option value="procesando">Procesando</option>
+  <option value="enviado">Enviado</option>
+  <option value="completado">Completado</option>
+  <option value="cancelado">Cancelado</option>
+</select>
+
+
+  </div>
 
       <div className="orders-grid">
-        {pedidos.map((pedido) => {
+        {pedidosFiltrados.map((pedido) => {
           const usuario = pedido.usuario;
           const nombreUsuario = usuario
             ? (usuario.name || usuario.username || usuario.email || 'Usuario sin datos')

@@ -4260,6 +4260,191 @@ SECCIÓN 5: ESTILOS ESPECÍFICOS DE PRODUCTOS
   opacity: 0.4;
   cursor: not-allowed;
 }
+/* ============================
+   BOTÓN ☰ PARA ABRIR/CERRAR FILTROS
+=============================== */
+
+.catalog-filter-button {
+  border: none;
+  background: transparent;
+  font-size: 1.6rem;        /* tamaño elegante del icono */
+  cursor: pointer;
+  color: var(--siena-tostado);
+  padding: 0.25rem 0.5rem;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.catalog-filter-button:hover {
+  transform: scale(1.15);
+  color: var(--dark-wood);
+}
+
+/* ============================
+         PANEL DE FILTROS
+=============================== */
+
+.catalog-filter-panel {
+  margin: 1rem auto;
+  max-width: 360px;
+  width: 100%;
+  background: var(--surface);
+  padding: 1rem 1.2rem;
+  border-radius: 10px;
+  border: 1px solid rgba(160, 82, 45, 0.18);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+
+  /* Animación suave */
+  animation: filterFadeIn 0.25s ease both;
+}
+
+@keyframes filterFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================
+        INPUTS DE PRECIO
+=============================== */
+.catalog-price-input {
+  width: 100%;
+  padding: 0.6rem 0.7rem;
+  border-radius: 6px;
+  border: 1px solid rgba(0, 0, 0, 0.18);
+  background: white;
+  font-size: 0.9rem;
+  transition: border-color 0.2s ease;
+}
+
+.catalog-price-input:focus {
+  outline: none;
+  border-color: var(--siena-tostado);
+}
+
+/* ============================
+            RESPONSIVE
+=============================== */
+
+@media (max-width: 768px) {
+  .catalog-filter-button {
+    font-size: 1.5rem;
+  }
+
+  .catalog-filter-panel {
+    max-width: 92%;
+  }
+}
+
+/* ============================
+  SELECT FILTRO DE ESTADO (Pedidos)
+=============================== */
+
+.order-list-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+/* Wrapper para el select si necesitás ajustar su posición */
+.header-info {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+/* Select principal */
+.order-status-filter {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  display: inline-block;
+  min-width: 180px;
+  max-width: 260px;
+  padding: 0.55rem 0.9rem;
+  padding-right: 2.6rem; /* espacio para la flechita */
+  border-radius: 10px;
+  border: 1px solid rgba(0,0,0,0.12);
+  background-color: var(--surface, #ffffff);
+  color: var(--ink, #2f2f2f);
+  font-size: 0.95rem;
+  cursor: pointer;
+  line-height: 1;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.12s ease;
+  position: relative;
+  box-shadow: 0 1px 0 rgba(0,0,0,0.02);
+}
+
+/* Placeholder-like option: make sure first option stands out less (browsers vary) */
+.order-status-filter option[value=""] {
+  color: rgba(0,0,0,0.6);
+}
+
+/* Hover / focus */
+.order-status-filter:hover {
+  transform: translateY(-1px);
+}
+
+.order-status-filter:focus {
+  outline: none;
+  border-color: var(--siena-tostado, #a25a36);
+  box-shadow: 0 6px 18px rgba(160,82,45,0.06);
+}
+
+/* Disabled state */
+.order-status-filter:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Custom chevron (pure CSS SVG) placed on the right */
+.order-status-filter {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24'%3E%3Cpath fill='%23666' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 12px 12px;
+}
+
+/* Cuando esté desplegado (no se puede detectar cross-browser), opcional: clase .open */
+.order-status-filter.open {
+  border-color: var(--siena-tostado);
+}
+
+/* Small / compact variant (útil en mobile) */
+.order-status-filter--small,
+.order-status-filter.small {
+  min-width: 140px;
+  padding: 0.45rem 0.7rem;
+  font-size: 0.9rem;
+  border-radius: 8px;
+}
+
+/* ====== Responsive ====== */
+@media (max-width: 720px) {
+  .order-list-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .order-status-filter {
+    width: 100%;
+    max-width: none;
+    padding-right: 2.2rem;
+  }
+
+  .header-info {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
 
 /* Responsive */
 @media (max-width: 768px) {

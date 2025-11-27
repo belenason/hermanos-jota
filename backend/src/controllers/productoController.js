@@ -3,9 +3,23 @@ import { Producto } from '../models/Producto.js';
 
 // @desc    Obtener todos los productos
 // @route   GET /api/productos
-const getProductos = asyncHandler(async (req, res) => {
-  const productos = await Producto.find({});
-  res.status(200).json(productos);
+ const getProductos = asyncHandler(async (req, res) => {
+  const { minPrice, maxPrice } = req.query;
+
+  const filtro = {};
+
+  // Filtrar por precio mínimo
+  if (minPrice) {
+    filtro.precio = { ...filtro.precio, $gte: Number(minPrice) };
+  }
+
+  // Filtrar por precio máximo
+  if (maxPrice) {
+    filtro.precio = { ...filtro.precio, $lte: Number(maxPrice) };
+  }
+
+  const productos = await Producto.find(filtro);
+  res.json(productos);
 });
 
 // @desc    Obtener un producto determinado por su ID
@@ -24,6 +38,7 @@ const getProducto = asyncHandler(async (req, res) => {
 
   res.status(200).json(producto);
 });
+
 
 // @desc    Crear un nuevo producto
 // @route   POST /api/productos

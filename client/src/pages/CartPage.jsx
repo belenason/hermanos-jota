@@ -62,10 +62,11 @@ export default function CartPage() {
     }
 
     // Solo cuando entrás al carrito
-    if (items.length) {
+   /* if (items.length) {
       cleanupDeletedProducts();
-    }
-  }, [items.length, removeItem]); // usamos length para no re-ejecutar por cambios de cantidad
+    } */
+   cleanupDeletedProducts();
+  }, [items, removeItem]); // usamos length para no re-ejecutar por cambios de cantidad (;p )
 
   async function handleFinalizarCompra() {
     setErrorMsg("");

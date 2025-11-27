@@ -11,15 +11,30 @@ export default function CatalogPage({
   onRetry,
   onAdd
 }) {
+ 
   const [buscado, setQuery] = useState('');
+  const [filterOpen, setFilterOpen] = useState(false);
+  const [minPrice, setMinPrice] = useState("");
+  const [maxPrice, setMaxPrice] = useState("");
   const { isAuthenticated, isAdmin } = useContext(AuthContext);
+  
 
-  const filteredProducts = products.filter((p) => {
-    const query = buscado.toLowerCase().trim();
-    if (!query) return true;
-    const words = (p.nombre || '').toLowerCase().split(' ');
-    return words.some((word) => word.startsWith(query));
-  });
+const filteredProducts = products.filter((p) => {
+  const name = (p.nombre || "").toLowerCase();
+  const query = buscado.toLowerCase().trim();
+
+  // FILTRO POR NOMBRE
+  const matchesName =
+    !query || name.includes(query) || name.startsWith(query);
+
+  // FILTRO POR PRECIO
+  const price = Number(p.precio);
+
+  const matchesMin = minPrice === "" || price >= Number(minPrice);
+  const matchesMax = maxPrice === "" || price <= Number(maxPrice);
+
+  return matchesName && matchesMin && matchesMax;
+});
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -74,7 +89,7 @@ export default function CatalogPage({
       <section className="contact-hero">
         <div className="contact-container">
           <h2 className="hero-title">Catálogo</h2>
-          <div className="catalog-search-wrapper">
+        <div className="catalog-search-wrapper">
             <input
               type="text"
               className="catalog-search-input"
@@ -82,8 +97,36 @@ export default function CatalogPage({
               value={buscado}
               onChange={(e) => setQuery(e.target.value)}
             />
+
+            {/* Botón para abrir/cerrar filtros */}
+            <button
+              className="catalog-filter-button"
+              onClick={() => setFilterOpen(!filterOpen)}
+            >
+              ☰
+            </button>
           </div>
         </div>
+        {filterOpen && (
+          <div className="catalog-filter-panel">
+            <input
+              type="number"
+              className="catalog-price-input"
+              placeholder="Precio mínimo"
+              value={minPrice}
+              onChange={(e) => setMinPrice(e.target.value)}
+            />
+
+            <input
+              type="number"
+              className="catalog-price-input"
+              placeholder="Precio máximo"
+              value={maxPrice}
+              onChange={(e) => setMaxPrice(e.target.value)}
+            />
+          </div>
+        )}
+
       </section>
 
       {/* GRILLA MINIMAL */}
