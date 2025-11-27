@@ -2,7 +2,16 @@ export default function OrderCard({ pedido }) {
   const fecha = pedido.createdAt ? new Date(pedido.createdAt) : null;
   const total = pedido.total ?? 0;
   const items = pedido.items ?? [];
-
+  const getEstadoBadgeClass = (estado) => {
+  const estados = {
+      'pendiente': 'pending',
+      'procesando': 'processing',
+      'enviado': 'shipped',
+      'completado': 'completed',
+      'cancelado': 'cancelled'
+    };
+    return estados[estado] || 'default';
+  };
   return (
     <div className="order-card">
       {/* Header */}
@@ -30,7 +39,10 @@ export default function OrderCard({ pedido }) {
       </div>
 
       {/* Footer / Total */}
-      <div className="card-footer">
+      <div className="card-footer d-flex justify-content-between align-items-center">
+      <span className={`order-status-badge ${getEstadoBadgeClass(pedido.estado)}`}>
+                    {pedido.estado}
+                  </span>
         <span className="total-amount">${total.toLocaleString('es-AR')}</span>
       </div>
     </div>
