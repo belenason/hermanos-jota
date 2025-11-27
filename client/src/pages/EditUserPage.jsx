@@ -55,10 +55,12 @@ export default function EditUserPage() {
     if (formData.newPassword || formData.confirmPassword) {
       if (!formData.currentPassword) {
         setPasswordError('Debes ingresar la contraseña actual para cambiarla.');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
         return;
       }
       if (formData.newPassword !== formData.confirmPassword) {
         setPasswordError('La nueva contraseña y su confirmación no coinciden.');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
         return;
       }
     }
