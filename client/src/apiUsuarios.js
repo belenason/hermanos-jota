@@ -22,26 +22,30 @@ export async function perfilUsuario() {
   });
 }
 
-// src/apiUsuarios.js
-export const updatePerfil = async (token, payload) => {
-  const res = await fetch('/api/usuarios/perfil', {
-    method: 'PUT',
-    headers: { 
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}` 
-    },
-    body: JSON.stringify(payload),
+
+export async function updatePerfil(payload) {
+  // apiPut maneja: headers, token, errores de red, baseURL, etc.
+  const data = await apiPut('/api/usuarios/perfil', payload, {
+    auth: true,
   });
 
-  const data = await res.json();
-
-  if (!res.ok) {
-    // Esto lanza un error y lo agarra tu catch en ModificarCuenta.jsx
-    throw new Error(data.message || 'Error al actualizar perfil');
+  // Backend devuelve: { message, user: {...} }
+  if (data && data.user) {
+    return data.user;
   }
 
-  return data.user; // ahora devolvemos solo el usuario actualizado
-};
+  // Si devuelve algo directo, lo devolvemos
+  if (data) {
+    return data;
+  }
+
+  // Fallback por si Render responde sin cuerpo (204)
+  return {
+    username: payload.username,
+    email: payload.email,
+  };
+}
+
 
 /* ========== FUNCIONES ADMIN ========== */
 

@@ -20,7 +20,7 @@ import AdminPanelPage from './pages/AdminPanelPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import ProfilePage from './pages/ProfilePage';
-import ModificarCuenta from './pages/ModificarCuenta';
+import EditUserPage from './pages/EditUserPage';
 
 import AdminRoute from './auth/AdminRoute';
 import ProtectedRoute from './auth/ProtectedRoute';
@@ -158,7 +158,7 @@ export default function App() {
             path="/modificar-cuenta"
             element={
             <ProtectedRoute>
-              <ModificarCuenta />
+              <EditUserPage />
             </ProtectedRoute>
   }
 />
